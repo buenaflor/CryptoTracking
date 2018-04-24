@@ -21,7 +21,14 @@ class MainViewController: UIViewController, LoadingController {
     }()
     
     func loadData(force: Bool) {
-        print("loaded datasource")
+        SessionManager.shared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/ripple/")) { (result) in
+            result.onSuccess { value in
+                print(value.id)
+                }.onError { error in
+                    print("error: \(error.localizedDescription)")
+            }
+        }
+        print("loading datasource")
     }
     
     override func viewDidLoad() {
