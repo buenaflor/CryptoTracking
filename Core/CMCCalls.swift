@@ -10,7 +10,7 @@ import Endpoints
 
 extension CMCClient {
     struct GetSpecCurrencyTicker: Call {
-        typealias ResponseType = SpecCurrencyTickerResponse
+        typealias ResponseType = CoinTickerResponse
         
         var tag: String
         

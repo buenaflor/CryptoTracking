@@ -8,48 +8,48 @@
 
 import UIKit
 
-class MainViewController: UIViewController, LoadingController {
-    
-    lazy var tableView: UITableView = {
-        let tv = UITableView()
-        tv.delegate = self
-        tv.dataSource = self
-        tv.register(UITableViewCell.self)
-        tv.backgroundColor = .lightGray
-        tv.tableFooterView = UIView()
-        return tv
-    }()
-    
-    func loadData(force: Bool) {
-        SessionManager.shared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/ripple/")) { (result) in
-            result.onSuccess { value in
-                print(value.id)
-                }.onError { error in
-                    print("error: \(error.localizedDescription)")
-            }
-        }
-        print("loading datasource")
-    }
-    
+class MainViewController: MainController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         view.fillToSuperview(tableView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateView()
+    }
+    
+    private func updateView() {
+        navigationItem.leftBarButtonItems = [ activityIndicatorItem]
     }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        
+        // Add +1 for the last cell (add coin)
+        return self.coinTickers.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(UITableViewCell.self, for: indexPath)
-        
-        cell.textLabel?.text = "dsa"
-        
-        return cell
+        if indexPath.row != self.coinTickers.count {
+            let coin = self.coinTickers[indexPath.row]
+            cell.textLabel?.text = coin.name
+            return cell
+        }
+        else {
+            cell.textLabel?.text = "Add Coin"
+            return cell
+        }
     }
 }

@@ -8,6 +8,8 @@
 
 import Endpoints
 
+// Unused
+
 public protocol DecodableParser: Decodable, ResponseParser { }
 
 public extension DecodableParser {
