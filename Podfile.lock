@@ -1,0 +1,12 @@
+PODS:
+  - Endpoints (0.4.6)
+
+DEPENDENCIES:
+  - Endpoints
+
+SPEC CHECKSUMS:
+  Endpoints: 6adcbb48f26ec8c6db7ac103e5de922a140cbf1f
+
+PODFILE CHECKSUM: afd5beddbc3953bf19ddc67645a869959c42da2f
+
+COCOAPODS: 1.4.0.beta.2
