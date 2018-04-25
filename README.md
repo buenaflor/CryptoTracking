@@ -10,7 +10,6 @@ CryptoTracking is an iOS CryptoCurrency portfolio tracker that directly retrieve
 - Pod: 'Endpoints'
 
 ## Build Instructions
-------------------
 
 1. Install the latest [Xcode developer tools](https://developer.apple.com/xcode/downloads/) from Apple.
 2. Clone the repository:
