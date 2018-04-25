@@ -44,6 +44,9 @@ extension UIFont {
     public class var cryptoRegular: UIFont {
         return UIFont(name: "DINPro-Regular", size: 15.0)! //?? UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightRegular)
     }
+    public class var cryptoRegularMedium: UIFont {
+        return UIFont(name: "DINPro-Regular", size: 17.5)! //?? UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightRegular)
+    }
     public class var cryptoRegularLarge: UIFont {
         return UIFont(name: "DINPro-Regular", size: 20.0)!
     }

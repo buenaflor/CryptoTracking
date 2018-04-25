@@ -45,6 +45,23 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         return item
     }()
     
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.register(UICollectionViewCell.self)
+        cv.isPagingEnabled = true
+        cv.backgroundColor = .white
+        return cv
+    }()
+    
+    let headerView: CoinDetailHeaderView = {
+        let view = CoinDetailHeaderView()
+        return view
+    }()
+    
     var isSettingOpen = false
     
     init(coinID: String) {
@@ -52,12 +69,27 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         self.coinID = coinID
         
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = activityIndicatorItem
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = activityIndicatorItem
+        headerView.loadData(force: true)
+        
+        view.add(subview: headerView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.4)
+            ]}
+        
+        view.add(subview: collectionView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor)
+            ]}
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -98,6 +130,44 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         }
     }
 }
+
+
+// MARK: - CollectionView DataSource & Delegate
+
+extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath)
+        
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = .red
+        }
+        else {
+            cell.backgroundColor = .blue
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        // Add notification here to headerview so it can update its border
+        print("ended")
+    }
+}
+
 
 // MARK: - Custom SettingsCell
 

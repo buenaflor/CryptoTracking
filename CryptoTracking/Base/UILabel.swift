@@ -26,3 +26,21 @@ class Label: UILabel {
     }
 }
 
+class TextView: UITextView {
+    
+    init() {
+        super.init(frame: .zero, textContainer: nil)
+    }
+    
+    init(isEditable: Bool, font: UIFont? = nil) {
+        super.init(frame: .zero, textContainer: nil)
+        if let font = font { self.font = font }
+        self.isEditable = isEditable
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
