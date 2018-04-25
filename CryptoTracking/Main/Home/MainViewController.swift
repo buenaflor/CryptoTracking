@@ -9,6 +9,7 @@
 import UIKit
 
 class MainViewController: MainController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +29,22 @@ class MainViewController: MainController {
     }
     
     private func updateView() {
-        navigationItem.leftBarButtonItems = [ activityIndicatorItem]
+        if !activityIndicator.isHidden {
+            navigationItem.leftBarButtonItems = [ activityIndicatorItem ]
+        }
+        else {
+            // Set it here too or it will dissappear
+            navigationItem.leftBarButtonItem = titleItem
+        }
+        navigationItem.rightBarButtonItems = [ settingsItem, searchItem ]
     }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return indexPath.row == self.coinTickers.count ? 120 : 70
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -41,15 +53,23 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(UITableViewCell.self, for: indexPath)
         if indexPath.row != self.coinTickers.count {
+            let cell = tableView.dequeueReusableCell(MainCoinTickerCell.self, for: indexPath)
             let coin = self.coinTickers[indexPath.row]
-            cell.textLabel?.text = coin.name
+            cell.configureWithModel(coin)
             return cell
         }
         else {
-            cell.textLabel?.text = "Add Coin"
+            let cell = tableView.dequeueReusableCell(MainAddCoinCell.self, for: indexPath)
+            cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
+            cell.label.text = "Add Coin"
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow()
+    }
 }
+
+

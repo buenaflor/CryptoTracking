@@ -1,5 +1,5 @@
 //
-//  MainHeaderView.swift
+//  BaseView.swift
 //  CryptoTracking
 //
 //  Created by Giancarlo on 24.04.18.
@@ -8,3 +8,7 @@
 
 import UIKit
 
+class BaseView: UIView, LoadingController {
+    func changed() {}    
+    func loadData(force: Bool) {}
+}

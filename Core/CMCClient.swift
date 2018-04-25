@@ -11,7 +11,8 @@ import Endpoints
 class CMCClient: Client {
     
     let client: AnyClient = {
-        return AnyClient(baseURL: URL(string: "https://api.coinmarketcap.com/v1/")!)
+        let baseURL = BaseConfig.shared.cmcBaseURL
+        return AnyClient(baseURL: baseURL)
     }()
     
     func encode<C>(call: C) -> URLRequest where C : Call {

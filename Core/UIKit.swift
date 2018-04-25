@@ -106,8 +106,40 @@ extension UITableView {
         
         return cell
     }
+    
+    /// Deselects row at given IndexPath
+    func deselectRow() {
+        guard let indexPath = indexPathForSelectedRow else { return }
+        self.deselectRow(at: indexPath, animated: true)
+    }
 }
 
+
+// MARK: - UIViewController
+
+extension UIViewController {
+    
+    public var backTitle: String {
+        set {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: newValue, style: .plain, target: nil, action: nil)
+            
+        } get {
+            guard let backBarButtonItem = navigationItem.backBarButtonItem else {
+                return ""
+            }
+            
+            return backBarButtonItem.title ?? ""
+        }
+    }
+    
+    public func wrapped(in navigationController: UINavigationController? = nil) -> UINavigationController {
+        if let navigationController = navigationController {
+            navigationController.viewControllers = [self]
+            return navigationController
+        }
+        return UINavigationController(rootViewController: self)
+    }
+}
 
 // MARK: - Alert
 
@@ -120,15 +152,6 @@ extension UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-}
-
-
-//  MARK: - Data Loading
-
-protocol LoadingController {
-    
-    /// Called, when the data should load
-    func loadData(force: Bool)
 }
 
 

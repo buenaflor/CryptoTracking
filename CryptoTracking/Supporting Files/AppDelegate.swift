@@ -22,19 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let navController = UINavigationController(rootViewController: mainVC)
-        window?.rootViewController = navController
+        window?.rootViewController = mainVC.wrapped()
+        
+        let currentTheme = ThemeManager.currentTheme()
+        ThemeManager.applyTheme(currentTheme)
         
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        
         mainVC.loadData(force: false)
     }
 }
-
-extension UIViewController {
-    
-}
-

@@ -33,7 +33,3 @@ class SessionManager {
         return task
     }
 }
-
-extension SessionManager {
-    static let shared = SessionManager()
-}
