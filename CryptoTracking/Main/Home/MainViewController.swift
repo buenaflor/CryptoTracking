@@ -10,7 +10,6 @@ import UIKit
 
 class MainViewController: MainController {
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +66,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
+        
+        if indexPath.row != self.coinTickers.count {
+            let coinID = self.coinTickers[indexPath.row].id
+            let coinVC = CoinDetailViewController(coinID: coinID)
+            coinVC.loadData(force: true)
+            navigationController?.pushViewController(coinVC, animated: true)
+        }
     }
 }
 

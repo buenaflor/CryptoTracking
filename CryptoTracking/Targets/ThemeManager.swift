@@ -129,6 +129,8 @@ class ThemeManager {
         UINavigationBar.appearance().tintColor = theme.tintColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]
         
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.cryptoRegularLarge], for: .normal)
+        
         UILabel.appearance().textColor = theme.tintColor
         
         UITableView.appearance().backgroundColor = theme.backgroundColor

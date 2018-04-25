@@ -65,12 +65,10 @@ class MainController: BaseViewController, LoadingController {
     // MARK: - Action
     
     @objc func settingsItemTapped(sender: UIBarButtonItem) {
-        print("hey")
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
     
     @objc func searchItemTapped(sender: UIBarButtonItem) {
-        print("hey")
         let vc = CryptoSearchViewController()
         vc.loadData(force: true)
         present(vc.wrapped(), animated: true, completion: nil)

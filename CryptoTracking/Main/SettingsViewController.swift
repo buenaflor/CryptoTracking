@@ -13,13 +13,14 @@ import UIKit
 
 class SettingsCell: TableViewCell {
     
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureLabel(font: .cryptoMedium, numberOfLines: 1)
         
         add(subview: self.label) { (v, p) in [
-            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 20),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 40),
             v.centerYAnchor.constraint(equalTo: p.centerYAnchor)
             ]}
     }
@@ -42,6 +43,7 @@ class DisclosureCell: SettingsCell {
 
 // MARK: - Protocol Structure
 
+// For ViewController
 protocol SettingsItem {
     var cellType: SettingsCell.Type { get }
     func configure(cell: SettingsCell)
@@ -54,6 +56,18 @@ struct SettingsSection {
     var footer: String?
 }
 
+// For View
+protocol SettingsItemForView {
+    var cellType: SettingsCellForView.Type { get }
+    func configure(cell: SettingsCellForView)
+    func didSelect(settingsVC: UIView)
+}
+
+struct SettingsSectionForView {
+    var title: String?
+    var items: [SettingsItemForView]
+    var footer: String?
+}
 
 // MARK: - Cell Items
 
