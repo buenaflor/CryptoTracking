@@ -7,7 +7,7 @@ CryptoTracking is an iOS CryptoCurrency portfolio tracker that directly retrieve
 
 - Swift 4.1
 - iOS 11
-- Pod: 'Endpoints'
+- XCode 9.3
 
 ## Build Instructions
 
