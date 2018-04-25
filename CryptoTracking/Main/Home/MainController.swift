@@ -33,19 +33,6 @@ class MainController: BaseViewController, LoadingController {
     
     // MARK: - View Declaration
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
-        let av = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        av.isHidden = true
-        av.hidesWhenStopped = true
-        av.startAnimating()
-        return av
-    }()
-    
-    lazy var activityIndicatorItem: UIBarButtonItem = {
-        let btn = UIBarButtonItem(customView: self.activityIndicator)
-        return btn
-    }()
-    
     lazy var titleItem: UIBarButtonItem = {
         let item = UIBarButtonItem(title: "CryptoTracker", style: .plain, target: nil, action: nil)
         item.isEnabled = false

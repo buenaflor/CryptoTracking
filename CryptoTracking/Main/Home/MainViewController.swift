@@ -29,10 +29,8 @@ class MainViewController: MainController {
     }
     
     private func updateView() {
-        if !activityIndicator.isHidden {
-            navigationItem.leftBarButtonItems = [ activityIndicatorItem ]
-        }
-        else {
+        
+        if !activityIndicatorAdded() {
             // Set it here too or it will dissappear
             navigationItem.leftBarButtonItem = titleItem
         }

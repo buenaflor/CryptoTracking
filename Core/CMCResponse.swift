@@ -17,7 +17,7 @@ struct CoinTicker: Codable {
     let rank: String
     let priceUsd, priceBtc, the24HVolumeUsd, marketCapUsd: String
     let availableSupply, totalSupply: String
-    let maxSupply: String
+    let maxSupply: String?
     let percentChange1H, percentChange24H, percentChange7D: String
     let lastUpdated: String
     
