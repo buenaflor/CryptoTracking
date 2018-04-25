@@ -14,11 +14,15 @@ CryptoTracking is an iOS CryptoCurrency portfolio tracker that directly retrieve
 1. Install the latest [Xcode developer tools](https://developer.apple.com/xcode/downloads/) from Apple.
 2. Clone the repository:
 
+```shell
 git clone https://github.com/buenaflor/CryptoTracking.git
+```
 
 3. Install dependencies in terminal
 
+```shell
 'pod install'
+```
 
 5. Open `CryptoTracking.xcworkspace` in Xcode.
 6. Run build in Xcode.
