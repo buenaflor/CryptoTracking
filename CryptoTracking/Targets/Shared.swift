@@ -14,9 +14,6 @@ protocol LoadingController {
     
     /// Called, when the data should load
     func loadData(force: Bool)
-    
-    
-    func changed()
 }
 
 

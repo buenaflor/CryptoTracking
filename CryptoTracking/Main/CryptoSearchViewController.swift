@@ -16,7 +16,7 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
     var filteredCoinTickers = [CoinTicker]()
     
     func loadData(force: Bool) {
-        SessionManager.shared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/")) { (result) in
+        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/")) { (result) in
             result.onSuccess { value in
                 
                 self.coinTickers = value.items

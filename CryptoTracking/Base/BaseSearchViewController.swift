@@ -12,7 +12,7 @@ class BaseSearchViewController: BaseViewController {
     
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search Coin"
+        searchController.searchBar.placeholder = "Search"
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         return searchController

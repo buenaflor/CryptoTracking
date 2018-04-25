@@ -14,9 +14,17 @@ class BaseConfig {
     var cmcBaseURL: URL {
         return URL(string: "https://api.coinmarketcap.com/v1/")!
     }
+    
+    var ccBaseURL: URL {
+        return URL(string: "https://min-api.cryptocompare.com/data/")!
+    }
 
+    var ccMediaBaseURL: URL {
+        return URL(string: "www.cryptocompare.com")!
+    }
 }
 
 extension SessionManager {
-    static let shared = SessionManager()  
+    static let ccShared = SessionManager(clientType: ClientType.ccClient)
+    static let cmcShared = SessionManager(clientType: ClientType.cmcClient)
 }

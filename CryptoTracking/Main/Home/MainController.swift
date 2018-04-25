@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 // MARK: - Controller
 
@@ -15,20 +16,32 @@ class MainController: BaseViewController, LoadingController {
     func changed() { print("globally changed") }
  
     var coinTickers = [CoinTicker]()
+    var coinData = [ExchangeDataClass]()
     
     func loadData(force: Bool) {
         
-        SessionManager.shared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/ripple/")) { (result) in
+        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": "XRP", "tsym": "USD"])) { (result) in
             result.onSuccess { value in
-                self.coinTickers = value.items
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                self.coinData.append(value.data)
                 self.activityIndicator.stopAnimating()
                 self.navigationItem.leftBarButtonItem = self.titleItem
+                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
                 }.onError { error in
-                    self.showAlert(title: "Error", message: error.localizedDescription)
-                    print("error: \(error.localizedDescription)")
+                    print(error)
             }
         }
+        
+//        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/ripple/")) { (result) in
+//            result.onSuccess { value in
+//                self.coinTickers = value.items
+//                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+//                self.activityIndicator.stopAnimating()
+//                self.navigationItem.leftBarButtonItem = self.titleItem
+//                }.onError { error in
+//                    self.showAlert(title: "Error", message: error.localizedDescription)
+//                    print("error: \(error.localizedDescription)")
+//            }
+//        }
     }
     
     // MARK: - View Declaration
@@ -80,18 +93,23 @@ class MainController: BaseViewController, LoadingController {
 
 class MainCoinTickerCell: UITableViewCell, Configurable {
     
-    var model: CoinTicker?
+    var model: ExchangeDataClass?
     
-    func configureWithModel(_ coinTicker: CoinTicker) {
-        self.model = coinTicker
+    func configureWithModel(_ dataClass: ExchangeDataClass) {
+        self.model = dataClass
         
-        symbolLabel.text = coinTicker.symbol
+        symbolLabel.text = dataClass.coinInfo.name
         
         // Dollar Symbol only for testing
-        currentPriceLabel.text = "$\(coinTicker.priceUsd)"
+        currentPriceLabel.text = "$\(dataClass.aggregatedData.price)"
         
-        change24hLabel.text = "\(coinTicker.percentChange24H)%"
-        change24hLabel.textColor = (Double(coinTicker.percentChange24H) ?? 0 >= 0.0) ? .green : .red
+        let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
+        change24hLabel.text = "\(rounded24hChange)%"
+        change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
+        
+        if let imageURLPath = dataClass.coinInfo.imageURL {
+            iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
+        }
         
         // Test Data only - Model is still not ready
         holdingsLabel.text = "17.80%"
@@ -120,6 +138,11 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         return lbl
     }()
     
+    let iconImageView: UIImageView = {
+        let iv = UIImageView()
+        return iv
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -128,9 +151,16 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     
     func createConstraints() {
         
+        add(subview: iconImageView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 5),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 32),
+            v.heightAnchor.constraint(equalToConstant: 25),
+            v.widthAnchor.constraint(equalToConstant: 25)
+            ]}
+        
         add(subview: symbolLabel) { (v, p) in [
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 32),
-            v.bottomAnchor.constraint(equalTo: p.bottomAnchor, constant: -13)
+            v.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 8)
             ]}
         
         add(subview: holdingsLabel) { (v, p) in [

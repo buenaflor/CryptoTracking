@@ -1,15 +1,20 @@
 PODS:
   - Endpoints (0.4.6)
+  - SDWebImage (4.3.0):
+    - SDWebImage/Core (= 4.3.0)
+  - SDWebImage/Core (4.3.0)
   - Unbox (2.5.0)
 
 DEPENDENCIES:
   - Endpoints
+  - SDWebImage
   - Unbox
 
 SPEC CHECKSUMS:
   Endpoints: 6adcbb48f26ec8c6db7ac103e5de922a140cbf1f
+  SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
   Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: a24d410b7c55b6ec42cae0bee15c6ceeb4cca9fb
+PODFILE CHECKSUM: 24e1c5072d2d120639738c75fc4abac3209825e5
 
 COCOAPODS: 1.4.0.beta.2

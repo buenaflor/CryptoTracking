@@ -13,15 +13,15 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     // Unused
     func changed() { }
     
-    
     private var coinID: String?
+    private var coinSymbol: String?
     
     func loadData(force: Bool) {
         guard let coinID = coinID else {
             showAlert(title: "Error", message: "Coin ID is incorrect")
             return
         }
-        SessionManager.shared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/\(coinID)/")) { (result) in
+        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/\(coinID)/")) { (result) in
             result.onSuccess { value in
                 if value.items.count == 1 {
                     value.items.forEach({
@@ -62,14 +62,23 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         return view
     }()
     
+    lazy var fillView = SettingsFillView()
+    
     var isSettingOpen = false
     
-    init(coinID: String) {
+    init(coinID: String, coinSymbol: String) {
         super.init(nibName: nil, bundle: nil)
         self.coinID = coinID
+        self.coinSymbol = coinSymbol
         
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = activityIndicatorItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fillView.removeFromSuperview()
     }
     
     override func viewDidLoad() {
@@ -104,7 +113,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         if !isSettingOpen {
             isSettingOpen = true
             
-            let fillView = SettingsFillView()
+            fillView.delegate = self
             fillView.tag = 1
             fillView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
             
@@ -128,6 +137,31 @@ class CoinDetailViewController: BaseViewController, LoadingController {
                 fillView.removeFromSuperview()
             }
         }
+    }
+}
+
+
+// MARK: - FillView Delegate
+
+extension CoinDetailViewController: SettingsFillViewDelegate {
+    
+    func clicked(exchangeItem: SettingsItemForView) {
+        guard let coinSymbol = coinSymbol else {
+            showAlert(title: "Error", message: "Something is wrong with the coin name")
+            return
+        }
+        let exchangeVC = ExchangeViewController(coinSymbol: coinSymbol)
+        exchangeVC.loadData(force: true)
+        navigationController?.pushViewController(exchangeVC, animated: true)
+    }
+    
+    func clicked(tradingPairItem: SettingsItemForView) {
+        
+        // ToDo
+    }
+    
+    func clicked(removeCoinItem: SettingsItemForView) {
+        // ToDo
     }
 }
 
@@ -162,7 +196,7 @@ extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
+        // ToDo: Fix loading so that everything will only be loaded when finished (loadData)
         // Add notification here to headerview so it can update its border
         print("ended")
     }
@@ -220,8 +254,8 @@ struct ExchangeItem: SettingsItemForView {
         cell.label.text = "Exchange"
     }
     
-    func didSelect(settingsVC: UIView) {
-        print("clicked")
+    func didSelect(settingsVC: SettingsFillView) {
+        settingsVC.delegate?.clicked(exchangeItem: self)
     }
 }
 
@@ -236,8 +270,8 @@ struct TradingPair: SettingsItemForView {
         cell.label.text = "Trading Pair"
     }
     
-    func didSelect(settingsVC: UIView) {
-        print("clicked")
+    func didSelect(settingsVC: SettingsFillView) {
+        settingsVC.delegate?.clicked(tradingPairItem: self)
     }
 }
 
@@ -252,13 +286,21 @@ struct RemoveCoin: SettingsItemForView {
         cell.label.text = "Remove from Portfolio"
     }
     
-    func didSelect(settingsVC: UIView) {
-        print("clicked")
+    func didSelect(settingsVC: SettingsFillView) {
+        settingsVC.delegate?.clicked(removeCoinItem: self)
     }
 }
 
 
+protocol SettingsFillViewDelegate: class {
+    func clicked(exchangeItem: SettingsItemForView)
+    func clicked(tradingPairItem: SettingsItemForView)
+    func clicked(removeCoinItem: SettingsItemForView)
+}
+
 class SettingsFillView: UIView, UITableViewDelegate, UITableViewDataSource {
+    
+    weak var delegate: SettingsFillViewDelegate?
     
     var model = [SettingsSectionForView]()
     

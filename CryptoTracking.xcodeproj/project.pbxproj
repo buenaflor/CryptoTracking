@@ -44,6 +44,11 @@
 		345547F320908F2500230BCF /* BaseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547F220908F2500230BCF /* BaseSearchViewController.swift */; };
 		345547F6209095D000230BCF /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547F5209095D000230BCF /* CoinDetailViewController.swift */; };
 		345547F82090A78200230BCF /* CoinDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547F72090A78200230BCF /* CoinDetailHeaderView.swift */; };
+		345547FA2091045E00230BCF /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547F92091045E00230BCF /* ExchangeViewController.swift */; };
+		345547FE209105C700230BCF /* CCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547FD209105C700230BCF /* CCClient.swift */; };
+		345548002091070B00230BCF /* CCCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547FF2091070B00230BCF /* CCCall.swift */; };
+		345548022091071D00230BCF /* CCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345548012091071D00230BCF /* CCResponse.swift */; };
+		3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455480320912B3300230BCF /* TradingPairViewController.swift */; };
 		BB80CFA6B3A9500F8F56B2A1 /* Pods_CryptoTrackingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7756B1E18E353B2DD91AE0F6 /* Pods_CryptoTrackingUITests.framework */; };
 		CB2117A28C1079488DD4356E /* Pods_CryptoTrackingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185AB590B5F83A044EFE0562 /* Pods_CryptoTrackingTests.framework */; };
 /* End PBXBuildFile section */
@@ -110,6 +115,11 @@
 		345547F220908F2500230BCF /* BaseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSearchViewController.swift; sourceTree = "<group>"; };
 		345547F5209095D000230BCF /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
 		345547F72090A78200230BCF /* CoinDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailHeaderView.swift; sourceTree = "<group>"; };
+		345547F92091045E00230BCF /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
+		345547FD209105C700230BCF /* CCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCClient.swift; sourceTree = "<group>"; };
+		345547FF2091070B00230BCF /* CCCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCCall.swift; sourceTree = "<group>"; };
+		345548012091071D00230BCF /* CCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCResponse.swift; sourceTree = "<group>"; };
+		3455480320912B3300230BCF /* TradingPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairViewController.swift; sourceTree = "<group>"; };
 		3C083B3592E4B64343249B74 /* Pods-CryptoTrackingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTrackingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoTrackingTests/Pods-CryptoTrackingTests.release.xcconfig"; sourceTree = "<group>"; };
 		45F7F833C4098F835CABF357 /* Pods-CryptoTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.debug.xcconfig"; sourceTree = "<group>"; };
 		7756B1E18E353B2DD91AE0F6 /* Pods_CryptoTrackingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTrackingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,9 +213,8 @@
 		345547AB208F558A00230BCF /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				345547B0208F5D8D00230BCF /* CMCClient.swift */,
-				345547B2208F5D9D00230BCF /* CMCCalls.swift */,
-				345547B4208F5EB100230BCF /* CMCResponse.swift */,
+				345547FC209105BC00230BCF /* CC */,
+				345547FB209105A900230BCF /* CMC */,
 				345547AE208F55C800230BCF /* UIKit.swift */,
 				345547DE2090600800230BCF /* UIColor.swift */,
 				345547B6208F5F7100230BCF /* SessionManager.swift */,
@@ -224,6 +233,8 @@
 				345547D8208FBC9100230BCF /* ThemesViewController.swift */,
 				345547DA208FBCD300230BCF /* CurrencySettingsViewController.swift */,
 				345547F02090897B00230BCF /* CryptoSearchViewController.swift */,
+				345547F92091045E00230BCF /* ExchangeViewController.swift */,
+				3455480320912B3300230BCF /* TradingPairViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -299,6 +310,26 @@
 				345547F72090A78200230BCF /* CoinDetailHeaderView.swift */,
 			);
 			path = Coin;
+			sourceTree = "<group>";
+		};
+		345547FB209105A900230BCF /* CMC */ = {
+			isa = PBXGroup;
+			children = (
+				345547B0208F5D8D00230BCF /* CMCClient.swift */,
+				345547B2208F5D9D00230BCF /* CMCCalls.swift */,
+				345547B4208F5EB100230BCF /* CMCResponse.swift */,
+			);
+			path = CMC;
+			sourceTree = "<group>";
+		};
+		345547FC209105BC00230BCF /* CC */ = {
+			isa = PBXGroup;
+			children = (
+				345547FD209105C700230BCF /* CCClient.swift */,
+				345547FF2091070B00230BCF /* CCCall.swift */,
+				345548012091071D00230BCF /* CCResponse.swift */,
+			);
+			path = CC;
 			sourceTree = "<group>";
 		};
 		BA1727DBA012DF1D3BA33633 /* Pods */ = {
@@ -557,11 +588,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Endpoints/Endpoints.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Unbox/Unbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Endpoints.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Unbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,8 +656,11 @@
 			files = (
 				345547BD208FAE8200230BCF /* MainHeaderView.swift in Sources */,
 				345547F320908F2500230BCF /* BaseSearchViewController.swift in Sources */,
+				3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */,
 				345547E1209061D500230BCF /* Constants.swift in Sources */,
 				345547B1208F5D8D00230BCF /* CMCClient.swift in Sources */,
+				345548022091071D00230BCF /* CCResponse.swift in Sources */,
+				345548002091070B00230BCF /* CCCall.swift in Sources */,
 				345547D1208FB4E300230BCF /* ThemeManager.swift in Sources */,
 				34554780208F544B00230BCF /* MainViewController.swift in Sources */,
 				345547E7209072DF00230BCF /* UITableViewCell.swift in Sources */,
@@ -643,9 +679,11 @@
 				345547DF2090600800230BCF /* UIColor.swift in Sources */,
 				345547E5209070FE00230BCF /* UILabel.swift in Sources */,
 				345547F82090A78200230BCF /* CoinDetailHeaderView.swift in Sources */,
+				345547FA2091045E00230BCF /* ExchangeViewController.swift in Sources */,
 				3455477E208F544B00230BCF /* AppDelegate.swift in Sources */,
 				345547B9208F60DC00230BCF /* Endpoints+Decodable.swift in Sources */,
 				345547C0208FAFBA00230BCF /* BaseView.swift in Sources */,
+				345547FE209105C700230BCF /* CCClient.swift in Sources */,
 				345547B7208F5F7100230BCF /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

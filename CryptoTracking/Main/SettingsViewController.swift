@@ -60,7 +60,7 @@ struct SettingsSection {
 protocol SettingsItemForView {
     var cellType: SettingsCellForView.Type { get }
     func configure(cell: SettingsCellForView)
-    func didSelect(settingsVC: UIView)
+    func didSelect(settingsVC: SettingsFillView)
 }
 
 struct SettingsSectionForView {
