@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1F6AC4DFC696849F72384ECD /* Pods_CryptoTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B877FF8B26A950F836AB2880 /* Pods_CryptoTracking.framework */; };
+		343C09552091EF7E00FBE493 /* CMCCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C09522091EF7D00FBE493 /* CMCCalls.swift */; };
+		343C09562091EF7E00FBE493 /* CMCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C09532091EF7D00FBE493 /* CMCResponse.swift */; };
+		343C09572091EF7E00FBE493 /* CMCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C09542091EF7D00FBE493 /* CMCClient.swift */; };
+		343C095B20928F6000FBE493 /* FixerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095A20928F6000FBE493 /* FixerClient.swift */; };
+		343C095D2092900600FBE493 /* FixerCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095C2092900600FBE493 /* FixerCalls.swift */; };
+		343C095F2092904800FBE493 /* FixerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095E2092904800FBE493 /* FixerResponse.swift */; };
 		3455477E208F544B00230BCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477D208F544B00230BCF /* AppDelegate.swift */; };
 		34554780208F544B00230BCF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477F208F544B00230BCF /* MainViewController.swift */; };
 		34554785208F544C00230BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34554784208F544C00230BCF /* Assets.xcassets */; };
@@ -15,9 +21,6 @@
 		34554793208F544C00230BCF /* CryptoTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34554792208F544C00230BCF /* CryptoTrackingTests.swift */; };
 		3455479E208F544C00230BCF /* CryptoTrackingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455479D208F544C00230BCF /* CryptoTrackingUITests.swift */; };
 		345547AF208F55C800230BCF /* UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547AE208F55C800230BCF /* UIKit.swift */; };
-		345547B1208F5D8D00230BCF /* CMCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547B0208F5D8D00230BCF /* CMCClient.swift */; };
-		345547B3208F5D9D00230BCF /* CMCCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547B2208F5D9D00230BCF /* CMCCalls.swift */; };
-		345547B5208F5EB100230BCF /* CMCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547B4208F5EB100230BCF /* CMCResponse.swift */; };
 		345547B7208F5F7100230BCF /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547B6208F5F7100230BCF /* SessionManager.swift */; };
 		345547B9208F60DC00230BCF /* Endpoints+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547B8208F60DC00230BCF /* Endpoints+Decodable.swift */; };
 		345547BB208FAC6B00230BCF /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547BA208FAC6B00230BCF /* MainController.swift */; };
@@ -73,6 +76,12 @@
 /* Begin PBXFileReference section */
 		12BEAD97A7847E5AE654646C /* Pods-CryptoTrackingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTrackingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoTrackingUITests/Pods-CryptoTrackingUITests.release.xcconfig"; sourceTree = "<group>"; };
 		185AB590B5F83A044EFE0562 /* Pods_CryptoTrackingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTrackingTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		343C09522091EF7D00FBE493 /* CMCCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCCalls.swift; sourceTree = "<group>"; };
+		343C09532091EF7D00FBE493 /* CMCResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCResponse.swift; sourceTree = "<group>"; };
+		343C09542091EF7D00FBE493 /* CMCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCClient.swift; sourceTree = "<group>"; };
+		343C095A20928F6000FBE493 /* FixerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerClient.swift; sourceTree = "<group>"; };
+		343C095C2092900600FBE493 /* FixerCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerCalls.swift; sourceTree = "<group>"; };
+		343C095E2092904800FBE493 /* FixerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerResponse.swift; sourceTree = "<group>"; };
 		3455477A208F544B00230BCF /* CryptoTracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3455477D208F544B00230BCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3455477F208F544B00230BCF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -86,9 +95,6 @@
 		3455479D208F544C00230BCF /* CryptoTrackingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTrackingUITests.swift; sourceTree = "<group>"; };
 		3455479F208F544C00230BCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		345547AE208F55C800230BCF /* UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKit.swift; sourceTree = "<group>"; };
-		345547B0208F5D8D00230BCF /* CMCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCClient.swift; sourceTree = "<group>"; };
-		345547B2208F5D9D00230BCF /* CMCCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCCalls.swift; sourceTree = "<group>"; };
-		345547B4208F5EB100230BCF /* CMCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCResponse.swift; sourceTree = "<group>"; };
 		345547B6208F5F7100230BCF /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		345547B8208F60DC00230BCF /* Endpoints+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Endpoints+Decodable.swift"; sourceTree = "<group>"; };
 		345547BA208FAC6B00230BCF /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -157,6 +163,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		343C09582091EF8D00FBE493 /* CMC */ = {
+			isa = PBXGroup;
+			children = (
+				343C09522091EF7D00FBE493 /* CMCCalls.swift */,
+				343C09542091EF7D00FBE493 /* CMCClient.swift */,
+				343C09532091EF7D00FBE493 /* CMCResponse.swift */,
+			);
+			path = CMC;
+			sourceTree = "<group>";
+		};
+		343C095920928F5400FBE493 /* Fixer */ = {
+			isa = PBXGroup;
+			children = (
+				343C095A20928F6000FBE493 /* FixerClient.swift */,
+				343C095C2092900600FBE493 /* FixerCalls.swift */,
+				343C095E2092904800FBE493 /* FixerResponse.swift */,
+			);
+			path = Fixer;
+			sourceTree = "<group>";
+		};
 		34554771208F544B00230BCF = {
 			isa = PBXGroup;
 			children = (
@@ -213,8 +239,9 @@
 		345547AB208F558A00230BCF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				343C095920928F5400FBE493 /* Fixer */,
+				343C09582091EF8D00FBE493 /* CMC */,
 				345547FC209105BC00230BCF /* CC */,
-				345547FB209105A900230BCF /* CMC */,
 				345547AE208F55C800230BCF /* UIKit.swift */,
 				345547DE2090600800230BCF /* UIColor.swift */,
 				345547B6208F5F7100230BCF /* SessionManager.swift */,
@@ -310,16 +337,6 @@
 				345547F72090A78200230BCF /* CoinDetailHeaderView.swift */,
 			);
 			path = Coin;
-			sourceTree = "<group>";
-		};
-		345547FB209105A900230BCF /* CMC */ = {
-			isa = PBXGroup;
-			children = (
-				345547B0208F5D8D00230BCF /* CMCClient.swift */,
-				345547B2208F5D9D00230BCF /* CMCCalls.swift */,
-				345547B4208F5EB100230BCF /* CMCResponse.swift */,
-			);
-			path = CMC;
 			sourceTree = "<group>";
 		};
 		345547FC209105BC00230BCF /* CC */ = {
@@ -658,18 +675,20 @@
 				345547F320908F2500230BCF /* BaseSearchViewController.swift in Sources */,
 				3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */,
 				345547E1209061D500230BCF /* Constants.swift in Sources */,
-				345547B1208F5D8D00230BCF /* CMCClient.swift in Sources */,
+				343C09572091EF7E00FBE493 /* CMCClient.swift in Sources */,
 				345548022091071D00230BCF /* CCResponse.swift in Sources */,
+				343C09552091EF7E00FBE493 /* CMCCalls.swift in Sources */,
 				345548002091070B00230BCF /* CCCall.swift in Sources */,
 				345547D1208FB4E300230BCF /* ThemeManager.swift in Sources */,
+				343C095B20928F6000FBE493 /* FixerClient.swift in Sources */,
 				34554780208F544B00230BCF /* MainViewController.swift in Sources */,
 				345547E7209072DF00230BCF /* UITableViewCell.swift in Sources */,
 				345547E32090681E00230BCF /* BaseViewController.swift in Sources */,
-				345547B5208F5EB100230BCF /* CMCResponse.swift in Sources */,
 				345547F6209095D000230BCF /* CoinDetailViewController.swift in Sources */,
-				345547B3208F5D9D00230BCF /* CMCCalls.swift in Sources */,
 				345547C7208FB31E00230BCF /* BaseConfig.swift in Sources */,
+				343C095D2092900600FBE493 /* FixerCalls.swift in Sources */,
 				345547DB208FBCD300230BCF /* CurrencySettingsViewController.swift in Sources */,
+				343C09562091EF7E00FBE493 /* CMCResponse.swift in Sources */,
 				345547BB208FAC6B00230BCF /* MainController.swift in Sources */,
 				345547C2208FB11F00230BCF /* Shared.swift in Sources */,
 				345547F12090897B00230BCF /* CryptoSearchViewController.swift in Sources */,
@@ -681,6 +700,7 @@
 				345547F82090A78200230BCF /* CoinDetailHeaderView.swift in Sources */,
 				345547FA2091045E00230BCF /* ExchangeViewController.swift in Sources */,
 				3455477E208F544B00230BCF /* AppDelegate.swift in Sources */,
+				343C095F2092904800FBE493 /* FixerResponse.swift in Sources */,
 				345547B9208F60DC00230BCF /* Endpoints+Decodable.swift in Sources */,
 				345547C0208FAFBA00230BCF /* BaseView.swift in Sources */,
 				345547FE209105C700230BCF /* CCClient.swift in Sources */,

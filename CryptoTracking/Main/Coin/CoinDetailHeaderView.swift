@@ -9,6 +9,7 @@
 import UIKit
 
 class CoinDetailHeaderView: UIView, Configurable {
+    
     var model: ExchangeDataClass?
     
     func configureWithModel(_ coinData: ExchangeDataClass) {
@@ -33,6 +34,11 @@ class CoinDetailHeaderView: UIView, Configurable {
         portfolioLabel.textAlignment = .center
         netCostLabel.textAlignment = .center
         marketValueLabel.textAlignment = .center
+    }
+    
+    func loadPosition(x: CGFloat) {
+        separatorView.transform = CGAffineTransform(translationX: x / 3, y: 0)
+        print(x/3)
     }
     
     let profitLabel: UILabel = {
@@ -69,7 +75,7 @@ class CoinDetailHeaderView: UIView, Configurable {
         btn.addTarget(self, action: #selector(alertButtonTapped(sender:)), for: .touchUpInside)
         return btn
     }()
-    
+
     lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [ portfolioLabel, marketValueLabel, netCostLabel ])
         sv.distribution = .fillEqually
@@ -82,11 +88,11 @@ class CoinDetailHeaderView: UIView, Configurable {
         return sv
     }()
     
-    init(coinData: ExchangeDataClass) {
-        super.init(frame: .zero)
-        
-        
-    }
+    let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,6 +114,12 @@ class CoinDetailHeaderView: UIView, Configurable {
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
             v.heightAnchor.constraint(equalToConstant: 70)
+            ]}
+        
+        add(subview: separatorView) { (v, p) in [
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor),
+            v.widthAnchor.constraint(equalTo: generalButton.widthAnchor),
+            v.heightAnchor.constraint(equalToConstant: 3)
             ]}
     }
     

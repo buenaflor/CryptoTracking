@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let currentTheme = ThemeManager.currentTheme()
         ThemeManager.applyTheme(currentTheme)
+
         
         return true
     }

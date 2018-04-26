@@ -29,28 +29,12 @@ class CoinDetailViewController: BaseViewController, LoadingController {
                 self.coinData = value.data
                 self.headerView.configureWithModel(value.data)
                 self.activityIndicator.stopAnimating()
+                self.title = value.data.coinInfo.fullName
                 self.navigationItem.rightBarButtonItem = self.settingsItem
                 }.onError { error in
                     print(error)
             }
         }
-//        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/\(coinID)/")) { (result) in
-//            result.onSuccess { value in
-//                if value.items.count == 1 {
-//                    value.items.forEach({
-//                        self.title = $0.name
-//                    })
-//                    self.activityIndicator.stopAnimating()
-//                    self.navigationItem.rightBarButtonItem = self.settingsItem
-//                }
-//                else {
-//                    self.showAlert(title: "Error", message: "An error has occured")
-//                }
-//
-//                }.onError { error in
-//                    print(error.localizedDescription)
-//            }
-//        }
     }
     
     lazy var settingsItem: UIBarButtonItem = {
@@ -67,9 +51,11 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         cv.register(UICollectionViewCell.self)
         cv.isPagingEnabled = true
         cv.backgroundColor = .white
+        cv.showsHorizontalScrollIndicator = false
+        cv.bounces = false
         return cv
     }()
-    
+
     lazy var fillView = SettingsFillView()
     
     let headerView: CoinDetailHeaderView = {
@@ -101,7 +87,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
             v.topAnchor.constraint(equalTo: p.topAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.4)
+            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.405)
             ]}
         
         view.add(subview: collectionView) { (v, p) in [
@@ -206,10 +192,8 @@ extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollec
         return 0
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        // ToDo: Fix loading so that everything will only be loaded when finished (loadData)
-        // Add notification here to headerview so it can update its border
-        print("ended")
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        headerView.loadPosition(x: scrollView.contentOffset.x)
     }
 }
 

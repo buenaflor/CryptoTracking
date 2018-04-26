@@ -22,9 +22,15 @@ class BaseConfig {
     var ccMediaBaseURL: URL {
         return URL(string: "www.cryptocompare.com")!
     }
+    
+    var fixerBaseURL:  URL {
+        return URL(string: "http://data.fixer.io/api/")!
+    }
+
 }
 
 extension SessionManager {
     static let ccShared = SessionManager(clientType: ClientType.ccClient)
     static let cmcShared = SessionManager(clientType: ClientType.cmcClient)
+    static let fixerShared = SessionManager(clientType: ClientType.fixerClient)
 }

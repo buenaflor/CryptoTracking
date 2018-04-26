@@ -30,18 +30,6 @@ class MainController: BaseViewController, LoadingController {
                     print(error)
             }
         }
-        
-//        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/ripple/")) { (result) in
-//            result.onSuccess { value in
-//                self.coinTickers = value.items
-//                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-//                self.activityIndicator.stopAnimating()
-//                self.navigationItem.leftBarButtonItem = self.titleItem
-//                }.onError { error in
-//                    self.showAlert(title: "Error", message: error.localizedDescription)
-//                    print("error: \(error.localizedDescription)")
-//            }
-//        }
     }
     
     // MARK: - View Declaration

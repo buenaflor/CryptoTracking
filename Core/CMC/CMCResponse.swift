@@ -20,7 +20,7 @@ struct CoinTicker: Codable {
     let maxSupply: String?
     let percentChange1H, percentChange24H, percentChange7D: String
     let lastUpdated: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id, name, symbol, rank
         case priceUsd = "price_usd"
@@ -39,7 +39,7 @@ struct CoinTicker: Codable {
 
 extension CoinTickerResponse: ResponseParser {
     static func parse(data: Data, encoding: String.Encoding) throws -> CoinTickerResponse {
-        
+
         let coinTickers = try JSONDecoder().decode([CoinTicker].self, from: data)
 
         return CoinTickerResponse(items: coinTickers)
