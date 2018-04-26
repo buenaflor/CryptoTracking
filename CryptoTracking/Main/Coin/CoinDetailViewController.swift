@@ -16,28 +16,41 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     private var coinID: String?
     private var coinSymbol: String?
     
+    var coinData: ExchangeDataClass?
+    
     func loadData(force: Bool) {
-        guard let coinID = coinID else {
+        guard let coinSymbol = coinSymbol else {
             showAlert(title: "Error", message: "Coin ID is incorrect")
             return
         }
-        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/\(coinID)/")) { (result) in
+        
+        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "USD"])) { (result) in
             result.onSuccess { value in
-                if value.items.count == 1 {
-                    value.items.forEach({
-                        self.title = $0.name
-                    })
-                    self.activityIndicator.stopAnimating()
-                    self.navigationItem.rightBarButtonItem = self.settingsItem
-                }
-                else {
-                    self.showAlert(title: "Error", message: "An error has occured")
-                }
-                
+                self.coinData = value.data
+                self.headerView.configureWithModel(value.data)
+                self.activityIndicator.stopAnimating()
+                self.navigationItem.rightBarButtonItem = self.settingsItem
                 }.onError { error in
-                    print(error.localizedDescription)
+                    print(error)
             }
         }
+//        SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/\(coinID)/")) { (result) in
+//            result.onSuccess { value in
+//                if value.items.count == 1 {
+//                    value.items.forEach({
+//                        self.title = $0.name
+//                    })
+//                    self.activityIndicator.stopAnimating()
+//                    self.navigationItem.rightBarButtonItem = self.settingsItem
+//                }
+//                else {
+//                    self.showAlert(title: "Error", message: "An error has occured")
+//                }
+//
+//                }.onError { error in
+//                    print(error.localizedDescription)
+//            }
+//        }
     }
     
     lazy var settingsItem: UIBarButtonItem = {
@@ -57,12 +70,12 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         return cv
     }()
     
+    lazy var fillView = SettingsFillView()
+    
     let headerView: CoinDetailHeaderView = {
         let view = CoinDetailHeaderView()
         return view
     }()
-    
-    lazy var fillView = SettingsFillView()
     
     var isSettingOpen = false
     
@@ -83,8 +96,6 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        headerView.loadData(force: true)
         
         view.add(subview: headerView) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor),

@@ -8,9 +8,11 @@
 
 import UIKit
 
-class CoinDetailHeaderView: UIView, LoadingController {
+class CoinDetailHeaderView: UIView, Configurable {
+    var model: ExchangeDataClass?
     
-    func loadData(force: Bool) {
+    func configureWithModel(_ coinData: ExchangeDataClass) {
+        self.model = coinData
         
         let profitAttributedString = NSMutableAttributedString(string: "All Time Profit: ", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge])
         profitAttributedString.append(NSAttributedString(string: "€ 199.12", attributes: [NSAttributedStringKey.foregroundColor: UIColor.green]))
@@ -21,7 +23,7 @@ class CoinDetailHeaderView: UIView, LoadingController {
         portfolioLabel.attributedText = portfolioAttributedString
         
         let marketValueLabelAttributedString = NSMutableAttributedString(string: "Market Value", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        marketValueLabelAttributedString.append(NSAttributedString(string: "\n€0.51", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        marketValueLabelAttributedString.append(NSAttributedString(string: "\n$\(coinData.aggregatedData.price)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
         marketValueLabel.attributedText = marketValueLabelAttributedString
         
         let netCostAttributedString = NSMutableAttributedString(string: "Net Cost", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
@@ -32,8 +34,6 @@ class CoinDetailHeaderView: UIView, LoadingController {
         netCostLabel.textAlignment = .center
         marketValueLabel.textAlignment = .center
     }
-    
-    func changed() {}
     
     let profitLabel: UILabel = {
         let lbl = UILabel()
@@ -81,6 +81,12 @@ class CoinDetailHeaderView: UIView, LoadingController {
         sv.distribution = .fillEqually
         return sv
     }()
+    
+    init(coinData: ExchangeDataClass) {
+        super.init(frame: .zero)
+        
+        
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
