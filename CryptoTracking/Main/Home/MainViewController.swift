@@ -34,6 +34,8 @@ class MainViewController: MainController {
             navigationItem.leftBarButtonItem = titleItem
         }
         navigationItem.rightBarButtonItems = [ settingsItem, searchItem ]
+        
+        tableView.reloadData()
     }
 }
 

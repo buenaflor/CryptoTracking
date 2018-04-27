@@ -83,6 +83,7 @@ struct CurrencySettingsItem: SettingsItem {
     
     func didSelect(settingsVC: SettingsViewController) {
         let vc = CurrencySettingsViewController()
+        vc.loadData(force: true)
         settingsVC.navigationController?.pushViewController(vc, animated: true)
     }
 }

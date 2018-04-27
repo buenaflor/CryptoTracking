@@ -16,6 +16,26 @@ protocol LoadingController {
     func loadData(force: Bool)
 }
 
+/// Class for shared activity throughout the app
+class Accessible {
+    
+    var currentUsedCurrency: String {
+        return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrency) ?? "CurrencyError"
+    }
+    
+    func setCurrency(code: String) {
+        CurrencyManager.shared.currencyList { (currencies) in
+            if let currencyOffSet = currencies.index(where: {$0.value.code == code}) {
+                let symbol = currencies[currencyOffSet].value.symbolNative
+                UserDefaults.standard.set(symbol, forKey: Constant.Key.UserDefault.currentCurrency)
+            }
+        }
+    }
+}
+
+extension Accessible {
+    static let shared = Accessible()
+}
 
 // MARK: - Custom Fonts
 

@@ -20,7 +20,7 @@ class MainController: BaseViewController, LoadingController {
     
     func loadData(force: Bool) {
         
-        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": "XRP", "tsym": "USD"])) { (result) in
+        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": "XRP", "tsym": "EUR"])) { (result) in
             result.onSuccess { value in
                 self.coinData.append(value.data)
                 self.activityIndicator.stopAnimating()
@@ -76,7 +76,6 @@ class MainController: BaseViewController, LoadingController {
     }
 }
 
-
 // MARK: - Cells
 
 class MainCoinTickerCell: UITableViewCell, Configurable {
@@ -89,7 +88,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         symbolLabel.text = dataClass.coinInfo.name
         
         // Dollar Symbol only for testing
-        currentPriceLabel.text = "$\(dataClass.aggregatedData.price)"
+        currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrency)\(dataClass.aggregatedData.price)"
         
         let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
         change24hLabel.text = "\(rounded24hChange)%"

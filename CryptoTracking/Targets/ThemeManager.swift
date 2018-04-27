@@ -107,7 +107,7 @@ class ThemeManager {
     }
     
     static func currentTheme() -> Theme {
-        if let storedTheme = (UserDefaults.standard.value(forKey: Constant.Key.UIColor.selectedTheme) as AnyObject).integerValue {
+        if let storedTheme = (UserDefaults.standard.value(forKey: Constant.Key.UserDefault.selectedTheme) as AnyObject).integerValue {
             return Theme(rawValue: storedTheme)!
         } else {
             return .standard
@@ -117,7 +117,7 @@ class ThemeManager {
     static func applyTheme(_ theme: Theme) {
         
         // Save the theme by storing its rawValue in UserDefault
-        UserDefaults.standard.setValue(theme.rawValue, forKey: Constant.Key.UIColor.selectedTheme)
+        UserDefaults.standard.setValue(theme.rawValue, forKey: Constant.Key.UserDefault.selectedTheme)
         UserDefaults.standard.synchronize()
         
         let sharedApplication = UIApplication.shared

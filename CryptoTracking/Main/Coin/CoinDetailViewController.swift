@@ -24,7 +24,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
             return
         }
         
-        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "USD"])) { (result) in
+        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "EUR"])) { (result) in
             result.onSuccess { value in
                 self.coinData = value.data
                 self.headerView.configureWithModel(value.data)

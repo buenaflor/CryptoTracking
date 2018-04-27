@@ -64,6 +64,10 @@ public extension UIView {
     }
 }
 
+public protocol CodeableCurrency {
+    var currencyModel: CurrencyResponseList? { get set }
+}
+
 
 // MARK: - ReusableView Protocol & Configurable
 

@@ -14,6 +14,8 @@
 		343C095B20928F6000FBE493 /* FixerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095A20928F6000FBE493 /* FixerClient.swift */; };
 		343C095D2092900600FBE493 /* FixerCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095C2092900600FBE493 /* FixerCalls.swift */; };
 		343C095F2092904800FBE493 /* FixerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095E2092904800FBE493 /* FixerResponse.swift */; };
+		343C096320929C8E00FBE493 /* CommonCurrency.json in Resources */ = {isa = PBXBuildFile; fileRef = 343C096220929C8E00FBE493 /* CommonCurrency.json */; };
+		343C096520929D1700FBE493 /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C096420929D1700FBE493 /* CurrencyManager.swift */; };
 		3455477E208F544B00230BCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477D208F544B00230BCF /* AppDelegate.swift */; };
 		34554780208F544B00230BCF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477F208F544B00230BCF /* MainViewController.swift */; };
 		34554785208F544C00230BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34554784208F544C00230BCF /* Assets.xcassets */; };
@@ -82,6 +84,8 @@
 		343C095A20928F6000FBE493 /* FixerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerClient.swift; sourceTree = "<group>"; };
 		343C095C2092900600FBE493 /* FixerCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerCalls.swift; sourceTree = "<group>"; };
 		343C095E2092904800FBE493 /* FixerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerResponse.swift; sourceTree = "<group>"; };
+		343C096220929C8E00FBE493 /* CommonCurrency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonCurrency.json; sourceTree = "<group>"; };
+		343C096420929D1700FBE493 /* CurrencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
 		3455477A208F544B00230BCF /* CryptoTracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3455477D208F544B00230BCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3455477F208F544B00230BCF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				3455477D208F544B00230BCF /* AppDelegate.swift */,
+				343C096220929C8E00FBE493 /* CommonCurrency.json */,
 				34554784208F544C00230BCF /* Assets.xcassets */,
 				345547DC208FBDC900230BCF /* Images.xcassets */,
 				34554786208F544C00230BCF /* LaunchScreen.storyboard */,
@@ -296,6 +301,7 @@
 				345547C4208FB30A00230BCF /* Fonts */,
 				345547C1208FB11F00230BCF /* Shared.swift */,
 				345547D0208FB4E300230BCF /* ThemeManager.swift */,
+				343C096420929D1700FBE493 /* CurrencyManager.swift */,
 			);
 			path = Targets;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 				345547D3208FB50500230BCF /* DINPro-Bold.otf in Resources */,
 				345547DD208FBDC900230BCF /* Images.xcassets in Resources */,
 				34554788208F544C00230BCF /* LaunchScreen.storyboard in Resources */,
+				343C096320929C8E00FBE493 /* CommonCurrency.json in Resources */,
 				345547D5208FB50800230BCF /* DINPro-Light.otf in Resources */,
 				34554785208F544C00230BCF /* Assets.xcassets in Resources */,
 				345547D2208FB50200230BCF /* DINPro-Black.otf in Resources */,
@@ -687,6 +694,7 @@
 				345547F6209095D000230BCF /* CoinDetailViewController.swift in Sources */,
 				345547C7208FB31E00230BCF /* BaseConfig.swift in Sources */,
 				343C095D2092900600FBE493 /* FixerCalls.swift in Sources */,
+				343C096520929D1700FBE493 /* CurrencyManager.swift in Sources */,
 				345547DB208FBCD300230BCF /* CurrencySettingsViewController.swift in Sources */,
 				343C09562091EF7E00FBE493 /* CMCResponse.swift in Sources */,
 				345547BB208FAC6B00230BCF /* MainController.swift in Sources */,

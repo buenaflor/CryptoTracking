@@ -27,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let currentTheme = ThemeManager.currentTheme()
         ThemeManager.applyTheme(currentTheme)
 
+        if Accessible.shared.currentUsedCurrency == "CurrencyError" {
+            // Set default currency
+            UserDefaults.standard.set("€", forKey: Constant.Key.UserDefault.currentCurrency)
+        }
         
         return true
     }
