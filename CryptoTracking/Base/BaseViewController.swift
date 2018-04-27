@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, ChangeableTheme {
+class BaseViewController: UIViewController {
     
     lazy var activityIndicator: UIActivityIndicatorView = {
         let av = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -33,15 +33,6 @@ class BaseViewController: UIViewController, ChangeableTheme {
             return false
         }
     }
-    
-    func changeTheme() { }
 
-    var model: Theme?
-    
-    func applyTheme(_ theme: Theme) {
-        self.model = theme
-        changeTheme()
-        print("model applied")
-    }
 }
 

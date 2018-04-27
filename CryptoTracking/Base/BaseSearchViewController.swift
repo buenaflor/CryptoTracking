@@ -23,5 +23,4 @@ class BaseSearchViewController: BaseViewController {
         tv.tableFooterView = UIView()
         return tv
     }()
-
 }

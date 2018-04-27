@@ -49,7 +49,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
         // Add +1 for the last cell (add coin)
         return coinData.count + 1
-//        return self.coinTickers.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,6 +57,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(MainAddCoinCell.self, for: indexPath)
             cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
             cell.label.text = "Add Coin"
+            cell.selectionStyle = .none
+            cell.delegate = self
             return cell
         }
         else {
@@ -82,6 +83,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
         }
     }
+}
+
+extension MainViewController: ClickableDelegate {
+    
+    func clicked(button: UIButton) {
+        let vc = CryptoSearchViewController()
+        vc.loadData(force: true)
+        present(vc.wrapped(), animated: true, completion: nil)
+    }
+    
+    
 }
 
 

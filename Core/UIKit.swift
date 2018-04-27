@@ -8,6 +8,13 @@
 
 import UIKit
 
+// MARK: - General
+
+/// Useful for simple click events that don't need further customization
+public protocol ClickableDelegate: class {
+    func clicked(button: UIButton)
+}
+
 
 // MARK: - UIView Extensions
 
@@ -63,11 +70,6 @@ public extension UIView {
         }
     }
 }
-
-public protocol CodeableCurrency {
-    var currencyModel: CurrencyResponseList? { get set }
-}
-
 
 // MARK: - ReusableView Protocol & Configurable
 
@@ -142,7 +144,7 @@ extension UICollectionView {
 
 // MARK: - UIViewController
 
-extension UIViewController {
+public extension UIViewController {
     
     public var backTitle: String {
         set {
@@ -157,18 +159,15 @@ extension UIViewController {
         }
     }
     
-    public func wrapped(in navigationController: UINavigationController? = nil) -> UINavigationController {
-        if let navigationController = navigationController {
-            navigationController.viewControllers = [self]
-            return navigationController
-        }
+    public func wrapped() -> UINavigationController {
         return UINavigationController(rootViewController: self)
     }
 }
 
+
 // MARK: - Alert
 
-extension UIViewController {
+public extension UIViewController {
     
     /// Shows an alert message
     public func showAlert(title: String, message: String = "") {

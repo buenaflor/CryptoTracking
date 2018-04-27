@@ -58,7 +58,6 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
         view.fillToSuperview(tableView)
         
         tableView.register(TableViewCell.self)
-        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -90,9 +89,12 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(TableViewCell.self, for: indexPath)
+        let coinName = filteredCoinTickers[indexPath.row].name
+        let coinSymbol = filteredCoinTickers[indexPath.row].symbol
         
+        cell.accessoryType = .disclosureIndicator
         cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
-        cell.label.text = filteredCoinTickers[indexPath.row].name
+        cell.label.text = "\(coinName): \(coinSymbol)"
         
         return cell
     }
@@ -100,6 +102,8 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
         
+        let vc = TransactionViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

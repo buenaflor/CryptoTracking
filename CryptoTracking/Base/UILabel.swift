@@ -18,6 +18,7 @@ class Label: UILabel {
         super.init(frame: .zero)
         self.font = font
         self.numberOfLines = numberOfLines
+        self.isUserInteractionEnabled = false
         if let breakMode = breakMode { self.lineBreakMode = breakMode }
     }
     
@@ -36,6 +37,7 @@ class TextView: UITextView {
         super.init(frame: .zero, textContainer: nil)
         if let font = font { self.font = font }
         self.isEditable = isEditable
+        self.isUserInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {

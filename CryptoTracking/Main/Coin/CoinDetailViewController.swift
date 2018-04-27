@@ -28,6 +28,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
             result.onSuccess { value in
                 self.coinData = value.data
                 self.headerView.configureWithModel(value.data)
+                self.headerView.delegate = self
                 self.activityIndicator.stopAnimating()
                 self.title = value.data.coinInfo.fullName
                 self.navigationItem.rightBarButtonItem = self.settingsItem
@@ -159,6 +160,22 @@ extension CoinDetailViewController: SettingsFillViewDelegate {
     
     func clicked(removeCoinItem: SettingsItemForView) {
         // ToDo
+    }
+}
+
+
+extension CoinDetailViewController: ClickableDelegate {
+    func clicked(button: UIButton) {
+        switch button.tag {
+        case 1:
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .right, animated: true)
+        case 2:
+            collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: true)
+        case 3:
+            collectionView.scrollToItem(at: IndexPath(item: 2, section: 0), at: .right, animated: true)
+        default:
+            break;
+        }
     }
 }
 

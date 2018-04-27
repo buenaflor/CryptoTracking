@@ -175,10 +175,13 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
 
 class MainAddCoinCell: TableViewCell {
     
-    let addButton: UIButton = {
+    weak var delegate: ClickableDelegate?
+    
+    lazy var addButton: UIButton = {
         let btn = UIButton()
         btn.setImage(#imageLiteral(resourceName: "cryptoTracking_add").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .gray
+        btn.addTarget(self, action: #selector(addButtonTapped(sender:)), for: .touchUpInside)
         return btn
     }()
     
@@ -199,6 +202,10 @@ class MainAddCoinCell: TableViewCell {
             v.widthAnchor.constraint(equalToConstant: 40)
             ]}
         
+    }
+    
+    @objc func addButtonTapped(sender: UIButton) {
+        delegate?.clicked(button: sender)
     }
     
     required init?(coder aDecoder: NSCoder) {

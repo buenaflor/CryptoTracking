@@ -10,6 +10,8 @@ import UIKit
 
 class CoinDetailHeaderView: UIView, Configurable {
     
+    weak var delegate: ClickableDelegate?
+    
     var model: ExchangeDataClass?
     
     func configureWithModel(_ coinData: ExchangeDataClass) {
@@ -38,7 +40,6 @@ class CoinDetailHeaderView: UIView, Configurable {
     
     func loadPosition(x: CGFloat) {
         separatorView.transform = CGAffineTransform(translationX: x / 3, y: 0)
-        print(x/3)
     }
     
     let profitLabel: UILabel = {
@@ -127,15 +128,19 @@ class CoinDetailHeaderView: UIView, Configurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func transactionsButtonTapped(sender: UIButton) {
-        print("bruder")
+    @objc func generalButtonTapped(sender: UIButton) {
+        sender.tag = 1
+        delegate?.clicked(button: sender)
     }
     
-    @objc func generalButtonTapped(sender: UIButton) {
-        
+    @objc func transactionsButtonTapped(sender: UIButton) {
+//        separatorView.transform = CGAffineTransform(translationX: frame.size.width / 3, y: 0)
+        sender.tag = 2
+        delegate?.clicked(button: sender)
     }
     
     @objc func alertButtonTapped(sender: UIButton) {
-        
+        sender.tag = 3
+        delegate?.clicked(button: sender)
     }
 }
