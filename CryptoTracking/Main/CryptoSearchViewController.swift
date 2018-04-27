@@ -24,7 +24,7 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
                 
                 self.activityIndicator.stopAnimating()
                 self.navigationItem.leftBarButtonItem = self.titleItem
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                self.tableView.reloadData()
                 }.onError { error in
                     print(error.localizedDescription)
             }
@@ -57,7 +57,7 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
         view.backgroundColor = .white
         view.fillToSuperview(tableView)
         
-        tableView.register(UITableViewCell.self)
+        tableView.register(TableViewCell.self)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -89,9 +89,10 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(UITableViewCell.self, for: indexPath)
+        let cell = tableView.dequeueReusableCell(TableViewCell.self, for: indexPath)
         
-        cell.textLabel?.text = filteredCoinTickers[indexPath.row].name
+        cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
+        cell.label.text = filteredCoinTickers[indexPath.row].name
         
         return cell
     }

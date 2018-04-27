@@ -72,7 +72,7 @@ class MainController: BaseViewController, LoadingController {
     @objc func searchItemTapped(sender: UIBarButtonItem) {
         let vc = CryptoSearchViewController()
         vc.loadData(force: true)
-        present(vc.wrapped(), animated: true, completion: nil)
+        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }
 
