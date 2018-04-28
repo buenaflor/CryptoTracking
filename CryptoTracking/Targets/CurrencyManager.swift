@@ -18,6 +18,7 @@ public struct CurrencyResponse: Decodable {
 }
 
 class CurrencyManager {
+    
     func currencyList(completion: (CurrencyResponseList) -> Void) {
         if let path = Bundle.main.path(forResource: "CommonCurrency", ofType: "json") {
             do {
@@ -30,6 +31,19 @@ class CurrencyManager {
                 completion(currencies)
             } catch let err{
                 print(err)
+            }
+        }
+    }
+
+    
+    /// Converts one currency to another. Amount from the converted currency is always one
+    func convertCurrency(from: String, to: String, completion: @escaping (Results) -> Void) {
+        SessionManager.fixerShared.start(call: FixerClient.ConvertCurrency(tag: "convert", query: ["q": "\(from)_\(to)"])) { (result) in
+            result.onSuccess { value in
+                guard let results = value.results["\(from)_\(to)"] else { return }
+                completion(results)
+                }.onError { error in
+                    print(error)
             }
         }
     }

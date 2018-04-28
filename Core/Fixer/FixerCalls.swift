@@ -9,8 +9,8 @@
 import Endpoints
 
 extension FixerClient {
-    struct GetCurrencyList: Call {
-        typealias ResponseType = CoinTickerResponse
+    struct ConvertCurrency: Call {
+        typealias ResponseType = ConvertCurrencyResponse
         
         var tag: String
         var query: Parameters

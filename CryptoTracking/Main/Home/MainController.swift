@@ -88,7 +88,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         symbolLabel.text = dataClass.coinInfo.name
         
         // Dollar Symbol only for testing
-        currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrency)\(dataClass.aggregatedData.price)"
+        currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(dataClass.aggregatedData.price)"
         
         let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
         change24hLabel.text = "\(rounded24hChange)%"

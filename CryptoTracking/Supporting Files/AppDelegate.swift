@@ -27,9 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let currentTheme = ThemeManager.currentTheme()
         ThemeManager.applyTheme(currentTheme)
 
-        if Accessible.shared.currentUsedCurrency == "CurrencyError" {
+        if Accessible.shared.currentUsedCurrencySymbol == "CurrencySymbolError" {
             // Set default currency
-            UserDefaults.standard.set("€", forKey: Constant.Key.UserDefault.currentCurrency)
+            UserDefaults.standard.set("€", forKey: Constant.Key.UserDefault.currentCurrencySymbol)
+        }
+        
+        if Accessible.shared.currentUsedCurrencyCode == "CurrencyCodeError" {
+            UserDefaults.standard.set("EUR", forKey: Constant.Key.UserDefault.currentCurrencyCode)
         }
         
         return true

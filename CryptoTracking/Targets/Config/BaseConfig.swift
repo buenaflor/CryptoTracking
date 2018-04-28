@@ -24,7 +24,8 @@ class BaseConfig {
     }
     
     var fixerBaseURL:  URL {
-        return URL(string: "http://data.fixer.io/api/")!
+
+        return URL(string: "https://free.currencyconverterapi.com/api/v5/")!
     }
 
 }

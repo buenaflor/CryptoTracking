@@ -19,15 +19,19 @@ protocol LoadingController {
 /// Class for shared activity throughout the app
 class Accessible {
     
-    var currentUsedCurrency: String {
-        return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrency) ?? "CurrencyError"
+    var currentUsedCurrencySymbol: String {
+        return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrencySymbol) ?? "CurrencySymbolError"
+    }
+    
+    var currentUsedCurrencyCode: String {
+        return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrencyCode) ?? "CurrencyCodeError"
     }
     
     func setCurrency(code: String) {
         CurrencyManager.shared.currencyList { (currencies) in
             if let currencyOffSet = currencies.index(where: {$0.value.code == code}) {
                 let symbol = currencies[currencyOffSet].value.symbolNative
-                UserDefaults.standard.set(symbol, forKey: Constant.Key.UserDefault.currentCurrency)
+                UserDefaults.standard.set(symbol, forKey: Constant.Key.UserDefault.currentCurrencySymbol)
             }
         }
     }

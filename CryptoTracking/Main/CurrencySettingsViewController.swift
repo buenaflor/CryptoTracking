@@ -64,7 +64,7 @@ extension CurrencySettingsViewController: UITableViewDelegate, UITableViewDataSo
         let currencyCode = Array(filteredCurrencyList)[indexPath.row].value.code
         Accessible.shared.setCurrency(code: currencyCode)
         
-        print(Accessible.shared.currentUsedCurrency)
+        print(Accessible.shared.currentUsedCurrencySymbol)
         
         navigationController?.popViewController(animated: true)
         print("heyho")

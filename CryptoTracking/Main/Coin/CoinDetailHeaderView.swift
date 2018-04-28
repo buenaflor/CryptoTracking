@@ -18,7 +18,7 @@ class CoinDetailHeaderView: UIView, Configurable {
         self.model = coinData
         
         let profitAttributedString = NSMutableAttributedString(string: "All Time Profit: ", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge])
-        profitAttributedString.append(NSAttributedString(string: "\(Accessible.shared.currentUsedCurrency)199.12", attributes: [NSAttributedStringKey.foregroundColor: UIColor.green]))
+        profitAttributedString.append(NSAttributedString(string: "\(Accessible.shared.currentUsedCurrencySymbol)199.12", attributes: [NSAttributedStringKey.foregroundColor: UIColor.green]))
         profitLabel.attributedText = profitAttributedString
         
         let portfolioAttributedString = NSMutableAttributedString(string: "Portfolio", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
@@ -26,11 +26,11 @@ class CoinDetailHeaderView: UIView, Configurable {
         portfolioLabel.attributedText = portfolioAttributedString
         
         let marketValueLabelAttributedString = NSMutableAttributedString(string: "Market Value", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        marketValueLabelAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrency)\(coinData.aggregatedData.price)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        marketValueLabelAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.aggregatedData.price)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
         marketValueLabel.attributedText = marketValueLabelAttributedString
         
         let netCostAttributedString = NSMutableAttributedString(string: "Net Cost", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        netCostAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrency)301.23", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        netCostAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)301.23", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
         netCostLabel.attributedText = netCostAttributedString
         
         portfolioLabel.textAlignment = .center
@@ -134,7 +134,6 @@ class CoinDetailHeaderView: UIView, Configurable {
     }
     
     @objc func transactionsButtonTapped(sender: UIButton) {
-//        separatorView.transform = CGAffineTransform(translationX: frame.size.width / 3, y: 0)
         sender.tag = 2
         delegate?.clicked(button: sender)
     }

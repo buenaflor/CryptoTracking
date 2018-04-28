@@ -11,7 +11,8 @@ import Foundation
 struct Constant {
     struct Key {
         struct UserDefault {
-            static let currentCurrency = "currentCurrency"
+            static let currentCurrencySymbol = "currentCurrencySymbol"
+            static let currentCurrencyCode = "currentCurrencyCode"
             static let selectedTheme = "selectedTheme"
         }
         

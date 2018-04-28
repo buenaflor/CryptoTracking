@@ -9,9 +9,9 @@
 import Endpoints
 
 class FixerClient: Client {
-//    96f1d6ae9aed982738ba07035d0a9281
+
     let client: AnyClient = {
-        let baseURL = BaseConfig.shared.cmcBaseURL
+        let baseURL = BaseConfig.shared.fixerBaseURL
         return AnyClient(baseURL: baseURL)
     }()
     
