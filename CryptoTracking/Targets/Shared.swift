@@ -27,11 +27,20 @@ class Accessible {
         return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrencyCode) ?? "CurrencyCodeError"
     }
     
+    func getCurrencyValueConverted(target: String, completion: @escaping (Double) -> Void) {
+        CurrencyManager.shared.convertCurrency(from: currentUsedCurrencyCode, to: target) { (results) in
+            print(self.currentUsedCurrencyCode)
+            completion(results.val)
+        }
+    }
+    
     func setCurrency(code: String) {
         CurrencyManager.shared.currencyList { (currencies) in
             if let currencyOffSet = currencies.index(where: {$0.value.code == code}) {
                 let symbol = currencies[currencyOffSet].value.symbolNative
+                let code = currencies[currencyOffSet].value.code
                 UserDefaults.standard.set(symbol, forKey: Constant.Key.UserDefault.currentCurrencySymbol)
+                UserDefaults.standard.set(code, forKey: Constant.Key.UserDefault.currentCurrencyCode)
             }
         }
     }

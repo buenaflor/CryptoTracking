@@ -85,17 +85,19 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     func configureWithModel(_ dataClass: ExchangeDataClass) {
         self.model = dataClass
         
-        symbolLabel.text = dataClass.coinInfo.name
-        
-        // Dollar Symbol only for testing
-        currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(dataClass.aggregatedData.price)"
-        
-        let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
-        change24hLabel.text = "\(rounded24hChange)%"
-        change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
-        
-        if let imageURLPath = dataClass.coinInfo.imageURL {
-            iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
+        // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes 
+        Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
+            let roundedPrice = (dataClass.aggregatedData.price / value * 1000).rounded() / 1000
+            let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
+            
+            self.symbolLabel.text = dataClass.coinInfo.name
+            self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
+            self.change24hLabel.text = "\(rounded24hChange)%"
+            self.change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
+            
+            if let imageURLPath = dataClass.coinInfo.imageURL {
+                self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
+            }
         }
         
         // Test Data only - Model is still not ready
