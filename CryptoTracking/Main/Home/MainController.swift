@@ -61,6 +61,12 @@ class MainController: BaseViewController, LoadingController {
         let item = UIBarButtonItem(image: #imageLiteral(resourceName: "cryptoTracking_search").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchItemTapped(sender:)))
         return item
     }()
+    
+    let mainHeaderView: MainHeaderView = {
+        let view = MainHeaderView()
+        view.loadData(force: true)
+        return view
+    }()
 
     
     // MARK: - Action
@@ -92,7 +98,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             
             self.symbolLabel.text = dataClass.coinInfo.name
             self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
-            self.change24hLabel.text = "\(rounded24hChange)%"
+            self.change24hLabel.text = rounded24hChange >= 0.0 ? "+\(rounded24hChange)%" : "-\(rounded24hChange)%"
             self.change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
             
             if let imageURLPath = dataClass.coinInfo.imageURL {

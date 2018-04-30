@@ -33,7 +33,16 @@ struct TradingPairItem: TransactionsItem {
     }
     
     func didSelect(transactionsVC: TransactionViewController, cell: TransactionCell) {
-        
+        let exchangeCell = transactionsVC.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TransactionDisclosureCell
+        if exchangeCell?.valueLabel.text == "Select an exchange" {
+            transactionsVC.showAlert(title: "Error", message: "Select an exchange first!")
+        }
+        else {
+            let tradingPairVC = TradingPairViewController(exchangeName: (exchangeCell?.valueLabel.text)!, coinSymbol: transactionsVC.coinSymbol)
+            tradingPairVC.loadData(force: true)
+            tradingPairVC.delegate = transactionsVC
+            transactionsVC.navigationController?.pushViewController(tradingPairVC, animated: true)
+        }
     }
     
 }
@@ -194,6 +203,7 @@ class TransactionDisclosureCell: TransactionCell {
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var selectedButton = 0
     var selectedIndexPath = IndexPath()
     
     var model = [TransactionSection]()
@@ -208,6 +218,95 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         return tv
     }()
     
+    lazy var buyButton: UIButton = {
+        let btn = UIButton()
+        btn.tag = 1
+        btn.backgroundColor = #colorLiteral(red: 0.1944887459, green: 0.9029509391, blue: 0.4793502826, alpha: 0.2388589348)
+        btn.tintColor = .white
+        btn.layer.borderColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1).cgColor
+        btn.layer.borderWidth = 2.5
+        btn.layer.cornerRadius = 5
+        btn.setTitle("Buy", for: .normal)
+        btn.addTarget(self, action: #selector(buyButtonTapped(sender:)), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var sellButton: UIButton = {
+        let btn = UIButton()
+        btn.tag = 2
+        btn.backgroundColor = .clear
+        btn.tintColor = .lightGray
+        btn.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        btn.layer.borderWidth = 2.5
+        btn.layer.cornerRadius = 5
+        btn.setTitle("Sell", for: .normal)
+        btn.addTarget(self, action: #selector(sellButtonTapped(sender:)), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var watchButton: UIButton = {
+        let btn = UIButton()
+        btn.tag = 3
+        btn.backgroundColor = .clear
+        btn.tintColor = .lightGray
+        btn.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        btn.layer.borderWidth = 2.5
+        btn.layer.cornerRadius = 5
+        btn.setTitle("Watch", for: .normal)
+        btn.addTarget(self, action: #selector(watchButtonTapped(sender:)), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func buyButtonTapped(sender: UIButton) {
+        selectedButton = sender.tag
+        
+        sellButton.backgroundColor = .clear
+        sellButton.tintColor = .lightGray
+        sellButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        watchButton.backgroundColor = .clear
+        watchButton.tintColor = .lightGray
+        watchButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        buyButton.backgroundColor = #colorLiteral(red: 0.1944887459, green: 0.9029509391, blue: 0.4793502826, alpha: 0.2388589348)
+        buyButton.tintColor = .white
+        buyButton.layer.borderColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1).cgColor
+    }
+    
+    @objc func sellButtonTapped(sender: UIButton) {
+        selectedButton = sender.tag
+        
+        buyButton.backgroundColor = .clear
+        buyButton.tintColor = .lightGray
+        buyButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        watchButton.backgroundColor = .clear
+        watchButton.tintColor = .lightGray
+        watchButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        sellButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 0.24)
+        sellButton.tintColor = .white
+        sellButton.layer.borderColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1).cgColor
+    }
+    
+    @objc func watchButtonTapped(sender: UIButton) {
+        selectedButton = sender.tag
+        
+        buyButton.backgroundColor = .clear
+        buyButton.tintColor = .lightGray
+        buyButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        sellButton.backgroundColor = .clear
+        sellButton.tintColor = .lightGray
+        sellButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        
+        watchButton.backgroundColor = #colorLiteral(red: 0.1102050645, green: 0.659310277, blue: 0.9254902005, alpha: 0.24)
+        watchButton.tintColor = .white
+        watchButton.layer.borderColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1).cgColor
+    }
+    
+    let headerView = UIView()
+    
     init(coinSymbol: String) {
         super.init(nibName: nil, bundle: nil)
         self.coinSymbol = coinSymbol
@@ -221,13 +320,48 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         title = "Add Transaction"
         
         view.backgroundColor = .white
-        view.fillToSuperview(tableView)
+        
+        headerView.backgroundColor = .gray
+        view.add(subview: headerView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.heightAnchor.constraint(equalToConstant: 100)
+            ]}
+        
+        headerView.add(subview: buyButton) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 10),
+            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
+            v.heightAnchor.constraint(equalToConstant: 60)
+            ]}
+        
+        headerView.add(subview: sellButton) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
+            v.centerXAnchor.constraint(equalTo: p.centerXAnchor),
+            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
+            v.heightAnchor.constraint(equalToConstant: 60)
+            ]}
+        
+        headerView.add(subview: watchButton) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -10),
+            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
+            v.heightAnchor.constraint(equalToConstant: 60)
+            ]}
+        
+        view.add(subview: tableView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor)
+            ]}
         
         updateView()
     }
     
     func updateView() {
-        let generalSection = TransactionSection(title: "General", items: [ TradingPairItem(), SelectExchangeItem(), BuyPriceItem(), AmountBoughtItem(), DateBought() ], footer: nil)
+        let generalSection = TransactionSection(title: "General", items: [ SelectExchangeItem(), TradingPairItem(), BuyPriceItem(), AmountBoughtItem(), DateBought() ], footer: nil)
         
         model = [ generalSection ]
         
@@ -311,13 +445,21 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
 }
 
-extension TransactionViewController: UIPopoverPresentationControllerDelegate, DatePickerControllerDelegate, ExchangeViewControllerDelegate {
+extension TransactionViewController: UIPopoverPresentationControllerDelegate, DatePickerControllerDelegate, ExchangeViewControllerDelegate, TradingPairViewControllerDelegate {
+    
+    // TradingPair Delegate
+    
+    func tradingPairViewController(_ tradingPairViewController: TradingPairViewController, didPick tradingPair: String) {
+        let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell
+        cell?.valueLabel.text = tradingPair
+    }
+    
     
     // ExchangeView Delegate
     
     func exchangeViewController(_ exchangeViewController: ExchangeViewController, didPick exchange: Exchange) {
         
-        let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TransactionDisclosureCell
         cell?.valueLabel.text = exchange.market
     }
     

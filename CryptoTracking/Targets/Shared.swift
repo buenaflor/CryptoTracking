@@ -65,6 +65,9 @@ extension UIFont {
     public class var cryptoBoldLarge: UIFont {
         return UIFont(name: "DINPro-Bold", size: 20.0)!// ?? UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightBold)
     }
+    public class var cryptoBoldExtraLarge: UIFont {
+        return UIFont(name: "DINPro-Bold", size: 30.0)!// ?? UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightBold)
+    }
     public class var cryptoLight: UIFont {
         return UIFont(name: "DINPro-Light", size: 15.0)!// ?? UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightLight)
     }

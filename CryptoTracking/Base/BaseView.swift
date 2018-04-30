@@ -8,7 +8,6 @@
 
 import UIKit
 
-class BaseView: UIView, LoadingController {
-    func changed() {}    
+class BaseView: UIView, LoadingController {   
     func loadData(force: Bool) {}
 }

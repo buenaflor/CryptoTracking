@@ -17,11 +17,6 @@ struct Results: Codable {
     let val: Double
 }
 
-struct ConvertedInfo: Codable {
-    let id, fr, to: String
-    let val: Double
-}
-
 extension ConvertCurrencyResponse: ResponseParser {
     static func parse(data: Data, encoding: String.Encoding) throws -> ConvertCurrencyResponse {
         

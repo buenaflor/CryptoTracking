@@ -14,10 +14,10 @@
 		343C095B20928F6000FBE493 /* FixerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095A20928F6000FBE493 /* FixerClient.swift */; };
 		343C095D2092900600FBE493 /* FixerCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095C2092900600FBE493 /* FixerCalls.swift */; };
 		343C095F2092904800FBE493 /* FixerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C095E2092904800FBE493 /* FixerResponse.swift */; };
-		343C096320929C8E00FBE493 /* CommonCurrency.json in Resources */ = {isa = PBXBuildFile; fileRef = 343C096220929C8E00FBE493 /* CommonCurrency.json */; };
 		343C096520929D1700FBE493 /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C096420929D1700FBE493 /* CurrencyManager.swift */; };
 		343C0967209337E400FBE493 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C0966209337E400FBE493 /* TransactionViewController.swift */; };
 		343C096B2097033300FBE493 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C096A2097033300FBE493 /* DatePickerController.swift */; };
+		343C09722097298500FBE493 /* CommonCurrency.json in Resources */ = {isa = PBXBuildFile; fileRef = 343C09712097298400FBE493 /* CommonCurrency.json */; };
 		3455477E208F544B00230BCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477D208F544B00230BCF /* AppDelegate.swift */; };
 		34554780208F544B00230BCF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477F208F544B00230BCF /* MainViewController.swift */; };
 		34554785208F544C00230BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34554784208F544C00230BCF /* Assets.xcassets */; };
@@ -56,6 +56,9 @@
 		345548002091070B00230BCF /* CCCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345547FF2091070B00230BCF /* CCCall.swift */; };
 		345548022091071D00230BCF /* CCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345548012091071D00230BCF /* CCResponse.swift */; };
 		3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455480320912B3300230BCF /* TradingPairViewController.swift */; };
+		34FEBF7D209734790066FDBA /* CWClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF7C209734790066FDBA /* CWClient.swift */; };
+		34FEBF7F2097350A0066FDBA /* CWCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF7E2097350A0066FDBA /* CWCalls.swift */; };
+		34FEBF81209735220066FDBA /* CWResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF80209735220066FDBA /* CWResponse.swift */; };
 		BB80CFA6B3A9500F8F56B2A1 /* Pods_CryptoTrackingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7756B1E18E353B2DD91AE0F6 /* Pods_CryptoTrackingUITests.framework */; };
 		CB2117A28C1079488DD4356E /* Pods_CryptoTrackingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185AB590B5F83A044EFE0562 /* Pods_CryptoTrackingTests.framework */; };
 /* End PBXBuildFile section */
@@ -86,10 +89,10 @@
 		343C095A20928F6000FBE493 /* FixerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerClient.swift; sourceTree = "<group>"; };
 		343C095C2092900600FBE493 /* FixerCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerCalls.swift; sourceTree = "<group>"; };
 		343C095E2092904800FBE493 /* FixerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerResponse.swift; sourceTree = "<group>"; };
-		343C096220929C8E00FBE493 /* CommonCurrency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonCurrency.json; sourceTree = "<group>"; };
 		343C096420929D1700FBE493 /* CurrencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
 		343C0966209337E400FBE493 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		343C096A2097033300FBE493 /* DatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
+		343C09712097298400FBE493 /* CommonCurrency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonCurrency.json; sourceTree = "<group>"; };
 		3455477A208F544B00230BCF /* CryptoTracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3455477D208F544B00230BCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3455477F208F544B00230BCF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +137,9 @@
 		345547FF2091070B00230BCF /* CCCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCCall.swift; sourceTree = "<group>"; };
 		345548012091071D00230BCF /* CCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCResponse.swift; sourceTree = "<group>"; };
 		3455480320912B3300230BCF /* TradingPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairViewController.swift; sourceTree = "<group>"; };
+		34FEBF7C209734790066FDBA /* CWClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWClient.swift; sourceTree = "<group>"; };
+		34FEBF7E2097350A0066FDBA /* CWCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWCalls.swift; sourceTree = "<group>"; };
+		34FEBF80209735220066FDBA /* CWResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWResponse.swift; sourceTree = "<group>"; };
 		3C083B3592E4B64343249B74 /* Pods-CryptoTrackingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTrackingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoTrackingTests/Pods-CryptoTrackingTests.release.xcconfig"; sourceTree = "<group>"; };
 		45F7F833C4098F835CABF357 /* Pods-CryptoTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.debug.xcconfig"; sourceTree = "<group>"; };
 		7756B1E18E353B2DD91AE0F6 /* Pods_CryptoTrackingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTrackingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +195,16 @@
 				343C095E2092904800FBE493 /* FixerResponse.swift */,
 			);
 			path = Fixer;
+			sourceTree = "<group>";
+		};
+		343C096C20971C3500FBE493 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				343C09712097298400FBE493 /* CommonCurrency.json */,
+				34554784208F544C00230BCF /* Assets.xcassets */,
+				345547DC208FBDC900230BCF /* Images.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		34554771208F544B00230BCF = {
@@ -247,6 +263,7 @@
 		345547AB208F558A00230BCF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				34FEBF7B2097345B0066FDBA /* CryptWatch */,
 				343C095920928F5400FBE493 /* Fixer */,
 				343C09582091EF8D00FBE493 /* CMC */,
 				345547FC209105BC00230BCF /* CC */,
@@ -279,10 +296,8 @@
 		345547AD208F55A600230BCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				343C096C20971C3500FBE493 /* Resources */,
 				3455477D208F544B00230BCF /* AppDelegate.swift */,
-				343C096220929C8E00FBE493 /* CommonCurrency.json */,
-				34554784208F544C00230BCF /* Assets.xcassets */,
-				345547DC208FBDC900230BCF /* Images.xcassets */,
 				34554786208F544C00230BCF /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
@@ -359,6 +374,16 @@
 				345548012091071D00230BCF /* CCResponse.swift */,
 			);
 			path = CC;
+			sourceTree = "<group>";
+		};
+		34FEBF7B2097345B0066FDBA /* CryptWatch */ = {
+			isa = PBXGroup;
+			children = (
+				34FEBF7C209734790066FDBA /* CWClient.swift */,
+				34FEBF7E2097350A0066FDBA /* CWCalls.swift */,
+				34FEBF80209735220066FDBA /* CWResponse.swift */,
+			);
+			path = CryptWatch;
 			sourceTree = "<group>";
 		};
 		BA1727DBA012DF1D3BA33633 /* Pods */ = {
@@ -500,8 +525,8 @@
 				345547D3208FB50500230BCF /* DINPro-Bold.otf in Resources */,
 				345547DD208FBDC900230BCF /* Images.xcassets in Resources */,
 				34554788208F544C00230BCF /* LaunchScreen.storyboard in Resources */,
-				343C096320929C8E00FBE493 /* CommonCurrency.json in Resources */,
 				345547D5208FB50800230BCF /* DINPro-Light.otf in Resources */,
+				343C09722097298500FBE493 /* CommonCurrency.json in Resources */,
 				34554785208F544C00230BCF /* Assets.xcassets in Resources */,
 				345547D2208FB50200230BCF /* DINPro-Black.otf in Resources */,
 				345547D7208FB50C00230BCF /* DINPro-Regular.otf in Resources */,
@@ -688,6 +713,7 @@
 				345547F320908F2500230BCF /* BaseSearchViewController.swift in Sources */,
 				3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */,
 				345547E1209061D500230BCF /* Constants.swift in Sources */,
+				34FEBF81209735220066FDBA /* CWResponse.swift in Sources */,
 				343C09572091EF7E00FBE493 /* CMCClient.swift in Sources */,
 				345548022091071D00230BCF /* CCResponse.swift in Sources */,
 				343C09552091EF7E00FBE493 /* CMCCalls.swift in Sources */,
@@ -700,6 +726,7 @@
 				345547F6209095D000230BCF /* CoinDetailViewController.swift in Sources */,
 				345547C7208FB31E00230BCF /* BaseConfig.swift in Sources */,
 				343C095D2092900600FBE493 /* FixerCalls.swift in Sources */,
+				34FEBF7D209734790066FDBA /* CWClient.swift in Sources */,
 				343C096520929D1700FBE493 /* CurrencyManager.swift in Sources */,
 				345547DB208FBCD300230BCF /* CurrencySettingsViewController.swift in Sources */,
 				343C09562091EF7E00FBE493 /* CMCResponse.swift in Sources */,
@@ -707,6 +734,7 @@
 				345547C2208FB11F00230BCF /* Shared.swift in Sources */,
 				345547F12090897B00230BCF /* CryptoSearchViewController.swift in Sources */,
 				345547AF208F55C800230BCF /* UIKit.swift in Sources */,
+				34FEBF7F2097350A0066FDBA /* CWCalls.swift in Sources */,
 				345547D9208FBC9100230BCF /* ThemesViewController.swift in Sources */,
 				345547CF208FB4DC00230BCF /* SettingsViewController.swift in Sources */,
 				345547DF2090600800230BCF /* UIColor.swift in Sources */,

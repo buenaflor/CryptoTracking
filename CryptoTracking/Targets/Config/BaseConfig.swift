@@ -27,11 +27,16 @@ class BaseConfig {
 
         return URL(string: "https://free.currencyconverterapi.com/api/v5/")!
     }
-
+    
+    var cwBaseURL:  URL {
+        
+        return URL(string: "https://api.cryptowat.ch/")!
+    }
 }
 
 extension SessionManager {
     static let ccShared = SessionManager(clientType: ClientType.ccClient)
     static let cmcShared = SessionManager(clientType: ClientType.cmcClient)
     static let fixerShared = SessionManager(clientType: ClientType.fixerClient)
+    static let cwShared = SessionManager(clientType: ClientType.cwClient)
 }

@@ -12,6 +12,7 @@ enum ClientType {
     case cmcClient
     case ccClient
     case fixerClient
+    case cwClient
     
     var client: Client {
         switch self {
@@ -21,6 +22,8 @@ enum ClientType {
             return CCClient()
         case .fixerClient:
             return FixerClient()
+        case .cwClient:
+            return CWClient()
         }
     }
 
@@ -31,6 +34,7 @@ class SessionManager {
     let cmcSession: Session<CMCClient>
     let ccSession: Session<CCClient>
     let fixerSession: Session<FixerClient>
+    let cwSession: Session<CWClient>
 
     var clientType: ClientType?
     
@@ -65,6 +69,16 @@ class SessionManager {
             
             return session
         }()
+        
+        cwSession = {
+            let client = CWClient()
+            let session = Session(with: client)
+            #if DEBUG
+            session.debug = true
+            #endif
+            
+            return session
+        }()
     }
     
     @discardableResult
@@ -81,7 +95,9 @@ class SessionManager {
         case .fixerClient:
             let task = fixerSession.start(call: call, completion: completion)
             return task
-
+        case .cwClient:
+            let task = cwSession.start(call: call, completion: completion)
+            return task
         }
     }
 }

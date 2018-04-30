@@ -193,4 +193,3 @@ struct CoinData: Codable {
         case sponsored = "Sponsored"
     }
 }
-

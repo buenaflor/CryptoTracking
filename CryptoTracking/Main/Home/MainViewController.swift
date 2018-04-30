@@ -18,15 +18,25 @@ class MainViewController: MainController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        view.fillToSuperview(tableView)
+        view.add(subview: mainHeaderView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.16)
+            ]}
+        
+        view.add(subview: tableView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: mainHeaderView.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor)
+            ]}
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         updateView()
-        
-        
     }
     
     private func updateView() {
@@ -36,7 +46,7 @@ class MainViewController: MainController {
             navigationItem.leftBarButtonItem = titleItem
         }
         navigationItem.rightBarButtonItems = [ settingsItem, searchItem ]
-        
+        mainHeaderView.loadData(force: true)
         tableView.reloadData()
     }
 }
