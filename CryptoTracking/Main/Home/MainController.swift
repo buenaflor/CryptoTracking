@@ -98,7 +98,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             
             self.symbolLabel.text = dataClass.coinInfo.name
             self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
-            self.change24hLabel.text = rounded24hChange >= 0.0 ? "+\(rounded24hChange)%" : "-\(rounded24hChange)%"
+            self.change24hLabel.text = rounded24hChange >= 0.0 ? "+\(rounded24hChange)%" : "\(rounded24hChange)%"
             self.change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
             
             if let imageURLPath = dataClass.coinInfo.imageURL {

@@ -89,13 +89,11 @@ struct BuyPriceItem: TransactionsItem {
         cell.label.text = "Buy Price in \(Accessible.shared.currentUsedCurrencyCode) (\(Accessible.shared.currentUsedCurrencySymbol))"
         
         cell.addValueTextView()
-        
         cell.valueTextView.text = "0"
     }
     
     func didSelect(transactionsVC: TransactionViewController, cell: TransactionCell) {
         cell.valueTextView.becomeFirstResponder()
-        cell.valueTextView.keyboardType = .numberPad
         
         if cell.valueTextView.text == "0" {
             cell.valueTextView.text = ""
@@ -113,12 +111,10 @@ struct AmountBoughtItem: TransactionsItem {
         
         cell.addValueTextView()
         cell.valueTextView.text = "0"
-        cell.valueTextView.keyboardType = .decimalPad
     }
     
     func didSelect(transactionsVC: TransactionViewController, cell: TransactionCell) {
         cell.valueTextView.becomeFirstResponder()
-        cell.valueTextView.keyboardType = .numberPad
         
         if cell.valueTextView.text == "0" {
             cell.valueTextView.text = ""
@@ -146,7 +142,7 @@ struct DateBought: TransactionsItem {
     
 }
 
-class TransactionCell: TableViewCell {
+class TransactionCell: TableViewCell, UITextFieldDelegate {
     
     override func addLabel() {
         add(subview: label) { (v, p) in [
@@ -156,7 +152,16 @@ class TransactionCell: TableViewCell {
     }
     lazy var valueButton = UIButton()
     lazy var valueLabel = UILabel()
-    lazy var valueTextView = TextView(isEditable: true, font: .cryptoRegularLarge)
+    lazy var valueTextView: UITextField = {
+        let tf = UITextField()
+        tf.delegate = self
+        return tf
+    }()
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing(true)
+        return true
+    }
     
     func addValueLabel() {
         valueLabel.font = .cryptoRegularLarge
@@ -167,7 +172,6 @@ class TransactionCell: TableViewCell {
     }
     
     func addValueTextView() {
-        valueTextView.addDoneCancelToolbar()
         add(subview: valueTextView) { (v, p) in [
             v.topAnchor.constraint(equalTo: label.bottomAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 15),
@@ -211,10 +215,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     var coinSymbol = ""
     
     lazy var tableView: UITableView = {
-        let tv = UITableView(frame: .zero, style: .grouped)
+        let tv = UITableView()
         tv.delegate = self
         tv.dataSource = self
         tv.register(UITableViewCell.self)
+        tv.tableFooterView = UIView()
         return tv
     }()
     
@@ -257,6 +262,17 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         return btn
     }()
     
+    let footerLabel: Label = {
+        let lbl = Label(font: .cryptoRegularLarge, numberOfLines: 1)
+        lbl.text = "Add Transaction"
+        lbl.textColor = .white
+        lbl.textAlignment = .center
+        return lbl
+    }()
+    
+    let headerView = UIView()
+    let footerView = UIView()
+    
     @objc func buyButtonTapped(sender: UIButton) {
         selectedButton = sender.tag
         
@@ -271,6 +287,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         buyButton.backgroundColor = #colorLiteral(red: 0.1944887459, green: 0.9029509391, blue: 0.4793502826, alpha: 0.2388589348)
         buyButton.tintColor = .white
         buyButton.layer.borderColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1).cgColor
+        
+        footerView.backgroundColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
     }
     
     @objc func sellButtonTapped(sender: UIButton) {
@@ -287,6 +305,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         sellButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 0.24)
         sellButton.tintColor = .white
         sellButton.layer.borderColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1).cgColor
+        
+        footerView.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
     }
     
     @objc func watchButtonTapped(sender: UIButton) {
@@ -303,13 +323,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         watchButton.backgroundColor = #colorLiteral(red: 0.1102050645, green: 0.659310277, blue: 0.9254902005, alpha: 0.24)
         watchButton.tintColor = .white
         watchButton.layer.borderColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1).cgColor
+        
+        footerView.backgroundColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1)
     }
-    
-    let headerView = UIView()
     
     init(coinSymbol: String) {
         super.init(nibName: nil, bundle: nil)
         self.coinSymbol = coinSymbol
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: coinSymbol, style: .plain, target: nil, action: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -321,7 +342,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         view.backgroundColor = .white
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
         headerView.backgroundColor = .gray
+        footerView.backgroundColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
+        
         view.add(subview: headerView) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
@@ -350,11 +378,27 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             v.heightAnchor.constraint(equalToConstant: 60)
             ]}
         
+        footerView.frame = CGRect(x: view.center.x, y: view.frame.height - 70, width: view.frame.width, height: 70)
+        footerView.center.x = view.center.x
+        view.addSubview(footerView)
+        
+//        view.add(subview: footerView) { (v, p) in [
+//            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor),
+//            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+//            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+//            v.heightAnchor.constraint(equalToConstant: 70)
+//            ]}
+        
+        footerView.add(subview: footerLabel) { (v, p) in [
+            v.centerXAnchor.constraint(equalTo: p.centerXAnchor),
+            v.centerYAnchor.constraint(equalTo: p.centerYAnchor)
+            ]}
+        
         view.add(subview: tableView) { (v, p) in [
             v.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor)
+            v.bottomAnchor.constraint(equalTo: footerView.topAnchor)
             ]}
         
         updateView()
@@ -372,6 +416,23 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         tableView.reloadData()
+    }
+    
+    
+    // Test Phase
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            footerView.frame.origin.y -= keyboardSize.height
+        }        
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if footerView.frame.origin.y != view.frame.height - 70 {
+                footerView.frame.origin.y += keyboardSize.height
+            }
+            
+        }
     }
     
     // Only relates to Buy Price Item

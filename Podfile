@@ -7,8 +7,8 @@ target 'CryptoTracking' do
 
   # Pods for CryptoTracking
   pod 'Endpoints'
-  pod 'Unbox'
   pod 'SDWebImage'
+  pod 'RealmSwift'
 
   target 'CryptoTrackingTests' do
     inherit! :search_paths

@@ -1,20 +1,25 @@
 PODS:
   - Endpoints (0.4.6)
+  - Realm (3.1.1):
+    - Realm/Headers (= 3.1.1)
+  - Realm/Headers (3.1.1)
+  - RealmSwift (3.1.1):
+    - Realm (= 3.1.1)
   - SDWebImage (4.3.0):
     - SDWebImage/Core (= 4.3.0)
   - SDWebImage/Core (4.3.0)
-  - Unbox (2.5.0)
 
 DEPENDENCIES:
   - Endpoints
+  - RealmSwift
   - SDWebImage
-  - Unbox
 
 SPEC CHECKSUMS:
   Endpoints: 6adcbb48f26ec8c6db7ac103e5de922a140cbf1f
+  Realm: 42d1c38a5b1bbcc828b48a7ce702cb86fc68adf4
+  RealmSwift: d31937ca6a6ee54acde64ec839523c0a3c04924b
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
-  Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: 24e1c5072d2d120639738c75fc4abac3209825e5
+PODFILE CHECKSUM: 2cc413570552c228887ef88cfde28eed443074a6
 
 COCOAPODS: 1.4.0.beta.2
