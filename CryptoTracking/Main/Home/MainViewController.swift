@@ -25,6 +25,8 @@ class MainViewController: MainController {
         super.viewWillAppear(animated)
         
         updateView()
+        
+        
     }
     
     private func updateView() {

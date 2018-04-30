@@ -13,7 +13,6 @@ import UIKit
 
 class SettingsCell: TableViewCell {
     
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -32,7 +31,7 @@ class SettingsCell: TableViewCell {
 
 class DisclosureCell: SettingsCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
         accessoryType = .disclosureIndicator
     }
     required init?(coder aDecoder: NSCoder) {
@@ -196,5 +195,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return model[section].title
     }
+    
     
 }

@@ -101,8 +101,8 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
-        
-        let vc = TransactionViewController()
+        let coinSymbol = filteredCoinTickers[indexPath.row].symbol
+        let vc = TransactionViewController(coinSymbol: coinSymbol)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

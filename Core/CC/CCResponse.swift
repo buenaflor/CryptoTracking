@@ -41,7 +41,7 @@ struct CoinInfo: Codable {
     let id, name, fullName, coinInfoInternal: String
     let imageURL, url: String?
     let algorithm, proofType: String
-    let totalCoinsMined, blockNumber, netHashesPerSecond: Int
+    let blockNumber: Int
     let blockReward: Double
     let blockTime: Int
     let totalVolume24H: Double
@@ -55,9 +55,7 @@ struct CoinInfo: Codable {
         case url = "Url"
         case algorithm = "Algorithm"
         case proofType = "ProofType"
-        case totalCoinsMined = "TotalCoinsMined"
         case blockNumber = "BlockNumber"
-        case netHashesPerSecond = "NetHashesPerSecond"
         case blockReward = "BlockReward"
         case blockTime = "BlockTime"
         case totalVolume24H = "TotalVolume24H"
@@ -76,7 +74,6 @@ struct Exchange: Codable {
     let open24Hour, high24Hour, low24Hour, change24Hour: Double
     let changepct24Hour: Double
     let changeday, changepctday: Double
-    let supply: Int?
     let mktcap, totalvolume24H, totalvolume24Hto: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -99,7 +96,6 @@ struct Exchange: Codable {
         case changepct24Hour = "CHANGEPCT24HOUR"
         case changeday = "CHANGEDAY"
         case changepctday = "CHANGEPCTDAY"
-        case supply = "SUPPLY"
         case mktcap = "MKTCAP"
         case totalvolume24H = "TOTALVOLUME24H"
         case totalvolume24Hto = "TOTALVOLUME24HTO"
@@ -122,7 +118,6 @@ struct AggregatedData: Codable {
     let open24Hour, high24Hour, low24Hour: Double
     let lastmarket: String
     let change24Hour, changepct24Hour, changeday, changepctday: Double
-    let supply: Int?
     let mktcap, totalvolume24H, totalvolume24Hto: Double?
 
     enum CodingKeys: String, CodingKey {
@@ -151,7 +146,6 @@ struct AggregatedData: Codable {
         case changepct24Hour = "CHANGEPCT24HOUR"
         case changeday = "CHANGEDAY"
         case changepctday = "CHANGEPCTDAY"
-        case supply = "SUPPLY"
         case mktcap = "MKTCAP"
         case totalvolume24H = "TOTALVOLUME24H"
         case totalvolume24Hto = "TOTALVOLUME24HTO"

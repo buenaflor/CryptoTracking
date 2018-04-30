@@ -17,6 +17,7 @@
 		343C096320929C8E00FBE493 /* CommonCurrency.json in Resources */ = {isa = PBXBuildFile; fileRef = 343C096220929C8E00FBE493 /* CommonCurrency.json */; };
 		343C096520929D1700FBE493 /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C096420929D1700FBE493 /* CurrencyManager.swift */; };
 		343C0967209337E400FBE493 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C0966209337E400FBE493 /* TransactionViewController.swift */; };
+		343C096B2097033300FBE493 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343C096A2097033300FBE493 /* DatePickerController.swift */; };
 		3455477E208F544B00230BCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477D208F544B00230BCF /* AppDelegate.swift */; };
 		34554780208F544B00230BCF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455477F208F544B00230BCF /* MainViewController.swift */; };
 		34554785208F544C00230BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34554784208F544C00230BCF /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		343C096220929C8E00FBE493 /* CommonCurrency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonCurrency.json; sourceTree = "<group>"; };
 		343C096420929D1700FBE493 /* CurrencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
 		343C0966209337E400FBE493 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		343C096A2097033300FBE493 /* DatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		3455477A208F544B00230BCF /* CryptoTracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3455477D208F544B00230BCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3455477F208F544B00230BCF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				345547F92091045E00230BCF /* ExchangeViewController.swift */,
 				3455480320912B3300230BCF /* TradingPairViewController.swift */,
 				343C0966209337E400FBE493 /* TransactionViewController.swift */,
+				343C096A2097033300FBE493 /* DatePickerController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				345547DF2090600800230BCF /* UIColor.swift in Sources */,
 				345547E5209070FE00230BCF /* UILabel.swift in Sources */,
 				345547F82090A78200230BCF /* CoinDetailHeaderView.swift in Sources */,
+				343C096B2097033300FBE493 /* DatePickerController.swift in Sources */,
 				345547FA2091045E00230BCF /* ExchangeViewController.swift in Sources */,
 				3455477E208F544B00230BCF /* AppDelegate.swift in Sources */,
 				343C095F2092904800FBE493 /* FixerResponse.swift in Sources */,

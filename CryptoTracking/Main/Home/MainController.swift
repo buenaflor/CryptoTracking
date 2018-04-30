@@ -22,7 +22,7 @@ class MainController: BaseViewController, LoadingController {
         
         SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": "XRP", "tsym": "EUR"])) { (result) in
             result.onSuccess { value in
-                self.coinData.append(value.data)
+                self.coinData = [value.data]
                 self.activityIndicator.stopAnimating()
                 self.navigationItem.leftBarButtonItem = self.titleItem
                 self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
@@ -85,7 +85,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     func configureWithModel(_ dataClass: ExchangeDataClass) {
         self.model = dataClass
         
-        // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes 
+        // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes
         Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
             let roundedPrice = (dataClass.aggregatedData.price / value * 1000).rounded() / 1000
             let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100

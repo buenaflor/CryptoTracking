@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ExchangeViewControllerDelegate: class {
+    func exchangeViewController(_ exchangeViewController: ExchangeViewController, didPick exchange: Exchange)
+}
+
 class ExchangeViewController: BaseSearchViewController, LoadingController {
+    
+    weak var delegate: ExchangeViewControllerDelegate?
     
     // Stores the exchanges for the coin
     private var exchanges = [Exchange]()
@@ -66,5 +72,11 @@ extension ExchangeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.label.text = filteredExchanges[indexPath.row].market
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow()
+        delegate?.exchangeViewController(self, didPick: filteredExchanges[indexPath.row])
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -13,10 +13,10 @@ extension UIColor {
         
         // Standard Mode Colors
         static let standardMain = UIColor.white
-        static let standardSecondary = #colorLiteral(red: 0.9596016839, green: 0.9596016839, blue: 0.9596016839, alpha: 1)
+        static let standardSecondary = UIColor.lightGray
         static let standardBackground = UIColor.white
         static let standardTitle = UIColor.black
-        static let standardSubtitle = UIColor.white
+        static let standardSubtitle = UIColor.black
         static let standardTint = UIColor.black
 
         
