@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 //  MARK: - Data Loading
 
@@ -25,6 +26,29 @@ class Accessible {
     
     var currentUsedCurrencyCode: String {
         return UserDefaults.standard.string(forKey: Constant.Key.UserDefault.currentCurrencyCode) ?? "CurrencyCodeError"
+    }
+    
+    func getPortfolioValue(completion: @escaping (Double) -> Void) {
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        
+        var portfolioValue = 0.0
+        
+        coins.forEach { (coin) in
+
+            SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                result.onSuccess { value in
+                    let finalCoinData = FinalCoinData(data: value.data, coin: coin)
+                    
+                    portfolioValue += finalCoinData.totalWorth
+                    completion(portfolioValue)
+                    
+                    }.onError { error in
+                        print(error)
+                }
+            }
+        }
+
     }
     
     func getCurrencyValueConverted(target: String, completion: @escaping (Double) -> Void) {

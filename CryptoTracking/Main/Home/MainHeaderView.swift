@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol MainHeaderViewDelegate: class {
     func mainHeaderView(_ mainHeaderView: MainHeaderView, didClick sortedCoin: CoinTicker)
@@ -19,11 +20,33 @@ protocol MainHeaderViewDelegate: class {
 class MainHeaderView: BaseView {
     
     override func loadData(force: Bool) {
-        Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
-            // If positive green // doesnt change yet
-            self.segmentedValueLabel.text = "+102.54%"
-            // Test Value
-            self.portfolioValueLabel.text = "\((2131 / value * 1000).rounded() / 1000)"
+        
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        
+        Accessible.shared.getCurrencyValueConverted(target: "EUR") { (currencyConverted) in
+            
+            var portfolioValue = 0.0
+            var winLosePercentage = 0.0
+            
+            coins.forEach { (coin) in
+                
+                SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                    result.onSuccess { value in
+                        let finalCoinData = FinalCoinData(data: value.data, coin: coin)
+            
+                        portfolioValue += finalCoinData.totalWorth
+                        winLosePercentage += finalCoinData.winLosePercentage
+                        
+                        // If positive green // doesnt change yet
+                        self.segmentedValueLabel.text = "\(winLosePercentage)%"
+                        self.segmentedValueLabel.textColor = .green
+                        self.portfolioValueLabel.text = "\((portfolioValue / currencyConverted * 1000).rounded() / 1000)"
+                        }.onError { error in
+                            print(error)
+                    }
+                }
+            }
         }
     }
     

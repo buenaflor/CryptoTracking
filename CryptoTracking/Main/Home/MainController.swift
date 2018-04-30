@@ -83,6 +83,10 @@ extension FinalCoinData {
         
         return netCost
     }
+    
+    var currentPrice: Double {
+        return self.data.aggregatedData.price
+    }
 }
 
 // MARK: - Controller
@@ -175,21 +179,24 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         
         // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes
         Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
-            let roundedPrice = (dataClass.data.aggregatedData.price / value * 1000).rounded() / 1000
-            
-            self.symbolLabel.text = dataClass.data.coinInfo.name
-            self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
-            
-            self.change24hLabel.text = dataClass.winLosePercentage >= 0.0 ? "+\(dataClass.winLosePercentage)%" : "\(dataClass.winLosePercentage)%"
-            self.change24hLabel.textColor = dataClass.winLosePercentage >= 0.0 ? .green : .red
-            
-            if let imageURLPath = dataClass.data.coinInfo.imageURL {
-                self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
-            }
+            Accessible.shared.getPortfolioValue(completion: { (portfolioValue) in
+                let roundedPrice = (dataClass.data.aggregatedData.price / value * 1000).rounded() / 1000
+                
+                self.symbolLabel.text = dataClass.data.coinInfo.name
+                self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
+                
+                self.change24hLabel.text = dataClass.winLosePercentage >= 0.0 ? "+\(dataClass.winLosePercentage)%" : "\(dataClass.winLosePercentage)%"
+                self.change24hLabel.textColor = dataClass.winLosePercentage >= 0.0 ? .green : .red
+                
+                self.holdingsLabel.text = "\((dataClass.totalWorth / portfolioValue) * 100)%"
+                
+                
+                if let imageURLPath = dataClass.data.coinInfo.imageURL {
+                    self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
+                }
+            })
         }
-        
-        // Test Data only - Model is still not ready
-        holdingsLabel.text = "17.80%"
+    
     }
     
     let symbolLabel: Label = {
