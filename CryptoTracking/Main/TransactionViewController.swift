@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol TransactionsItem {
     var cellType: TransactionCell.Type { get }
@@ -38,7 +39,8 @@ struct TradingPairItem: TransactionsItem {
             transactionsVC.showAlert(title: "Error", message: "Select an exchange first!")
         }
         else {
-            let tradingPairVC = TradingPairViewController(exchangeName: (exchangeCell?.valueLabel.text)!, coinSymbol: transactionsVC.coinSymbol)
+            guard let coinSymbol = transactionsVC.coinSymbol else { return }
+            let tradingPairVC = TradingPairViewController(exchangeName: (exchangeCell?.valueLabel.text)!, coinSymbol: coinSymbol)
             tradingPairVC.loadData(force: true)
             tradingPairVC.delegate = transactionsVC
             transactionsVC.navigationController?.pushViewController(tradingPairVC, animated: true)
@@ -61,7 +63,8 @@ struct SelectExchangeItem: TransactionsItem {
     }
     
     func didSelect(transactionsVC: TransactionViewController, cell: TransactionCell) {
-        let exchangeVC = ExchangeViewController(coinSymbol: transactionsVC.coinSymbol)
+        guard let coinSymbol = transactionsVC.coinSymbol else { return }
+        let exchangeVC = ExchangeViewController(coinSymbol: coinSymbol)
         exchangeVC.delegate = transactionsVC
         exchangeVC.loadData(force: true)
         transactionsVC.navigationController?.pushViewController(exchangeVC, animated: true)
@@ -212,7 +215,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     var model = [TransactionSection]()
     
-    var coinSymbol = ""
+    var coinSymbol: String?
+    var coinName: String?
     
     lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -327,9 +331,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         footerView.backgroundColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1)
     }
     
-    init(coinSymbol: String) {
+    init(coinSymbol: String, coinName: String) {
         super.init(nibName: nil, bundle: nil)
         self.coinSymbol = coinSymbol
+        self.coinName = coinName
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: coinSymbol, style: .plain, target: nil, action: nil)
     }
     
@@ -349,6 +354,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         headerView.backgroundColor = .gray
         footerView.backgroundColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
+        footerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(footerViewTapped)))
         
         view.add(subview: headerView) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor),
@@ -382,13 +388,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         footerView.center.x = view.center.x
         view.addSubview(footerView)
         
-//        view.add(subview: footerView) { (v, p) in [
-//            v.bottomAnchor.constraint(equalTo: p.safeAreaLayoutGuide.bottomAnchor),
-//            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
-//            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-//            v.heightAnchor.constraint(equalToConstant: 70)
-//            ]}
-        
         footerView.add(subview: footerLabel) { (v, p) in [
             v.centerXAnchor.constraint(equalTo: p.centerXAnchor),
             v.centerYAnchor.constraint(equalTo: p.centerYAnchor)
@@ -418,21 +417,62 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.reloadData()
     }
     
+    @objc func footerViewTapped() {
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        
+//        try! realm.write {
+//            realm.deleteAll()
+//            print("deleted")
+//        }
+        
+        guard let exchangeCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TransactionDisclosureCell,
+        let tradingPairCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell,
+        let buyPriceCell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? TransactionCell,
+        let amountBoughtCell = tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as? TransactionCell,
+        let dateCell = tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as? TransactionCell,
+        let coinName = coinName, let coinSymbol = coinSymbol
+            else { return }
+
+        let exchange = exchangeCell.valueLabel.text!
+        let tradingPair = tradingPairCell.valueLabel.text!
+        let buyPrice = buyPriceCell.valueTextView.text!
+        let amountBought = amountBoughtCell.valueTextView.text!
+        let date = dateCell.valueTextView.text!
+
+        let transaction = Transaction()
+        transaction.exchangeName = exchange
+        transaction.tradingPair = tradingPair
+        transaction.date = date
+        transaction.transactionType = 0
+
+        // Risky
+        transaction.price = Double(buyPrice)!
+        transaction.amount = Double(amountBought)!
+
+        if coins.count == 0 {
+            let coin = Coin()
+            coin.name = coinName
+            coin.symbol = coinSymbol
+            coin.transactions.append(transaction)
+            
+            try! realm.write {
+                realm.add(coin)
+                print("added")
+            }
+        }
+        else {
+            // get existing coin and append transaction
+        }
+    }
+    
     
     // Test Phase
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            footerView.frame.origin.y -= keyboardSize.height
-        }        
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if footerView.frame.origin.y != view.frame.height - 70 {
-                footerView.frame.origin.y += keyboardSize.height
-            }
-            
-        }
+
     }
     
     // Only relates to Buy Price Item

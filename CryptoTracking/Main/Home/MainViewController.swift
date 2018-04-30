@@ -54,18 +54,18 @@ class MainViewController: MainController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.row == self.coinData.count ? 120 : 70
+        return indexPath.row == self.finalCoinData.count ? 120 : 70
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         // Add +1 for the last cell (add coin)
-        return coinData.count + 1
+        return finalCoinData.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == coinData.count {
+        if indexPath.row == finalCoinData.count {
             let cell = tableView.dequeueReusableCell(MainAddCoinCell.self, for: indexPath)
             cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
             cell.label.text = "Add Coin"
@@ -75,7 +75,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             let cell = tableView.dequeueReusableCell(MainCoinTickerCell.self, for: indexPath)
-            let coin = self.coinData[indexPath.row]
+            let coin = self.finalCoinData[indexPath.row]
             cell.configureWithModel(coin)
             return cell
         }
@@ -84,9 +84,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
        
-        if indexPath.row != self.coinData.count {
-            let coinID = self.coinData[indexPath.row].coinInfo.fullName
-            let coinSymbol = self.coinData[indexPath.row].coinInfo.name
+        if indexPath.row != self.finalCoinData.count {
+            let coinID = self.finalCoinData[indexPath.row].data.coinInfo.fullName
+            let coinSymbol = self.finalCoinData[indexPath.row].data.coinInfo.name
             let coinVC = CoinDetailViewController(coinID: coinID, coinSymbol: coinSymbol)
             coinVC.loadData(force: true)
             navigationController?.pushViewController(coinVC, animated: true)

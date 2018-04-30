@@ -8,6 +8,12 @@
 
 import UIKit
 import SDWebImage
+import RealmSwift
+
+struct FinalCoinData {
+    let data: ExchangeDataClass
+    let coin: Coin
+}
 
 // MARK: - Controller
 
@@ -15,19 +21,25 @@ class MainController: BaseViewController, LoadingController {
     
     func changed() { print("globally changed") }
  
-    var coinTickers = [CoinTicker]()
-    var coinData = [ExchangeDataClass]()
+    var finalCoinData = [FinalCoinData]()
     
     func loadData(force: Bool) {
         
-        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": "XRP", "tsym": "EUR"])) { (result) in
-            result.onSuccess { value in
-                self.coinData = [value.data]
-                self.activityIndicator.stopAnimating()
-                self.navigationItem.leftBarButtonItem = self.titleItem
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                }.onError { error in
-                    print(error)
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        
+        coins.forEach { (coin) in
+            
+            SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                result.onSuccess { value in
+                    let finalCoinData = FinalCoinData(data: value.data, coin: coin)
+                    self.finalCoinData.append(finalCoinData)
+                    self.activityIndicator.stopAnimating()
+                    self.navigationItem.leftBarButtonItem = self.titleItem
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                    }.onError { error in
+                        print(error)
+                }
             }
         }
     }
@@ -86,22 +98,22 @@ class MainController: BaseViewController, LoadingController {
 
 class MainCoinTickerCell: UITableViewCell, Configurable {
     
-    var model: ExchangeDataClass?
+    var model: FinalCoinData?
     
-    func configureWithModel(_ dataClass: ExchangeDataClass) {
+    func configureWithModel(_ dataClass: FinalCoinData) {
         self.model = dataClass
         
         // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes
         Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
-            let roundedPrice = (dataClass.aggregatedData.price / value * 1000).rounded() / 1000
-            let rounded24hChange = (dataClass.aggregatedData.changepct24Hour * 100).rounded() / 100
+            let roundedPrice = (dataClass.data.aggregatedData.price / value * 1000).rounded() / 1000
+            let rounded24hChange = (dataClass.data.aggregatedData.changepct24Hour * 100).rounded() / 100
             
-            self.symbolLabel.text = dataClass.coinInfo.name
+            self.symbolLabel.text = dataClass.data.coinInfo.name
             self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
             self.change24hLabel.text = rounded24hChange >= 0.0 ? "+\(rounded24hChange)%" : "\(rounded24hChange)%"
             self.change24hLabel.textColor = rounded24hChange >= 0.0 ? .green : .red
             
-            if let imageURLPath = dataClass.coinInfo.imageURL {
+            if let imageURLPath = dataClass.data.coinInfo.imageURL {
                 self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
             }
         }

@@ -106,6 +106,7 @@ extension TradingPairViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
+        navigationController?.popViewController(animated: true)
         delegate?.tradingPairViewController(self, didPick: filteredTradingPairs[indexPath.row])
     }
 }
