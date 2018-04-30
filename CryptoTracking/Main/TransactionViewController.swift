@@ -421,11 +421,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         let realm = try! Realm()
         let coins = realm.objects(Coin.self)
         
-//        try! realm.write {
-//            realm.deleteAll()
-//            print("deleted")
-//        }
-        
         guard let exchangeCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TransactionDisclosureCell,
         let tradingPairCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell,
         let buyPriceCell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? TransactionCell,
@@ -450,33 +445,49 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         transaction.price = Double(buyPrice)!
         transaction.amount = Double(amountBought)!
 
-        if coins.count == 0 {
-            let coin = Coin()
-            coin.name = coinName
-            coin.symbol = coinSymbol
-            coin.transactions.append(transaction)
-            
-            try! realm.write {
-                realm.add(coin)
-                print("added")
-            }
-        }
-        else {
-            // get existing coin and append transaction
-        }
+//        if coins.count == 0 {
+//            let coin = Coin()
+//            coin.name = coinName
+//            coin.symbol = coinSymbol
+//            coin.transactions.append(transaction)
+//
+//            try! realm.write {
+//                realm.add(coin)
+//                print("added")
+//            }
+//        }
+//        else {
+//            
+//            let filteredCoins = coins.filter { (coin) -> Bool in
+//                if coin.name == coinName && coin.symbol == coinSymbol {
+//                    return true
+//                }
+//                else {
+//                    return false
+//                }
+//            }
+//            guard let theCoin = filteredCoins.first else { return }
+//            
+//            try! realm.write {
+//                theCoin.transactions.append(transaction)
+//                print("adding transaction succeeded")
+//            }
+//        }
+        
+        navigationController?.popToRootViewController(animated: true)
     }
-    
-    
-    // Test Phase
-    @objc func keyboardWillShow(notification: NSNotification) {
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
 
-    }
+
+// Test Phase
+@objc func keyboardWillShow(notification: NSNotification) {
+}
+
+@objc func keyboardWillHide(notification: NSNotification) {
     
-    // Only relates to Buy Price Item
-    @objc func showPricePerPicker() {
+}
+
+// Only relates to Buy Price Item
+@objc func showPricePerPicker() {
         let alertController = UIAlertController(title: "Buy Price", message: nil, preferredStyle: .actionSheet)
 
         

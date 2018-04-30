@@ -13,29 +13,31 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     // Unused
     func changed() { }
     
-    private var coinID: String?
-    private var coinSymbol: String?
-    
-    var coinData: ExchangeDataClass?
+    var finalCoinData: FinalCoinData?
     
     func loadData(force: Bool) {
-        guard let coinSymbol = coinSymbol else {
+        guard let finalCoinData = finalCoinData else {
             showAlert(title: "Error", message: "Coin ID is incorrect")
             return
         }
         
-        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "EUR"])) { (result) in
-            result.onSuccess { value in
-                self.coinData = value.data
-                self.headerView.configureWithModel(value.data)
-                self.headerView.delegate = self
-                self.activityIndicator.stopAnimating()
-                self.title = value.data.coinInfo.fullName
-                self.navigationItem.rightBarButtonItem = self.settingsItem
-                }.onError { error in
-                    print(error)
-            }
-        }
+        self.headerView.configureWithModel(finalCoinData)
+        self.headerView.delegate = self
+        self.title = finalCoinData.data.coinInfo.fullName
+        self.navigationItem.rightBarButtonItem = self.settingsItem
+        
+//        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "EUR"])) { (result) in
+//            result.onSuccess { value in
+//                self.coinData = value.data
+//                self.headerView.configureWithModel(value.data)
+//                self.headerView.delegate = self
+//                self.activityIndicator.stopAnimating()
+//                self.title = value.data.coinInfo.fullName
+//                self.navigationItem.rightBarButtonItem = self.settingsItem
+//                }.onError { error in
+//                    print(error)
+//            }
+//        }
     }
     
     lazy var settingsItem: UIBarButtonItem = {
@@ -66,10 +68,9 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     
     var isSettingOpen = false
     
-    init(coinID: String, coinSymbol: String) {
+    init(finalCoinData: FinalCoinData) {
         super.init(nibName: nil, bundle: nil)
-        self.coinID = coinID
-        self.coinSymbol = coinSymbol
+        self.finalCoinData = finalCoinData
         
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = activityIndicatorItem
@@ -144,11 +145,11 @@ class CoinDetailViewController: BaseViewController, LoadingController {
 extension CoinDetailViewController: SettingsFillViewDelegate {
     
     func clicked(exchangeItem: SettingsItemForView) {
-        guard let coinSymbol = coinSymbol else {
+        guard let finalCoinData = finalCoinData else {
             showAlert(title: "Error", message: "Something is wrong with the coin name")
             return
         }
-        let exchangeVC = ExchangeViewController(coinSymbol: coinSymbol)
+        let exchangeVC = ExchangeViewController(coinSymbol: finalCoinData.data.coinInfo.name)
         exchangeVC.loadData(force: true)
         navigationController?.pushViewController(exchangeVC, animated: true)
     }

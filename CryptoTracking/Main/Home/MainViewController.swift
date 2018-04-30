@@ -85,9 +85,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow()
        
         if indexPath.row != self.finalCoinData.count {
-            let coinID = self.finalCoinData[indexPath.row].data.coinInfo.fullName
-            let coinSymbol = self.finalCoinData[indexPath.row].data.coinInfo.name
-            let coinVC = CoinDetailViewController(coinID: coinID, coinSymbol: coinSymbol)
+            let coinVC = CoinDetailViewController(finalCoinData: finalCoinData[indexPath.row])
             coinVC.loadData(force: true)
             navigationController?.pushViewController(coinVC, animated: true)
         }
