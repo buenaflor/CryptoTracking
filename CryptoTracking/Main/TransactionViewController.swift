@@ -445,34 +445,34 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         transaction.price = Double(buyPrice)!
         transaction.amount = Double(amountBought)!
 
-//        if coins.count == 0 {
-//            let coin = Coin()
-//            coin.name = coinName
-//            coin.symbol = coinSymbol
-//            coin.transactions.append(transaction)
-//
-//            try! realm.write {
-//                realm.add(coin)
-//                print("added")
-//            }
-//        }
-//        else {
-//            
-//            let filteredCoins = coins.filter { (coin) -> Bool in
-//                if coin.name == coinName && coin.symbol == coinSymbol {
-//                    return true
-//                }
-//                else {
-//                    return false
-//                }
-//            }
-//            guard let theCoin = filteredCoins.first else { return }
-//            
-//            try! realm.write {
-//                theCoin.transactions.append(transaction)
-//                print("adding transaction succeeded")
-//            }
-//        }
+        if coins.count == 0 {
+            let coin = Coin()
+            coin.name = coinName
+            coin.symbol = coinSymbol
+            coin.transactions.append(transaction)
+
+            try! realm.write {
+                realm.add(coin)
+                print("added")
+            }
+        }
+        else {
+            
+            let filteredCoins = coins.filter { (coin) -> Bool in
+                if coin.name == coinName && coin.symbol == coinSymbol {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
+            guard let theCoin = filteredCoins.first else { return }
+            
+            try! realm.write {
+                theCoin.transactions.append(transaction)
+                print("adding transaction succeeded")
+            }
+        }
         
         navigationController?.popToRootViewController(animated: true)
     }
