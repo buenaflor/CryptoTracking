@@ -18,6 +18,8 @@ class MainViewController: MainController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewReceived(notification:)), name: .reloadTableView, object: nil)
+        
         view.add(subview: mainHeaderView) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
@@ -47,6 +49,10 @@ class MainViewController: MainController {
         }
         navigationItem.rightBarButtonItems = [ settingsItem, searchItem ]
         mainHeaderView.loadData(force: true)
+    }
+    
+    
+    @objc func reloadTableViewReceived(notification: Notification) {
         tableView.reloadData()
     }
 }

@@ -64,10 +64,13 @@ extension CurrencySettingsViewController: UITableViewDelegate, UITableViewDataSo
         let currencyCode = Array(filteredCurrencyList)[indexPath.row].value.code
         Accessible.shared.setCurrency(code: currencyCode)
         
-        print(Accessible.shared.currentUsedCurrencySymbol)
+        Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
+            Accessible.Currency.convertedValue = value
+        }
+        
+        NotificationCenter.default.post(name: .reloadTableView, object: nil)
         
         navigationController?.popViewController(animated: true)
-        print("heyho")
     }
 }
 

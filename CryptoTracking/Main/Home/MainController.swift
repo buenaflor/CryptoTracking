@@ -16,11 +16,7 @@ struct FinalCoinData {
 }
 
 extension FinalCoinData {
-    struct WorthCost {
-        let worth: Double
-        let cost: Double
-    }
-    
+
     var winLosePercentage: Double {
         var worth = 0.0
         var cost = 0.0
@@ -102,15 +98,19 @@ class MainController: BaseViewController, LoadingController {
         let realm = try! Realm()
         let coins = realm.objects(Coin.self)
         
+        var tempFinalCoinData = [FinalCoinData]()
         coins.forEach { (coin) in
             
             SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
                 result.onSuccess { value in
+
                     let finalCoinData = FinalCoinData(data: value.data, coin: coin)
-                    self.finalCoinData.append(finalCoinData)
+                    tempFinalCoinData.append(finalCoinData)
+                    self.finalCoinData = tempFinalCoinData
                     self.activityIndicator.stopAnimating()
                     self.navigationItem.leftBarButtonItem = self.titleItem
                     self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                    
                     }.onError { error in
                         print(error)
                 }
@@ -174,29 +174,32 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     
     var model: FinalCoinData?
     
+    var allTimePct = 0.0
+    var percentage24h = 0.0
+    
     func configureWithModel(_ dataClass: FinalCoinData) {
         self.model = dataClass
         
-        // Works, but can be better: Load the target value in maincontroller and pass it around or make a static variable that changes
-        Accessible.shared.getCurrencyValueConverted(target: "EUR") { (value) in
-            Accessible.shared.getPortfolioValue(completion: { (portfolioValue) in
-                let roundedPrice = (dataClass.data.aggregatedData.price / value * 1000).rounded() / 1000
-                
-                self.symbolLabel.text = dataClass.data.coinInfo.name
-                self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
-                
-                self.change24hLabel.text = dataClass.winLosePercentage >= 0.0 ? "+\(dataClass.winLosePercentage)%" : "\(dataClass.winLosePercentage)%"
-                self.change24hLabel.textColor = dataClass.winLosePercentage >= 0.0 ? .green : .red
-                
-                self.holdingsLabel.text = "\((dataClass.totalWorth / portfolioValue) * 100)%"
-                
-                
-                if let imageURLPath = dataClass.data.coinInfo.imageURL {
-                    self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
-                }
-            })
-        }
-    
+        Accessible.shared.getPortfolioValue(completion: { (portfolioValue) in
+            
+            let roundedPrice = (dataClass.data.aggregatedData.price / Accessible.Currency.convertedValue * 1000).rounded() / 1000
+            
+            self.allTimePct = dataClass.winLosePercentage
+            self.percentage24h = dataClass.data.aggregatedData.changepct24Hour
+            
+            self.symbolLabel.text = dataClass.data.coinInfo.name
+            self.currentPriceLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(roundedPrice)"
+            
+            self.change24hLabel.text = dataClass.winLosePercentage >= 0.0 ? "+\(dataClass.winLosePercentage)%" : "\(dataClass.winLosePercentage)%"
+            self.change24hLabel.textColor = dataClass.winLosePercentage >= 0.0 ? .green : .red
+            
+            self.holdingsLabel.text = "\(((dataClass.totalWorth / portfolioValue) * 100).roundToTwoDigits())%"
+            
+            
+            if let imageURLPath = dataClass.data.coinInfo.imageURL {
+                self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
+            }
+        })
     }
     
     let symbolLabel: Label = {
@@ -231,6 +234,12 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         createConstraints()
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(changePercentageReceived(sender:)),
+                                       name: .changePercentages,
+                                       object: nil)
     }
     
     func createConstraints() {
@@ -267,6 +276,19 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func changePercentageReceived(sender: Notification) {
+        guard let selectedIndex = sender.object as? Int else { return }
+        
+        if selectedIndex == 1 {
+            self.change24hLabel.text = "\(percentage24h.roundToTwoDigits())%"
+            self.change24hLabel.textColor = percentage24h > 0.0 ? .green : .red
+        }
+        else {
+            self.change24hLabel.text = "\(allTimePct.roundToTwoDigits())%"
+            self.change24hLabel.textColor = allTimePct > 0.0 ? .green : .red
+        }
     }
 }
 

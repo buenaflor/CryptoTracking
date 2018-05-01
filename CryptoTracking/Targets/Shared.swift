@@ -72,6 +72,10 @@ class Accessible {
 
 extension Accessible {
     static let shared = Accessible()
+    
+    struct Currency {
+        static var convertedValue = 0.0
+    }
 }
 
 // MARK: - Custom Fonts

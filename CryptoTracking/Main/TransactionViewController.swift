@@ -445,12 +445,18 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         transaction.price = Double(buyPrice)!
         transaction.amount = Double(amountBought)!
 
-        if coins.count == 0 {
-            let coin = Coin()
-            coin.name = coinName
-            coin.symbol = coinSymbol
-            coin.transactions.append(transaction)
-
+        coins.forEach { (coin) in
+            if coin.symbol == coinSymbol && coinName == coinName {
+                
+            }
+        }
+        
+        let coin = Coin()
+        coin.name = coinName
+        coin.symbol = coinSymbol
+        coin.transactions.append(transaction)
+        
+        if !coins.contains(coin) {
             try! realm.write {
                 realm.add(coin)
                 print("added")
