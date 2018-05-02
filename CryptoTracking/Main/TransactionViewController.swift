@@ -347,10 +347,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         view.backgroundColor = .white
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
         
         headerView.backgroundColor = .gray
         footerView.backgroundColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
@@ -456,14 +454,20 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         coin.symbol = coinSymbol
         coin.transactions.append(transaction)
         
-        if !coins.contains(coin) {
-            try! realm.write {
-                realm.add(coin)
-                print("added")
+        print(coinName)
+        print(coinSymbol)
+        
+        print(coin.name)
+        print(coin.symbol)
+        
+        if coins.contains(where: { (coin) -> Bool in
+            if coin.name == coinName && coin.symbol == coinSymbol {
+                return true
             }
-        }
-        else {
-            
+            else {
+                return false
+            }
+        }) {
             let filteredCoins = coins.filter { (coin) -> Bool in
                 if coin.name == coinName && coin.symbol == coinSymbol {
                     return true
@@ -479,8 +483,16 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 print("adding transaction succeeded")
             }
         }
+        else {
+            try! realm.write {
+                realm.add(coin)
+                print("added")
+            }
+        }
         
-        navigationController?.popToRootViewController(animated: true)
+        NotificationCenter.default.post(name: .reloadTableView, object: nil)
+        
+        navigationController?.popViewController(animated: true)
     }
 
 

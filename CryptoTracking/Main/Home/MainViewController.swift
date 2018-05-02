@@ -17,6 +17,7 @@ class MainViewController: MainController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.bounces = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewReceived(notification:)), name: .reloadTableView, object: nil)
         

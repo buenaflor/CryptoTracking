@@ -74,6 +74,8 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(clicked(notification:)), name: .clicked, object: nil)
+        
         view.add(subview: headerView) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
@@ -125,6 +127,12 @@ class CoinDetailViewController: BaseViewController, LoadingController {
                 fillView.removeFromSuperview()
             }
         }
+    }
+    
+    @objc func clicked(notification: Notification) {
+        guard let finalCoinData = finalCoinData else { return }
+        let transactionVC = TransactionViewController(coinSymbol: finalCoinData.coin.symbol, coinName: finalCoinData.coin.name)
+        navigationController?.pushViewController(transactionVC, animated: true)
     }
 }
 

@@ -34,13 +34,12 @@ class MainHeaderView: BaseView {
         var portfolioValue = 0.0
         var winLosePercentage = 0.0
         var percentage24h = 0.0
+        
         coins.forEach { (coin) in
             
             SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
                 result.onSuccess { value in
-                    if Accessible.Currency.convertedValue == 0.0 {
-                        self.loadData(force: true)
-                    }
+         
                     let finalCoinData = FinalCoinData(data: value.data, coin: coin)
                     
                     portfolioValue += finalCoinData.totalWorth

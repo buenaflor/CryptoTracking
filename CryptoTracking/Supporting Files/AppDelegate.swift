@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if Accessible.shared.currentUsedCurrencyCode == "CurrencyCodeError" {
             UserDefaults.standard.set("EUR", forKey: Constant.Key.UserDefault.currentCurrencyCode)
         }
+
         
         return true
     }

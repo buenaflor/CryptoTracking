@@ -19,4 +19,6 @@ extension Notification.Name {
         rawValue: "changePercentages")
     static let reloadTableView = Notification.Name(
         rawValue: "reloadTableView")
+    static let clicked = Notification.Name(
+        rawValue: "clicked")
 }
