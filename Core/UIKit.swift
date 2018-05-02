@@ -69,6 +69,17 @@ public extension UIView {
             self.isHidden = force
         }
     }
+    
+    public func addSeparatorLine(color: UIColor) {
+        let view = UIView()
+        view.backgroundColor = color
+        add(subview: view) { (v, p) in [
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.heightAnchor.constraint(equalToConstant: 0.5)
+            ]}
+    }
 }
 
 // MARK: - ReusableView Protocol & Configurable

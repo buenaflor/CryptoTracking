@@ -108,8 +108,6 @@ extension MainViewController: ClickableDelegate {
         vc.loadData(force: true)
         present(vc.wrapped(), animated: true, completion: nil)
     }
-    
-    
 }
 
 

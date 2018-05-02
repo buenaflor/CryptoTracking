@@ -25,19 +25,6 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         self.headerView.delegate = self
         self.title = finalCoinData.data.coinInfo.fullName
         self.navigationItem.rightBarButtonItem = self.settingsItem
-        
-//        SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coinSymbol, "tsym": "EUR"])) { (result) in
-//            result.onSuccess { value in
-//                self.coinData = value.data
-//                self.headerView.configureWithModel(value.data)
-//                self.headerView.delegate = self
-//                self.activityIndicator.stopAnimating()
-//                self.title = value.data.coinInfo.fullName
-//                self.navigationItem.rightBarButtonItem = self.settingsItem
-//                }.onError { error in
-//                    print(error)
-//            }
-//        }
     }
     
     lazy var settingsItem: UIBarButtonItem = {
@@ -52,6 +39,8 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         cv.delegate = self
         cv.dataSource = self
         cv.register(UICollectionViewCell.self)
+        cv.register(CoinDetailCell.self)
+        cv.register(TransactionsCVWindow.self)
         cv.isPagingEnabled = true
         cv.backgroundColor = .white
         cv.showsHorizontalScrollIndicator = false
@@ -190,16 +179,22 @@ extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath)
-        
-        if indexPath.row % 2 == 0 {
-            cell.backgroundColor = .red
+        guard let finalCoinData = finalCoinData else { return UICollectionViewCell() }
+        switch indexPath.row {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(CoinDetailCell.self, for: indexPath)
+            cell.configureWithModel(finalCoinData)
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(TransactionsCVWindow.self, for: indexPath)
+            cell.configureWithModel(finalCoinData)
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath)
+            return cell
+        default:
+            return UICollectionViewCell()
         }
-        else {
-            cell.backgroundColor = .blue
-        }
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

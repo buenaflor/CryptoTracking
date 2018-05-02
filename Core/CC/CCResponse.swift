@@ -117,7 +117,7 @@ struct AggregatedData: Codable {
     let openday, highday, lowday: Double
     let open24Hour, high24Hour, low24Hour: Double
     let lastmarket: String
-    let change24Hour, changepct24Hour, changeday, changepctday: Double
+    let change24Hour, changepct24Hour, changeday, changepctday, supply: Double
     let mktcap, totalvolume24H, totalvolume24Hto: Double?
 
     enum CodingKeys: String, CodingKey {
@@ -146,6 +146,7 @@ struct AggregatedData: Codable {
         case changepct24Hour = "CHANGEPCT24HOUR"
         case changeday = "CHANGEDAY"
         case changepctday = "CHANGEPCTDAY"
+        case supply = "SUPPLY"
         case mktcap = "MKTCAP"
         case totalvolume24H = "TOTALVOLUME24H"
         case totalvolume24Hto = "TOTALVOLUME24HTO"

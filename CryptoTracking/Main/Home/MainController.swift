@@ -182,6 +182,10 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         
         Accessible.shared.getPortfolioValue(completion: { (portfolioValue) in
             
+            if Accessible.Currency.convertedValue == 0.0 {
+                NotificationCenter.default.post(name: .reloadTableView, object: nil)
+            }
+            
             let roundedPrice = (dataClass.data.aggregatedData.price / Accessible.Currency.convertedValue * 1000).rounded() / 1000
             
             self.allTimePct = dataClass.winLosePercentage

@@ -38,6 +38,9 @@ class MainHeaderView: BaseView {
             
             SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
                 result.onSuccess { value in
+                    if Accessible.Currency.convertedValue == 0.0 {
+                        self.loadData(force: true)
+                    }
                     let finalCoinData = FinalCoinData(data: value.data, coin: coin)
                     
                     portfolioValue += finalCoinData.totalWorth
