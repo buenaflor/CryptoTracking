@@ -69,6 +69,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         super.viewWillAppear(animated)
         
         fillView.removeFromSuperview()
+        loadData(force: true)
     }
     
     override func viewDidLoad() {
@@ -130,9 +131,16 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     }
     
     @objc func clicked(notification: Notification) {
-        guard let finalCoinData = finalCoinData else { return }
-        let transactionVC = TransactionViewController(coinSymbol: finalCoinData.coin.symbol, coinName: finalCoinData.coin.name)
-        navigationController?.pushViewController(transactionVC, animated: true)
+        title = ""
+        if let transaction = notification.object as? Transaction {
+            let transactionVC = TransactionViewController(transaction: transaction)
+            navigationController?.pushViewController(transactionVC, animated: true)
+        }
+        else {
+            guard let finalCoinData = finalCoinData else { return }
+            let transactionVC = TransactionViewController(coinSymbol: finalCoinData.coin.symbol, coinName: finalCoinData.coin.name)
+            navigationController?.pushViewController(transactionVC, animated: true)
+        }
     }
 }
 

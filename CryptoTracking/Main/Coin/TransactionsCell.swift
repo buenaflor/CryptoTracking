@@ -220,6 +220,8 @@ class TransactionsCVCell: UITableViewCell, Configurable {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(containerViewTapped)))
+        
         add(subview: containerView) { (v, p) in [
             v.bottomAnchor.constraint(equalTo: p.bottomAnchor, constant: -30),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 20),
@@ -306,6 +308,13 @@ class TransactionsCVCell: UITableViewCell, Configurable {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func containerViewTapped() {
+        guard let coin = model?.coin else { return }
+        let transactions = coin.transactions.reversed()
+        let transaction = transactions[transactions.index(transactions.startIndex, offsetBy: tag)]
+        NotificationCenter.default.post(name: .clicked, object: transaction)
     }
 }
 
@@ -421,6 +430,8 @@ class FirstTransactionsCVCell: UITableViewCell, Configurable {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(containerViewTapped)))
+        
         add(subview: containerView) { (v, p) in [
             v.centerYAnchor.constraint(equalTo: p.centerYAnchor, constant: 10),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 20),
@@ -493,6 +504,13 @@ class FirstTransactionsCVCell: UITableViewCell, Configurable {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func containerViewTapped() {
+        guard let coin = model?.coin else { return }
+        let transactions = coin.transactions.reversed()
+        let transaction = transactions.last
+        NotificationCenter.default.post(name: .clicked, object: transaction)
+    }
 }
 
 class AddTransactionCell: UITableViewCell{
@@ -517,17 +535,6 @@ class AddTransactionCell: UITableViewCell{
     let addTransactionButton = UIButton()
     
     let newLabel = Label(font: .cryptoBoldLarge, numberOfLines: 1)
-    
-//    let shadowView: UIView = {
-//        let outerView = UIView()
-//        outerView.clipsToBounds = false
-//        outerView.layer.shadowColor = UIColor.black.cgColor
-//        outerView.layer.shadowOpacity = 1
-//        outerView.layer.shadowOffset = CGSize.zero
-//        outerView.layer.shadowRadius = 40 / 2
-//        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 40 / 2).cgPath
-//        return outerView
-//    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

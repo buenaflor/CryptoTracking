@@ -133,7 +133,7 @@ class MainController: BaseViewController, LoadingController {
         let tv = UITableView()
         tv.register(MainAddCoinCell.self)
         tv.register(MainCoinTickerCell.self)
-        tv.backgroundColor = .lightGray
+        tv.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
         tv.tableFooterView = UIView()
         return tv
     }()
