@@ -216,7 +216,7 @@ class TransactionCell: TableViewCell, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 class TransactionDisclosureCell: TransactionCell {
@@ -279,18 +279,18 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         return btn
     }()
     
-    lazy var watchButton: UIButton = {
-        let btn = UIButton()
-        btn.tag = 3
-        btn.backgroundColor = .clear
-        btn.tintColor = .lightGray
-        btn.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-        btn.layer.borderWidth = 2.5
-        btn.layer.cornerRadius = 5
-        btn.setTitle("Watch", for: .normal)
-        btn.addTarget(self, action: #selector(watchButtonTapped(sender:)), for: .touchUpInside)
-        return btn
-    }()
+//    lazy var watchButton: UIButton = {
+//        let btn = UIButton()
+//        btn.tag = 3
+//        btn.backgroundColor = .clear
+//        btn.tintColor = .lightGray
+//        btn.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+//        btn.layer.borderWidth = 2.5
+//        btn.layer.cornerRadius = 5
+//        btn.setTitle("Watch", for: .normal)
+//        btn.addTarget(self, action: #selector(watchButtonTapped(sender:)), for: .touchUpInside)
+//        return btn
+//    }()
     
     let footerLabel: Label = {
         let lbl = Label(font: .cryptoRegularLarge, numberOfLines: 1)
@@ -306,14 +306,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         selectedButton = sender.tag
         
         changeCellValues(buyPriceText: "Buy Price in \(Accessible.shared.currentUsedCurrencyCode) \(Accessible.shared.currentUsedCurrencySymbol)", amountText: "Amount Bought")
-
+        
         sellButton.backgroundColor = .clear
         sellButton.tintColor = .lightGray
         sellButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-        
-        watchButton.backgroundColor = .clear
-        watchButton.tintColor = .lightGray
-        watchButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
         
         buyButton.backgroundColor = #colorLiteral(red: 0.1944887459, green: 0.9029509391, blue: 0.4793502826, alpha: 0.2388589348)
         buyButton.tintColor = .white
@@ -331,10 +327,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         buyButton.tintColor = .lightGray
         buyButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
         
-        watchButton.backgroundColor = .clear
-        watchButton.tintColor = .lightGray
-        watchButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-        
         sellButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 0.24)
         sellButton.tintColor = .white
         sellButton.layer.borderColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1).cgColor
@@ -342,23 +334,23 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         footerView.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
     }
     
-    @objc func watchButtonTapped(sender: UIButton) {
-        selectedButton = sender.tag
-        
-        buyButton.backgroundColor = .clear
-        buyButton.tintColor = .lightGray
-        buyButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-        
-        sellButton.backgroundColor = .clear
-        sellButton.tintColor = .lightGray
-        sellButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-        
-        watchButton.backgroundColor = #colorLiteral(red: 0.1102050645, green: 0.659310277, blue: 0.9254902005, alpha: 0.24)
-        watchButton.tintColor = .white
-        watchButton.layer.borderColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1).cgColor
-
-        footerView.backgroundColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1)
-    }
+//    @objc func watchButtonTapped(sender: UIButton) {
+//        selectedButton = sender.tag
+//
+//        buyButton.backgroundColor = .clear
+//        buyButton.tintColor = .lightGray
+//        buyButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+//
+//        sellButton.backgroundColor = .clear
+//        sellButton.tintColor = .lightGray
+//        sellButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+//
+//        watchButton.backgroundColor = #colorLiteral(red: 0.1102050645, green: 0.659310277, blue: 0.9254902005, alpha: 0.24)
+//        watchButton.tintColor = .white
+//        watchButton.layer.borderColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1).cgColor
+//
+//        footerView.backgroundColor = #colorLiteral(red: 0.1734314166, green: 0.7699478535, blue: 0.9000489764, alpha: 1)
+//    }
     
     init(transaction: Transaction) {
         super.init(nibName: nil, bundle: nil)
@@ -403,27 +395,27 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         headerView.add(subview: buyButton) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 10),
-            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
+            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.45),
             v.heightAnchor.constraint(equalToConstant: 60)
             ]}
         
         headerView.add(subview: sellButton) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
-            v.centerXAnchor.constraint(equalTo: p.centerXAnchor),
-            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
-            v.heightAnchor.constraint(equalToConstant: 60)
-            ]}
-        
-        headerView.add(subview: watchButton) { (v, p) in [
-            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 20),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -10),
-            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.30),
+            v.widthAnchor.constraint(equalTo: p.widthAnchor, multiplier: 0.45),
             v.heightAnchor.constraint(equalToConstant: 60)
             ]}
+    
+        view.add(subview: footerView) { (v, p) in [
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
+            v.heightAnchor.constraint(equalToConstant: 70)
+            ]}
         
-        footerView.frame = CGRect(x: view.center.x, y: view.frame.height - 70, width: view.frame.width, height: 70)
-        footerView.center.x = view.center.x
-        view.addSubview(footerView)
+//        footerView.frame = CGRect(x: view.center.x, y: view.frame.height - 70, width: view.frame.width, height: 70)
+//        footerView.center.x = view.center.x
+//        view.addSubview(footerView)
         
         footerView.add(subview: footerLabel) { (v, p) in [
             v.centerXAnchor.constraint(equalTo: p.centerXAnchor),
@@ -466,16 +458,16 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     @objc func deleteCoinTapped() {
         print("delete")
     }
-
+    
     
     @objc func footerViewTapped() {
         let realm = try! Realm()
         let coins = realm.objects(Coin.self)
         
         guard let exchangeCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TransactionDisclosureCell,
-        let tradingPairCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell,
-        let buyPriceCell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? TransactionCell,
-        let amountBoughtCell = tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as? TransactionCell,
+            let tradingPairCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TransactionDisclosureCell,
+            let buyPriceCell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? TransactionCell,
+            let amountBoughtCell = tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as? TransactionCell,
             let dateCell = tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as? TransactionCell
             else { return }
         
@@ -485,87 +477,79 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         let amountBought = amountBoughtCell.valueTextView.text!
         let date = dateCell.valueTextView.text!
         
-        if selectedButton == 3 {
+        if let coinName = coinName, let coinSymbol = coinSymbol {
             
-        }
-        else {
-            if let coinName = coinName, let coinSymbol = coinSymbol {
-                
-                let transaction = Transaction()
-                transaction.exchangeName = exchange
-                transaction.tradingPair = tradingPair
-                transaction.date = date
-                
-                if selectedButton == 1 {
-                    transaction.transactionType = 0
+            let transaction = Transaction()
+            transaction.exchangeName = exchange
+            transaction.tradingPair = tradingPair
+            transaction.date = date
+            
+            // Risky
+            transaction.price = Double(buyPrice)!
+            transaction.amount = Double(amountBought)!
+            
+            let coin = Coin()
+            coin.name = coinName
+            coin.symbol = coinSymbol
+            coin.transactions.append(transaction)
+            
+            if coins.contains(where: { (coin) -> Bool in
+                if coin.name == coinName && coin.symbol == coinSymbol {
+                    return true
                 }
                 else {
-                    transaction.transactionType = 1
+                    return false
                 }
-                
-                // Risky
-                transaction.price = Double(buyPrice)!
-                transaction.amount = Double(amountBought)!
-                
-                let coin = Coin()
-                coin.name = coinName
-                coin.symbol = coinSymbol
-                coin.transactions.append(transaction)
-                
-                if coins.contains(where: { (coin) -> Bool in
+            }) {
+                let filteredCoins = coins.filter { (coin) -> Bool in
                     if coin.name == coinName && coin.symbol == coinSymbol {
                         return true
                     }
                     else {
                         return false
                     }
-                }) {
-                    let filteredCoins = coins.filter { (coin) -> Bool in
-                        if coin.name == coinName && coin.symbol == coinSymbol {
-                            return true
-                        }
-                        else {
-                            return false
-                        }
-                    }
-                    guard let theCoin = filteredCoins.first else { return }
-                    
-                    try! realm.write {
-                        theCoin.transactions.append(transaction)
-                        print("adding transaction succeeded transactiontype: \(transaction.transactionType)")
-                    }
                 }
-                else {
-                    try! realm.write {
-                        realm.add(coin)
-                        print("added")
-                    }
+                guard let theCoin = filteredCoins.first else { return }
+                
+                try! realm.write {
+                    theCoin.transactions.append(transaction)
+                    print("adding transaction succeeded transactiontype: \(transaction.transactionType)")
                 }
             }
             else {
-                // Update Coin
-                let realm = try! Realm()
-                if let transaction = transaction {
-                    try! realm.write {
-                        transaction.exchangeName = exchange
-                        transaction.tradingPair = tradingPair
-                        transaction.date = date
-                        if selectedButton == 1 {
-                            transaction.transactionType = 0
-                        }
-                        else {
-                            transaction.transactionType = 1
-                        }
-                        
-                        // Risky
-                        transaction.price = Double(buyPrice)!
-                        transaction.amount = Double(amountBought)!
-                        
-                        print("updating completed: transactiontype: \(transaction.transactionType)")
-                    }
+                try! realm.write {
+                    realm.add(coin)
+                    print("added")
+                    
                 }
-                
             }
+            
+        }
+        else {
+            // Update Coin
+            let realm = try! Realm()
+            if let transaction = transaction {
+                
+                try! realm.write {
+                    transaction.exchangeName = exchange
+                    transaction.tradingPair = tradingPair
+                    transaction.date = date
+                    if selectedButton == 1 {
+                        transaction.transactionType = 0
+                    }
+                    else {
+                        transaction.transactionType = 1
+                    }
+                    
+                    // Risky
+                    transaction.price = Double(buyPrice)!
+                    transaction.amount = Double(amountBought)!
+                    
+                    print("updating completed: transactiontype: \(transaction.transactionType)")
+                }
+            }
+            
+            
         }
         
         NotificationCenter.default.post(name: .reloadTableView, object: nil)
@@ -615,7 +599,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         present(datePickerController, animated: true, completion: nil)
     }
-
+    
     func itemAt(indexPath: IndexPath) -> TransactionsItem {
         return model[indexPath.section].items[indexPath.row]
     }
@@ -679,7 +663,7 @@ extension TransactionViewController: UIPopoverPresentationControllerDelegate, Da
     }
     
     
-     // Popover Delegate
+    // Popover Delegate
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none

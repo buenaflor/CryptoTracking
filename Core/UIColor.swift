@@ -11,6 +11,8 @@ import UIKit
 extension UIColor {
     struct CryptoTracking {
         
+        static let main = UIColor(red:0.32, green:0.36, blue:0.49, alpha:1.0)
+        
         // Standard Mode Colors
         static let standardMain = UIColor.white
         static let standardSecondary = UIColor.lightGray
@@ -21,10 +23,10 @@ extension UIColor {
 
         
         // Dark Mode Colors
-        static let darkMain = UIColor.black
+        static let darkMain = UIColor(red:0.20, green:0.21, blue:0.31, alpha:1.0)
         static let darkSecondary = #colorLiteral(red: 0.4633864961, green: 0.4633864961, blue: 0.4633864961, alpha: 1)
         static let darkBackground = UIColor.darkGray
-        static let darkTitle = UIColor.white
+        static let darkTitle = UIColor.black
         static let darkSubtitle = UIColor.black
         static let darkTint = UIColor.white
     }

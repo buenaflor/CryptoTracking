@@ -18,27 +18,30 @@ class CoinDetailHeaderView: UIView, Configurable {
         self.model = coinData
 
         
-        let profitAttributedString = NSMutableAttributedString(string: "All Time Profit: ", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge])
+        let profitAttributedString = NSMutableAttributedString(string: "All Time Profit: ", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.CryptoTracking.darkTint])
         profitAttributedString.append(NSAttributedString(string: "\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.allTimeProfit)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.green]))
         profitLabel.attributedText = profitAttributedString
         
-        
-        
         let portfolioAttributedString = NSMutableAttributedString(string: "Portfolio", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        portfolioAttributedString.append(NSAttributedString(string: "\n\(coinData.totalAmount) \(coinData.data.coinInfo.name)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        portfolioAttributedString.append(NSAttributedString(string: "\n\(coinData.totalAmount) \(coinData.data.coinInfo.name)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.CryptoTracking.darkTint]))
         portfolioLabel.attributedText = portfolioAttributedString
         
         let marketValueLabelAttributedString = NSMutableAttributedString(string: "Market Value", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        marketValueLabelAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.totalWorth)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        marketValueLabelAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.totalWorth)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.CryptoTracking.darkTint]))
         marketValueLabel.attributedText = marketValueLabelAttributedString
         
         let netCostAttributedString = NSMutableAttributedString(string: "Net Cost", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularMedium, NSAttributedStringKey.foregroundColor: UIColor.gray])
-        netCostAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.netCost)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]))
+        netCostAttributedString.append(NSAttributedString(string: "\n\(Accessible.shared.currentUsedCurrencySymbol)\(coinData.netCost)", attributes: [NSAttributedStringKey.font: UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.CryptoTracking.darkTint]))
         netCostLabel.attributedText = netCostAttributedString
+        
+        portfolioLabel.backgroundColor = UIColor.CryptoTracking.darkMain
+        marketValueLabel.backgroundColor = UIColor.CryptoTracking.darkMain
+        netCostLabel.backgroundColor = UIColor.CryptoTracking.darkMain
         
         portfolioLabel.textAlignment = .center
         netCostLabel.textAlignment = .center
         marketValueLabel.textAlignment = .center
+        
     }
     
     func loadPosition(x: CGFloat) {
@@ -58,7 +61,7 @@ class CoinDetailHeaderView: UIView, Configurable {
     
     let transactionsButton: UIButton = {
         let btn = UIButton()
-        btn.backgroundColor = .lightGray
+        btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
         btn.setAttributedTitle(NSAttributedString(string: "Transactions", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
         btn.addTarget(self, action: #selector(transactionsButtonTapped(sender:)), for: .touchUpInside)
         return btn
@@ -66,7 +69,7 @@ class CoinDetailHeaderView: UIView, Configurable {
     
     let generalButton: UIButton = {
         let btn = UIButton()
-        btn.backgroundColor = .lightGray
+        btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
         btn.setAttributedTitle(NSAttributedString(string: "General", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
         btn.addTarget(self, action: #selector(generalButtonTapped(sender:)), for: .touchUpInside)
         return btn
@@ -75,7 +78,7 @@ class CoinDetailHeaderView: UIView, Configurable {
     let alertButton: UIButton = {
         let btn = UIButton()
         btn.setAttributedTitle(NSAttributedString(string: "Alert", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
-        btn.backgroundColor = .lightGray
+        btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
         btn.addTarget(self, action: #selector(alertButtonTapped(sender:)), for: .touchUpInside)
         return btn
     }()
@@ -100,6 +103,8 @@ class CoinDetailHeaderView: UIView, Configurable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = UIColor.CryptoTracking.darkMain
         
         add(subview: profitLabel) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.safeAreaLayoutGuide.topAnchor, constant: 20),

@@ -116,6 +116,22 @@ class MainController: BaseViewController, LoadingController {
         }
     }
     
+    let pageVC: TabbarCollectionViewController?
+    
+    init(pageVC: TabbarCollectionViewController) {
+        self.pageVC = pageVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    var unwrappedPageVC: TabbarCollectionViewController {
+        guard let pageVC = pageVC else { return TabbarCollectionViewController() }
+        return pageVC
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View Declaration
     
     lazy var titleItem: UIBarButtonItem = {
@@ -156,10 +172,12 @@ class MainController: BaseViewController, LoadingController {
     // MARK: - Action
     
     @objc func settingsItemTapped(sender: UIBarButtonItem) {
+        unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
     
     @objc func searchItemTapped(sender: UIBarButtonItem) {
+        unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
         let vc = CryptoSearchViewController()
         vc.loadData(force: true)
         present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
@@ -197,10 +215,14 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             
             self.holdingsLabel.text = "\(((dataClass.totalWorth / portfolioValue) * 100).roundToTwoDigits())%"
             
-            
             if let imageURLPath = dataClass.data.coinInfo.imageURL {
                 self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
             }
+            
+            self.symbolLabel.textColor = UIColor.CryptoTracking.darkTint
+            self.holdingsLabel.textColor = UIColor.CryptoTracking.darkTint
+            self.currentPriceLabel.textColor = UIColor.CryptoTracking.darkTint
+            
         })
     }
     
@@ -232,6 +254,8 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
         return iv
     }()
     
+    let containerView = UIView()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -246,30 +270,40 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     
     func createConstraints() {
         
-        add(subview: iconImageView) { (v, p) in [
-            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 5),
-            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 32),
+        containerView.backgroundColor = UIColor.CryptoTracking.darkMain
+        containerView.layer.cornerRadius = 7
+        
+        add(subview: containerView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 10),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 20),
+            v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -20),
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor, constant: -10)
+            ]}
+        
+        containerView.add(subview: iconImageView) { (v, p) in [
+            v.topAnchor.constraint(equalTo: p.topAnchor, constant: 8),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 35),
             v.heightAnchor.constraint(equalToConstant: 25),
             v.widthAnchor.constraint(equalToConstant: 25)
             ]}
-        
-        add(subview: symbolLabel) { (v, p) in [
-            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 32),
+
+        containerView.add(subview: symbolLabel) { (v, p) in [
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 30),
             v.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 8)
             ]}
-        
-        add(subview: holdingsLabel) { (v, p) in [
+
+        containerView.add(subview: holdingsLabel) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 13),
             v.centerXAnchor.constraint(equalTo: p.centerXAnchor)
             ]}
-        
-        add(subview: currentPriceLabel) { (v, p) in [
+
+        containerView.add(subview: currentPriceLabel) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 8),
             v.leadingAnchor.constraint(equalTo: holdingsLabel.trailingAnchor, constant: 8),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -50)
             ]}
-        
-        add(subview: change24hLabel) { (v, p) in [
+
+        containerView.add(subview: change24hLabel) { (v, p) in [
             v.topAnchor.constraint(equalTo: currentPriceLabel.topAnchor, constant: 23),
             v.leadingAnchor.constraint(equalTo: holdingsLabel.trailingAnchor, constant: 8),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -50)

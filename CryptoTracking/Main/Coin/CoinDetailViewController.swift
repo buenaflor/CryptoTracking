@@ -81,7 +81,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
             v.topAnchor.constraint(equalTo: p.topAnchor),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.38)
+            v.heightAnchor.constraint(equalTo: p.heightAnchor, multiplier: 0.33)
             ]}
         
         view.add(subview: collectionView) { (v, p) in [

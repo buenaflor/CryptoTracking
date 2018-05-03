@@ -59,15 +59,10 @@ public extension UIView {
     }
     
     /// Hides view with animation parameter
-    public func hide(_ force: Bool, animated: Bool) {
-        if animated {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.isHidden = force
-            })
-        }
-        else {
+    public func hide(_ force: Bool, duration: TimeInterval, transition: UIViewAnimationOptions) {
+        UIView.transition(with: self, duration: duration, options: transition, animations: {
             self.isHidden = force
-        }
+        })
     }
     
     public func addSeparatorLine(color: UIColor) {

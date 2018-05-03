@@ -60,6 +60,12 @@ class MainHeaderView: BaseView {
                     
                     self.currencySymbolLabel.text = Accessible.shared.currentUsedCurrencySymbol
                     self.portfolioValueLabel.text = "\((portfolioValue / Accessible.Currency.convertedValue).roundToTwoDigits())"
+                    
+                    self.coinLabel.textColor = .gray
+                    self.holdingsLabel.textColor = .gray
+                    self.priceLabel.textColor = .gray
+                    
+                    
                     }.onError { error in
                         print(error)
                 }
@@ -73,10 +79,10 @@ class MainHeaderView: BaseView {
         return view
     }()
     
-    let coinLabel = Label(font: .cryptoLight, numberOfLines: 1)
-    let holdingsLabel = Label(font: .cryptoLight, numberOfLines: 1)
-    let priceLabel = Label(font: .cryptoLight, numberOfLines: 1)
-    let portfolioLabel = Label(font: .cryptoLight, numberOfLines: 1)
+    let coinLabel = Label(font: .cryptoMedium, numberOfLines: 1)
+    let holdingsLabel = Label(font: .cryptoMedium, numberOfLines: 1)
+    let priceLabel = Label(font: .cryptoMedium, numberOfLines: 1)
+    let portfolioLabel = Label(font: .cryptoMedium, numberOfLines: 1)
     let portfolioValueLabel = Label(font: .cryptoBoldExtraLarge, numberOfLines: 1)
     let currencySymbolLabel = Label(font: .cryptoBold, numberOfLines: 1)
     
@@ -102,6 +108,9 @@ class MainHeaderView: BaseView {
         holdingsLabel.text = "Holdings"
         priceLabel.text = "Price"
         portfolioLabel.text = "Total Portfolio Value"
+    
+        
+        backgroundColor = UIColor.CryptoTracking.darkMain
         
         coinLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coinLabelTapped(sender:))))
         

@@ -50,6 +50,7 @@ class MainViewController: MainController {
         }
         navigationItem.rightBarButtonItems = [ settingsItem, searchItem ]
         mainHeaderView.loadData(force: true)
+        unwrappedPageVC.tabbarView.hide(false, duration: 0.15, transition: .transitionCrossDissolve)
     }
     
     
@@ -61,7 +62,7 @@ class MainViewController: MainController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.row == self.finalCoinData.count ? 120 : 70
+        return indexPath.row == self.finalCoinData.count ? 120 : 90
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,14 +91,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
-       
         if indexPath.row != self.finalCoinData.count {
             let coinVC = CoinDetailViewController(finalCoinData: finalCoinData[indexPath.row])
             coinVC.loadData(force: true)
+            unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
             navigationController?.pushViewController(coinVC, animated: true)
         }
         else {
-
+            
         }
     }
 }
@@ -105,6 +106,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: ClickableDelegate {
     
     func clicked(button: UIButton) {
+        unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
         let vc = CryptoSearchViewController()
         vc.loadData(force: true)
         present(vc.wrapped(), animated: true, completion: nil)

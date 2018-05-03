@@ -128,6 +128,7 @@ class ThemeManager {
         UINavigationBar.appearance().backgroundColor = theme.backgroundColor
         UINavigationBar.appearance().tintColor = theme.tintColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont.cryptoRegularLarge]
+        UINavigationBar.appearance().isTranslucent = false
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.cryptoRegularLarge], for: .normal)
         
@@ -135,7 +136,7 @@ class ThemeManager {
         
         UITableView.appearance().backgroundColor = theme.backgroundColor
     
-        UITableViewCell.appearance().backgroundColor = theme.backgroundColor
+        UITableViewCell.appearance().backgroundColor = .clear
         UITableViewCell.appearance().tintColor = theme.tintColor
 
         updateColors()

@@ -11,14 +11,15 @@ import UIKit
 class TabbarCollectionViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate ,UIScrollViewDelegate {
     
     // Declare it outside of orderedVC so we can call loadData
-    let mainVC = MainViewController()
+    lazy var mainVC = MainViewController(pageVC: self)
+    lazy var watchListVC = WatchListViewController(pageVC: self)
     
     let tabbarView = UIView()
     
     var lastPendingViewControllerIndex = 0
     
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [mainVC.wrapped(), SettingsViewController().wrapped()]
+        return [mainVC.wrapped(), watchListVC.wrapped()]
     }()
     
     lazy var tabbarStackView: UIStackView = {
@@ -48,6 +49,7 @@ class TabbarCollectionViewController: UIPageViewController, UIPageViewController
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -57,6 +57,7 @@
 		345548022091071D00230BCF /* CCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345548012091071D00230BCF /* CCResponse.swift */; };
 		3455480420912B3300230BCF /* TradingPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455480320912B3300230BCF /* TradingPairViewController.swift */; };
 		34CE85AE209AFB59002EE744 /* TabbarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CE85AD209AFB59002EE744 /* TabbarCollectionViewController.swift */; };
+		34CE85B0209B12A2002EE744 /* WatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CE85AF209B12A2002EE744 /* WatchListViewController.swift */; };
 		34FEBF7D209734790066FDBA /* CWClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF7C209734790066FDBA /* CWClient.swift */; };
 		34FEBF7F2097350A0066FDBA /* CWCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF7E2097350A0066FDBA /* CWCalls.swift */; };
 		34FEBF81209735220066FDBA /* CWResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FEBF80209735220066FDBA /* CWResponse.swift */; };
@@ -143,6 +144,7 @@
 		345548012091071D00230BCF /* CCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCResponse.swift; sourceTree = "<group>"; };
 		3455480320912B3300230BCF /* TradingPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairViewController.swift; sourceTree = "<group>"; };
 		34CE85AD209AFB59002EE744 /* TabbarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCollectionViewController.swift; sourceTree = "<group>"; };
+		34CE85AF209B12A2002EE744 /* WatchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListViewController.swift; sourceTree = "<group>"; };
 		34FEBF7C209734790066FDBA /* CWClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWClient.swift; sourceTree = "<group>"; };
 		34FEBF7E2097350A0066FDBA /* CWCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWCalls.swift; sourceTree = "<group>"; };
 		34FEBF80209735220066FDBA /* CWResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CWResponse.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				34CE85AD209AFB59002EE744 /* TabbarCollectionViewController.swift */,
+				34CE85AF209B12A2002EE744 /* WatchListViewController.swift */,
 				3455477F208F544B00230BCF /* MainViewController.swift */,
 				345547BA208FAC6B00230BCF /* MainController.swift */,
 				345547BC208FAE8200230BCF /* MainHeaderView.swift */,
@@ -754,6 +757,7 @@
 				345547F12090897B00230BCF /* CryptoSearchViewController.swift in Sources */,
 				345547AF208F55C800230BCF /* UIKit.swift in Sources */,
 				34FEBF7F2097350A0066FDBA /* CWCalls.swift in Sources */,
+				34CE85B0209B12A2002EE744 /* WatchListViewController.swift in Sources */,
 				345547D9208FBC9100230BCF /* ThemesViewController.swift in Sources */,
 				34CE85AE209AFB59002EE744 /* TabbarCollectionViewController.swift in Sources */,
 				345547CF208FB4DC00230BCF /* SettingsViewController.swift in Sources */,

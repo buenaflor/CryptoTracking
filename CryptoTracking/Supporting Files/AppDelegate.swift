@@ -14,10 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    lazy var mainVC: MainViewController = {
-        return MainViewController()
-    }()
-    
     lazy var tabbarVC: TabbarCollectionViewController = {
         return TabbarCollectionViewController()
     }()
@@ -37,20 +33,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.applyTheme(currentTheme)
         
         if Accessible.shared.currentUsedCurrencySymbol == "CurrencySymbolError" {
-            // Set default currency
             UserDefaults.standard.set("€", forKey: Constant.Key.UserDefault.currentCurrencySymbol)
         }
         
         if Accessible.shared.currentUsedCurrencyCode == "CurrencyCodeError" {
             UserDefaults.standard.set("EUR", forKey: Constant.Key.UserDefault.currentCurrencyCode)
         }
-
         
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         tabbarVC.mainVC.loadData(force: true)
-//        mainVC.loadData(force: false)
+        tabbarVC.watchListVC.loadData(force: true)
     }
 }
