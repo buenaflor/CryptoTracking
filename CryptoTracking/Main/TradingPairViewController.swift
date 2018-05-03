@@ -14,7 +14,7 @@ protocol TradingPairViewControllerDelegate: class {
 
 class TradingPairViewController: BaseSearchViewController, LoadingController {
     
-    weak var delegate: TradingPairViewControllerDelegate?
+    weak var myDelegate: TradingPairViewControllerDelegate?
     
     var exchangeName: String?
     var coinSymbol: String?
@@ -107,6 +107,6 @@ extension TradingPairViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
         navigationController?.popViewController(animated: true)
-        delegate?.tradingPairViewController(self, didPick: filteredTradingPairs[indexPath.row])
+        myDelegate?.tradingPairViewController(self, didPick: filteredTradingPairs[indexPath.row])
     }
 }

@@ -88,8 +88,6 @@ extension FinalCoinData {
 // MARK: - Controller
 
 class MainController: BaseViewController, LoadingController {
-    
-    func changed() { print("globally changed") }
  
     var finalCoinData = [FinalCoinData]()
     

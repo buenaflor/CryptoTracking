@@ -120,7 +120,6 @@ extension UITableView {
         guard let cell = dequeueReusableCell(withIdentifier: type.defaultReuseIdentifier, for: indexPath) as? T else {
             fatalError("Could not dequeue cell: \(type.defaultReuseIdentifier)")
         }
-        
         return cell
     }
     

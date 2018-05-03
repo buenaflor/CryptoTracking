@@ -30,7 +30,6 @@ class MainHeaderView: BaseView {
         let realm = try! Realm()
         let coins = realm.objects(Coin.self)
         
-        
         var portfolioValue = 0.0
         var winLosePercentage = 0.0
         var percentage24h = 0.0

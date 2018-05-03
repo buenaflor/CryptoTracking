@@ -135,6 +135,10 @@ class TransactionsCVCell: UITableViewCell, Configurable {
             actionImageView.image = #imageLiteral(resourceName: "cryptoTracking_circled_b").withRenderingMode(.alwaysTemplate)
             actionImageView.tintColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
         }
+        else {
+            actionImageView.image = #imageLiteral(resourceName: "cryptoTracking_circled_s").withRenderingMode(.alwaysTemplate)
+            actionImageView.tintColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+        }
         
         buyPriceValueLabel.text = "\(buyPrice)"
         tradingPairValueLabel.text = "\(tradingPair)"
@@ -351,6 +355,10 @@ class FirstTransactionsCVCell: UITableViewCell, Configurable {
         if transaction.transactionType == 0 {
             actionImageView.image = #imageLiteral(resourceName: "cryptoTracking_circled_b").withRenderingMode(.alwaysTemplate)
             actionImageView.tintColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
+        }
+        else {
+            actionImageView.image = #imageLiteral(resourceName: "cryptoTracking_circled_s").withRenderingMode(.alwaysTemplate)
+            actionImageView.tintColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
         }
         
         buyPriceValueLabel.text = "\(buyPrice)"

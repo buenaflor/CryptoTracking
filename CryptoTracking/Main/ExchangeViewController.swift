@@ -14,7 +14,7 @@ protocol ExchangeViewControllerDelegate: class {
 
 class ExchangeViewController: BaseSearchViewController, LoadingController {
     
-    weak var delegate: ExchangeViewControllerDelegate?
+    weak var myDelegate: ExchangeViewControllerDelegate?
     
     // Stores the exchanges for the coin
     private var exchanges = [Exchange]()
@@ -76,7 +76,7 @@ extension ExchangeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
-        delegate?.exchangeViewController(self, didPick: filteredExchanges[indexPath.row])
+        myDelegate?.exchangeViewController(self, didPick: filteredExchanges[indexPath.row])
         navigationController?.popViewController(animated: true)
     }
 }

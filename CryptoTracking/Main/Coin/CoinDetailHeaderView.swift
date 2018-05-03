@@ -117,7 +117,7 @@ class CoinDetailHeaderView: UIView, Configurable {
             v.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 40),
             v.leadingAnchor.constraint(equalTo: p.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-            v.heightAnchor.constraint(equalToConstant: 70)
+            v.heightAnchor.constraint(equalToConstant: 55)
             ]}
         
         add(subview: separatorView) { (v, p) in [

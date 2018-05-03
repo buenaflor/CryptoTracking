@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var mainVC: MainViewController = {
         return MainViewController()
     }()
+    
+    lazy var tabbarVC: TabbarCollectionViewController = {
+        return TabbarCollectionViewController()
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -27,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = mainVC.wrapped()
+        window?.rootViewController = tabbarVC
         
         let currentTheme = ThemeManager.currentTheme()
         ThemeManager.applyTheme(currentTheme)
@@ -46,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        mainVC.loadData(force: false)
+        tabbarVC.mainVC.loadData(force: true)
+//        mainVC.loadData(force: false)
     }
 }
