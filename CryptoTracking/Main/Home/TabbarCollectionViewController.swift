@@ -103,12 +103,10 @@ class TabbarCollectionViewController: UIPageViewController, UIPageViewController
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
             if previousViewControllers.first != mainVCWrapped {
-                print("toot")
                 watchListButton.tintColor = .lightGray
                 homeButton.tintColor = .blue
             }
             else {
-                print("faal")
                 watchListButton.tintColor = UIColor.CryptoTracking.darkMain
                 homeButton.tintColor = .lightGray
             }

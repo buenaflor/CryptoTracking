@@ -79,12 +79,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.label.text = "Add Coin"
             cell.selectionStyle = .none
             cell.delegate = self
+            cell.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
             return cell
         }
         else {
             let cell = tableView.dequeueReusableCell(MainCoinTickerCell.self, for: indexPath)
             let coin = self.finalCoinData[indexPath.row]
             cell.configureWithModel(coin)
+            cell.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
             return cell
         }
     }
@@ -107,7 +109,7 @@ extension MainViewController: ClickableDelegate {
     
     func clicked(button: UIButton) {
         unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
-        let vc = CryptoSearchViewController()
+        let vc = CryptoSearchViewController(addToWatchListOnly: false)
         vc.loadData(force: true)
         present(vc.wrapped(), animated: true, completion: nil)
     }

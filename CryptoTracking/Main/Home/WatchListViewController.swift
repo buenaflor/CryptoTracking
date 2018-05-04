@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 import RealmSwift
 
-class WatchListViewController: MainController, UITableViewDelegate, UITableViewDataSource {
+class WatchListViewController: MainController, UITableViewDelegate, UITableViewDataSource, ClickableDelegate {
     
     lazy var addButton: UIButton = {
         let btn = UIButton()
@@ -18,6 +18,12 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
         btn.setImage(#imageLiteral(resourceName: "cryptoTracking_plus_100px").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .gray
         return btn
+    }()
+    
+    lazy var headerView: WatchListHeader = {
+        let view = WatchListHeader(frame: CGRect(x: 0, y: 0, width: 0, height: 55))
+        view.delegate = self
+        return view
     }()
     
     let containerView = UIView()
@@ -29,9 +35,6 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
         var tempFinalCoinData = [FinalCoinData]()
         
         coins.forEach { (coin) in
-            
-            print(coin.name)
-            
             if coin.transactions.contains(where: { (transaction) -> Bool in
                 if transaction.transactionType == 3 {
                     return true
@@ -44,21 +47,22 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
                     result.onSuccess { value in
                         let finalCoinData = FinalCoinData(data: value.data, coin: coin)
                         tempFinalCoinData.append(finalCoinData)
-                        self.finalCoinData = tempFinalCoinData
+                        
+                        // Sorted as Highest Cap for default
+                        self.finalCoinData = tempFinalCoinData.sorted { $0.data.aggregatedData.price < $1.data.aggregatedData.price }
+                        
                         self.activityIndicator.stopAnimating()
                         self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
                         }.onError { error in
                             print(error)
                     }
                 }
-                
             }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         pageVC?.tabbarView.hide(false, duration: 0.5, transition: .transitionCrossDissolve)
     }
     
@@ -66,8 +70,10 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(WatchListTickerCell.self)
+        tableView.tableHeaderView = headerView
         
         view.fillToSuperview(containerView)
         containerView.fillToSuperview(tableView)
@@ -81,9 +87,71 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
     }
     
     @objc func addButtonTapped(sender: UIButton) {
-        let cryptoSearchVC = CryptoSearchViewController()
+        let cryptoSearchVC = CryptoSearchViewController(addToWatchListOnly: true)
         cryptoSearchVC.loadData(force: true)
         present(cryptoSearchVC.wrapped(), animated: true, completion: nil)
+    }
+    
+    func clicked(button: UIButton) {
+        let alertController = UIAlertController(title: "Choose Filter", message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Alphabetical", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted { $0.coin.name < $1.coin.name }
+            self.headerView.filterButton.setTitle("Alphabetical", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Highest Cap", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted {
+                if let lhsMktCap = $0.data.aggregatedData.mktcap {
+                    if let rhsMktCap = $1.data.aggregatedData.mktcap {
+                        return lhsMktCap > rhsMktCap
+                    }
+                }
+                return false
+            }
+            self.headerView.filterButton.setTitle("Highest Cap", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Lowest Cap", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted {
+                if let lhsMktCap = $0.data.aggregatedData.mktcap {
+                    if let rhsMktCap = $1.data.aggregatedData.mktcap {
+                        return lhsMktCap < rhsMktCap
+                    }
+                }
+                return false
+            }
+            self.headerView.filterButton.setTitle("Lowest Cap", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Highest Price", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted { $0.data.aggregatedData.price > $1.data.aggregatedData.price }
+            self.headerView.filterButton.setTitle("Highest Price", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Lowest Price", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted { $0.data.aggregatedData.price > $1.data.aggregatedData.price }
+            self.headerView.filterButton.setTitle("Lowest Price", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Biggest Gain", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted { $0.data.aggregatedData.changepct24Hour > $1.data.aggregatedData.changepct24Hour }
+            self.headerView.filterButton.setTitle("Biggest Gain", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Biggest Lose", style: .default, handler: { (action) in
+            self.finalCoinData = self.finalCoinData.sorted { $0.data.aggregatedData.changepct24Hour < $1.data.aggregatedData.changepct24Hour }
+            self.headerView.filterButton.setTitle("Biggest Lose", for: .normal)
+            self.tableView.reloadData()
+        }))
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -98,6 +166,7 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(WatchListTickerCell.self, for: indexPath)
         
         cell.configureWithModel(finalCoinData[indexPath.row])
+        cell.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
         
         return cell
     }
@@ -108,6 +177,51 @@ class WatchListViewController: MainController, UITableViewDelegate, UITableViewD
         let coinDetailVC = CoinDetailViewController(coinSymbol: finalCoinData[indexPath.row].coin.symbol)
         pageVC?.tabbarView.hide(true, duration: 0.5, transition: .transitionCrossDissolve)
         navigationController?.pushViewController(coinDetailVC, animated: true)
+    }
+}
+
+class WatchListHeader: UIView {
+    
+    weak var delegate: ClickableDelegate?
+    
+    lazy var filterButton: UIButton = {
+        let somespace: CGFloat = 10
+        let btn = UIButton()
+        btn.setTitle("Highest Cap", for: .normal)
+        btn.setTitleColor(.lightGray, for: .normal)
+        btn.addTarget(self, action: #selector(filterButtonTapped(sender:)), for: .touchUpInside)
+        return btn
+    }()
+    
+    let buttonImageView = UIImageView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    
+        buttonImageView.image = #imageLiteral(resourceName: "cryptoTracking_filterdown").withRenderingMode(.alwaysTemplate)
+        buttonImageView.tintColor = .lightGray
+        
+        add(subview: buttonImageView) { (v, p) in [
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor, constant: -15),
+            v.leadingAnchor.constraint(equalTo: p.leadingAnchor, constant: 25),
+            v.heightAnchor.constraint(equalToConstant: 15),
+            v.widthAnchor.constraint(equalToConstant: 15)
+            ]}
+        
+        add(subview: filterButton) { (v, p) in [
+            v.bottomAnchor.constraint(equalTo: p.bottomAnchor, constant: -5),
+            v.leadingAnchor.constraint(equalTo: buttonImageView.trailingAnchor, constant: 5)
+            ]}
+        
+        backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
+    }
+    
+    @objc func filterButtonTapped(sender: UIButton) {
+        delegate?.clicked(button: sender)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

@@ -40,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set("EUR", forKey: Constant.Key.UserDefault.currentCurrencyCode)
         }
         
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        print(coins)
+         
         return true
     }
     

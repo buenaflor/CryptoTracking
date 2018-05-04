@@ -249,6 +249,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         tv.delegate = self
         tv.dataSource = self
         tv.register(UITableViewCell.self)
+        tv.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
         tv.tableFooterView = UIView()
         return tv
     }()
@@ -376,12 +377,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         
-        view.backgroundColor = .white
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        headerView.backgroundColor = .gray
+        headerView.backgroundColor = UIColor.CryptoTracking.darkMain
         footerView.backgroundColor = #colorLiteral(red: 0, green: 0.8705270402, blue: 0.3759691011, alpha: 1)
         footerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(footerViewTapped)))
         
@@ -487,6 +486,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             // Risky
             transaction.price = Double(buyPrice)!
             transaction.amount = Double(amountBought)!
+            if selectedButton == 1 {
+                transaction.transactionType = 0
+            }
+            else {
+                transaction.transactionType = 1
+            }
             
             let coin = Coin()
             coin.name = coinName

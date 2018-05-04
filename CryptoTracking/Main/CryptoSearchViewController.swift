@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CryptoSearchViewController: BaseSearchViewController, LoadingController {
     
@@ -14,6 +15,7 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
     
     var coinTickers = [CoinTicker]()
     var filteredCoinTickers = [CoinTicker]()
+    var addToWatchlist = false
     
     func loadData(force: Bool) {
         SessionManager.cmcShared.start(call: CMCClient.GetSpecCurrencyTicker(tag: "ticker/")) { (result) in
@@ -49,6 +51,15 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
     }()
 
     var isSearching = false
+    
+    init(addToWatchListOnly: Bool) {
+        super.init(nibName: nil, bundle: nil)
+        self.addToWatchlist = addToWatchListOnly
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,10 +114,62 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow()
-        let coinSymbol = filteredCoinTickers[indexPath.row].symbol
-        let coinName = filteredCoinTickers[indexPath.row].name
-        let vc = TransactionViewController(coinSymbol: coinSymbol, coinName: coinName)
-        navigationController?.pushViewController(vc, animated: true)
+        if !addToWatchlist {
+            let coinSymbol = filteredCoinTickers[indexPath.row].symbol
+            let coinName = filteredCoinTickers[indexPath.row].name
+            let vc = TransactionViewController(coinSymbol: coinSymbol, coinName: coinName)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        else {
+            
+            // BUG: Still no efficient solution for searching suitable Trading Pairs on exchanges
+            let realm = try! Realm()
+            let coins = realm.objects(Coin.self)
+            
+//            for coin in coins {
+//                if coin.name == filteredCoinTickers[indexPath.row].name && coin.symbol == filteredCoinTickers[indexPath.row].symbol && coin.transactions.count == 0 {
+//                    print("no transactions")
+//                }
+//                else {
+//                    print("coin doesnt exist?")
+//                    break
+//                }
+//            }
+            
+            for coin in coins {
+                if coin.name == filteredCoinTickers[indexPath.row].name && coin.symbol == filteredCoinTickers[indexPath.row].symbol {
+                    if coin.transactions.count != 0 {
+                        print("there is ")
+                    }
+                    
+                    for transaction in coin.transactions {
+                        if transaction.transactionType == 3 {
+                            
+                        }
+                    }
+                }
+            }
+
+//            let watchListTransaction = Transaction()
+//            watchListTransaction.transactionType = 3
+//
+//            let watchListCoin = Coin()
+//            watchListCoin.symbol = filteredCoinTickers[indexPath.row].symbol
+//            watchListCoin.name = filteredCoinTickers[indexPath.row].name
+//            watchListCoin.transactions.append(watchListTransaction)
+//
+//            let dataCoin = Coin()
+//            dataCoin.symbol = filteredCoinTickers[indexPath.row].symbol
+//            dataCoin.name = filteredCoinTickers[indexPath.row].name
+//
+//            try! realm.write {
+//                realm.add(watchListCoin)
+//                print("added to watchlist")
+//                realm.add(dataCoin)
+//                print("added datacoin")
+//                dismiss(animated: true, completion: nil)
+//            }
+        }
     }
 }
 

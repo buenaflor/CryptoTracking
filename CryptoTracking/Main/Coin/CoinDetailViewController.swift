@@ -18,7 +18,6 @@ class CoinDetailViewController: BaseViewController, LoadingController {
     
     func loadData(force: Bool) {
         guard let finalCoinData = finalCoinData else {
-            showAlert(title: "Error", message: "Coin ID is incorrect")
             return
         }
         

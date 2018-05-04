@@ -108,31 +108,37 @@ class MainController: BaseViewController, LoadingController {
         let coins = realm.objects(Coin.self)
         
         var tempFinalCoinData = [FinalCoinData]()
-        coins.forEach { (coin) in
-            
-            if !coin.transactions.contains(where: { (transaction) -> Bool in
-                if transaction.transactionType == 3 {
-                    return true
-                }
-                else {
-                    return false
-                }
-            }) {
-                SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
-                    result.onSuccess { value in
-                        
-                        let finalCoinData = FinalCoinData(data: value.data, coin: coin)
-                        tempFinalCoinData.append(finalCoinData)
-                        self.finalCoinData = tempFinalCoinData
-                        self.activityIndicator.stopAnimating()
-                        self.navigationItem.leftBarButtonItem = self.titleItem
-                        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                        
-                        }.onError { error in
-                            print(error)
+        if coins.count != 0 {
+            coins.forEach { (coin) in
+                
+                if !coin.transactions.contains(where: { (transaction) -> Bool in
+                    if transaction.transactionType == 3 {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }) {
+                    SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                        result.onSuccess { value in
+                            
+                            let finalCoinData = FinalCoinData(data: value.data, coin: coin)
+                            tempFinalCoinData.append(finalCoinData)
+                            self.finalCoinData = tempFinalCoinData
+                            self.activityIndicator.stopAnimating()
+                            self.navigationItem.leftBarButtonItem = self.titleItem
+                            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                            
+                            }.onError { error in
+                                print(error)
+                        }
                     }
                 }
             }
+        }
+        else {
+            self.activityIndicator.stopAnimating()
+            self.navigationItem.leftBarButtonItem = self.titleItem
         }
     }
     
@@ -198,7 +204,7 @@ class MainController: BaseViewController, LoadingController {
     
     @objc func searchItemTapped(sender: UIBarButtonItem) {
         unwrappedPageVC.tabbarView.hide(true, duration: 0.15, transition: .transitionCrossDissolve)
-        let vc = CryptoSearchViewController()
+        let vc = CryptoSearchViewController(addToWatchListOnly: false)
         vc.loadData(force: true)
         present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }

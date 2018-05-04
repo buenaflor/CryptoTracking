@@ -18,7 +18,7 @@ class CoinDetailCell: UICollectionViewCell, Configurable {
         let volume24h = "\((finalCoinData.data.aggregatedData.totalvolume24Hto! / Accessible.Currency.convertedValue).roundToTwoDigits())"
         let low24h = "\((finalCoinData.data.aggregatedData.low24Hour / Accessible.Currency.convertedValue).roundToTwoDigits())"
         let high24h = "\((finalCoinData.data.aggregatedData.high24Hour / Accessible.Currency.convertedValue).roundToTwoDigits())"
-        let circSupply = "\((finalCoinData.data.aggregatedData.supply / Accessible.Currency.convertedValue).roundToTwoDigits())"
+        let circSupply = "\((10000000 / Accessible.Currency.convertedValue).roundToTwoDigits())"
         
         // still has to be improved
 //        var firstAdded = false

@@ -128,6 +128,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tv.delegate = self
         tv.dataSource = self
         tv.register(UITableViewCell.self)
+        tv.backgroundColor = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
         return tv
     }()
     

@@ -62,7 +62,7 @@ class CoinDetailHeaderView: UIView, Configurable {
     let transactionsButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
-        btn.setAttributedTitle(NSAttributedString(string: "Transactions", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Transactions", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.white]), for: .normal)
         btn.addTarget(self, action: #selector(transactionsButtonTapped(sender:)), for: .touchUpInside)
         return btn
     }()
@@ -70,14 +70,14 @@ class CoinDetailHeaderView: UIView, Configurable {
     let generalButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
-        btn.setAttributedTitle(NSAttributedString(string: "General", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "General", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.white]), for: .normal)
         btn.addTarget(self, action: #selector(generalButtonTapped(sender:)), for: .touchUpInside)
         return btn
     }()
     
     let alertButton: UIButton = {
         let btn = UIButton()
-        btn.setAttributedTitle(NSAttributedString(string: "Alert", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Alert", attributes: [NSAttributedStringKey.font : UIFont.cryptoRegularLarge, NSAttributedStringKey.foregroundColor: UIColor.white]), for: .normal)
         btn.backgroundColor = UIColor(red:0.15, green:0.16, blue:0.23, alpha:1.0)
         btn.addTarget(self, action: #selector(alertButtonTapped(sender:)), for: .touchUpInside)
         return btn

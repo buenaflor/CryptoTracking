@@ -9,10 +9,7 @@
 import UIKit
 
 class TransactionHeaderView: BaseView {
-    override func loadData(force: Bool) {
-
-    }
-
+    
     let avgBuyLabel = Label(font: .cryptoMedium, numberOfLines: 1)
     let avgSellLabel = Label(font: .cryptoMedium, numberOfLines: 1)
 

@@ -25,7 +25,7 @@ extension UIColor {
         // Dark Mode Colors
         static let darkMain = UIColor(red:0.20, green:0.21, blue:0.31, alpha:1.0)
         static let darkSecondary = #colorLiteral(red: 0.4633864961, green: 0.4633864961, blue: 0.4633864961, alpha: 1)
-        static let darkBackground = UIColor.darkGray
+        static let darkBackground = #colorLiteral(red: 0.9044284326, green: 0.9044284326, blue: 0.9044284326, alpha: 1)
         static let darkTitle = UIColor.black
         static let darkSubtitle = UIColor.black
         static let darkTint = UIColor.white

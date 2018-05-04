@@ -14,6 +14,7 @@ enum TransactionType: Int {
 }
 
 class Coin: Object {
+    @objc dynamic var id = ""
     @objc dynamic var name = ""
     @objc dynamic var symbol = ""
     var transactions = List<Transaction>()
