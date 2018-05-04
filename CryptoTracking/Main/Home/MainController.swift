@@ -16,21 +16,24 @@ struct FinalCoinData {
 }
 
 extension FinalCoinData {
-
+    
     var winLosePercentage: Double {
         var worth = 0.0
         var cost = 0.0
         
         self.coin.transactions.forEach({ (transaction) in
-            // Cost during buy
-            cost += transaction.amount * transaction.price
-            
-            // Its worth now
-            worth += transaction.amount * self.data.aggregatedData.price
+            if transaction.transactionType != 3 {
+                // Cost during buy
+                cost += transaction.amount * transaction.price
+                
+                // Its worth now
+                worth += transaction.amount * self.data.aggregatedData.price
+            }
         })
         
         var winLosePercentage = (((worth / cost) - 1) * 100)
         winLosePercentage = (winLosePercentage * 1000).rounded() / 1000
+        print("winlose", winLosePercentage)
         
         return winLosePercentage
     }
@@ -40,11 +43,13 @@ extension FinalCoinData {
         var cost = 0.0
         
         self.coin.transactions.forEach({ (transaction) in
-            // Cost during buy
-            cost += transaction.amount * transaction.price
-            
-            // Its worth now
-            worth += transaction.amount * self.data.aggregatedData.price
+            if transaction.transactionType != 3 {
+                // Cost during buy
+                cost += transaction.amount * transaction.price
+                
+                // Its worth now
+                worth += transaction.amount * self.data.aggregatedData.price
+            }
         })
         
         return worth - cost
@@ -54,7 +59,9 @@ extension FinalCoinData {
         var amount = 0.0
         
         self.coin.transactions.forEach({ (transaction) in
-            amount += transaction.amount
+            if transaction.transactionType != 3 {
+                amount += transaction.amount
+            }
         })
         
         return amount
@@ -64,7 +71,9 @@ extension FinalCoinData {
         var worth = 0.0
         
         self.coin.transactions.forEach({ (transaction) in
-            worth += transaction.amount * self.data.aggregatedData.price
+            if transaction.transactionType != 3 {
+                worth += transaction.amount * self.data.aggregatedData.price
+            }
         })
         
         return worth
@@ -74,7 +83,9 @@ extension FinalCoinData {
         var netCost = 0.0
         
         self.coin.transactions.forEach({ (transaction) in
-            netCost += transaction.amount * transaction.price
+            if transaction.transactionType != 3 {
+                netCost += transaction.amount * transaction.price
+            }
         })
         
         return netCost
@@ -88,7 +99,7 @@ extension FinalCoinData {
 // MARK: - Controller
 
 class MainController: BaseViewController, LoadingController {
- 
+    
     var finalCoinData = [FinalCoinData]()
     
     func loadData(force: Bool) {
@@ -99,18 +110,27 @@ class MainController: BaseViewController, LoadingController {
         var tempFinalCoinData = [FinalCoinData]()
         coins.forEach { (coin) in
             
-            SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
-                result.onSuccess { value in
-
-                    let finalCoinData = FinalCoinData(data: value.data, coin: coin)
-                    tempFinalCoinData.append(finalCoinData)
-                    self.finalCoinData = tempFinalCoinData
-                    self.activityIndicator.stopAnimating()
-                    self.navigationItem.leftBarButtonItem = self.titleItem
-                    self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                    
-                    }.onError { error in
-                        print(error)
+            if !coin.transactions.contains(where: { (transaction) -> Bool in
+                if transaction.transactionType == 3 {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }) {
+                SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                    result.onSuccess { value in
+                        
+                        let finalCoinData = FinalCoinData(data: value.data, coin: coin)
+                        tempFinalCoinData.append(finalCoinData)
+                        self.finalCoinData = tempFinalCoinData
+                        self.activityIndicator.stopAnimating()
+                        self.navigationItem.leftBarButtonItem = self.titleItem
+                        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                        
+                        }.onError { error in
+                            print(error)
+                    }
                 }
             }
         }
@@ -162,7 +182,7 @@ class MainController: BaseViewController, LoadingController {
         return item
     }()
     
-    let mainHeaderView: MainHeaderView = {
+    lazy var mainHeaderView: MainHeaderView = {
         let view = MainHeaderView()
         view.loadData(force: true)
         return view
@@ -214,6 +234,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             self.change24hLabel.textColor = dataClass.winLosePercentage >= 0.0 ? .green : .red
             
             self.holdingsLabel.text = "\(((dataClass.totalWorth / portfolioValue) * 100).roundToTwoDigits())%"
+            self.totalWorthLabel.text = "\(Accessible.shared.currentUsedCurrencySymbol)\(dataClass.totalWorth.roundToTwoDigits())"
             
             if let imageURLPath = dataClass.data.coinInfo.imageURL {
                 self.iconImageView.sd_setImage(with: URL(string: "https://www.cryptocompare.com\(imageURLPath)")!)
@@ -222,7 +243,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             self.symbolLabel.textColor = UIColor.CryptoTracking.darkTint
             self.holdingsLabel.textColor = UIColor.CryptoTracking.darkTint
             self.currentPriceLabel.textColor = UIColor.CryptoTracking.darkTint
-            
+            self.totalWorthLabel.textColor = UIColor.CryptoTracking.darkTint
         })
     }
     
@@ -244,6 +265,12 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
     }()
     
     let change24hLabel: Label = {
+        let lbl = Label(font: .cryptoRegularLarge, numberOfLines: 1)
+        lbl.textAlignment = .right
+        return lbl
+    }()
+    
+    let totalWorthLabel: Label = {
         let lbl = Label(font: .cryptoRegularLarge, numberOfLines: 1)
         lbl.textAlignment = .right
         return lbl
@@ -296,6 +323,11 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 13),
             v.centerXAnchor.constraint(equalTo: p.centerXAnchor)
             ]}
+        
+        containerView.add(subview: totalWorthLabel) { (v, p) in [
+            v.topAnchor.constraint(equalTo: holdingsLabel.bottomAnchor),
+            v.centerXAnchor.constraint(equalTo: p.centerXAnchor)
+            ]}
 
         containerView.add(subview: currentPriceLabel) { (v, p) in [
             v.topAnchor.constraint(equalTo: p.topAnchor, constant: 8),
@@ -304,7 +336,7 @@ class MainCoinTickerCell: UITableViewCell, Configurable {
             ]}
 
         containerView.add(subview: change24hLabel) { (v, p) in [
-            v.topAnchor.constraint(equalTo: currentPriceLabel.topAnchor, constant: 23),
+            v.topAnchor.constraint(equalTo: currentPriceLabel.bottomAnchor),
             v.leadingAnchor.constraint(equalTo: holdingsLabel.trailingAnchor, constant: 8),
             v.trailingAnchor.constraint(equalTo: p.trailingAnchor, constant: -50)
             ]}

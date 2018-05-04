@@ -135,10 +135,7 @@ class ThemeManager {
         UILabel.appearance().textColor = theme.tintColor
         
         UITableView.appearance().backgroundColor = theme.backgroundColor
-    
-        UITableViewCell.appearance().backgroundColor = .clear
-        UITableViewCell.appearance().tintColor = theme.tintColor
-
+        
         updateColors()
     }
 }

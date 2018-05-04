@@ -25,6 +25,12 @@ class MainHeaderView: BaseView {
     var percentage24h = 0.0
     var allTimePct = 0.0
     
+    var finalCoinData: [FinalCoinData]? {
+        didSet {
+            
+        }
+    }
+    
     override func loadData(force: Bool) {
         
         let realm = try! Realm()
@@ -38,17 +44,16 @@ class MainHeaderView: BaseView {
             
             SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
                 result.onSuccess { value in
-         
+                    
                     let finalCoinData = FinalCoinData(data: value.data, coin: coin)
                     
                     portfolioValue += finalCoinData.totalWorth
                     winLosePercentage += finalCoinData.winLosePercentage
                     percentage24h += finalCoinData.data.aggregatedData.changepct24Hour
-                    
+                
                     self.percentage24h = percentage24h
                     self.allTimePct = winLosePercentage
                     
-                    // If positive green // doesnt change yet
                     self.segmentedValueLabel.text = self.segmentedControl.selectedSegmentIndex == 0 ? "\(winLosePercentage.roundToTwoDigits())%" : "\(percentage24h.roundToTwoDigits())%"
                     
                     if self.segmentedControl.selectedSegmentIndex == 0 {
@@ -64,7 +69,9 @@ class MainHeaderView: BaseView {
                     self.coinLabel.textColor = .gray
                     self.holdingsLabel.textColor = .gray
                     self.priceLabel.textColor = .gray
-                    
+                    self.portfolioLabel.textColor = UIColor.CryptoTracking.darkTint
+                    self.portfolioValueLabel.textColor = UIColor.CryptoTracking.darkTint
+                    self.currencySymbolLabel.textColor = UIColor.CryptoTracking.darkTint
                     
                     }.onError { error in
                         print(error)
@@ -100,6 +107,11 @@ class MainHeaderView: BaseView {
         sc.addTarget(self, action: #selector(segmentedControlTapped(sender:)), for: .valueChanged)
         return sc
     }()
+    
+    init(finalCoinData: [FinalCoinData]) {
+        super.init(frame: .zero)
+        self.finalCoinData = finalCoinData
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

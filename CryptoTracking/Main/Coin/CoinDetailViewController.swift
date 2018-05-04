@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CoinDetailViewController: BaseViewController, LoadingController {
     
@@ -25,6 +26,7 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         self.headerView.delegate = self
         self.title = finalCoinData.data.coinInfo.fullName
         self.navigationItem.rightBarButtonItem = self.settingsItem
+        self.collectionView.reloadData()
     }
     
     lazy var settingsItem: UIBarButtonItem = {
@@ -64,6 +66,39 @@ class CoinDetailViewController: BaseViewController, LoadingController {
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = activityIndicatorItem
     }
+    
+    init(coinSymbol: String) {
+        super.init(nibName: nil, bundle: nil)
+        let realm = try! Realm()
+        let coins = realm.objects(Coin.self)
+        
+        coins.forEach { (coin) in
+            if !coin.transactions.contains(where: { (transaction) -> Bool in
+                if transaction.transactionType != 3 && coin.symbol == coinSymbol {
+                    return false
+                }
+                else {
+                    return true
+                }
+            }) {
+                SessionManager.ccShared.start(call: CCClient.GetCoinData(tag: "top/exchanges/full", query: ["fsym": coin.symbol, "tsym": "EUR"])) { (result) in
+                    result.onSuccess { value in
+                        self.finalCoinData = FinalCoinData(data: value.data, coin: coin)
+                        self.view.backgroundColor = .white
+                        self.headerView.configureWithModel(FinalCoinData(data: value.data, coin: coin))
+                        self.headerView.delegate = self
+                        self.title = value.data.coinInfo.fullName
+                        self.navigationItem.rightBarButtonItem = self.settingsItem
+                        self.collectionView.reloadData()
+                        }.onError { error in
+                            print(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -195,7 +230,7 @@ extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let finalCoinData = finalCoinData else { return UICollectionViewCell() }
+        guard let finalCoinData = finalCoinData else { return collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath) }
         switch indexPath.row {
         case 0:
             let cell = collectionView.dequeueReusableCell(CoinDetailCell.self, for: indexPath)
@@ -209,7 +244,7 @@ extension CoinDetailViewController: UICollectionViewDelegateFlowLayout, UICollec
             let cell = collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath)
             return cell
         default:
-            return UICollectionViewCell()
+            return collectionView.dequeueReusableCell(UICollectionViewCell.self, for: indexPath)
         }
     }
     

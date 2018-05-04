@@ -10,16 +10,20 @@ import UIKit
 
 class TabbarCollectionViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate ,UIScrollViewDelegate {
     
+    
     // Declare it outside of orderedVC so we can call loadData
     lazy var mainVC = MainViewController(pageVC: self)
-    lazy var watchListVC = WatchListViewController(pageVC: self)
+    lazy var watchListVC =  WatchListViewController(pageVC: self)
+    
+    lazy var mainVCWrapped = mainVC.wrapped()
+    lazy var watchListWrapped = watchListVC.wrapped()
     
     let tabbarView = UIView()
     
-    var lastPendingViewControllerIndex = 0
+    var vcIndex = 0
     
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [mainVC.wrapped(), watchListVC.wrapped()]
+        return [mainVCWrapped, watchListWrapped]
     }()
     
     lazy var tabbarStackView: UIStackView = {
@@ -28,15 +32,17 @@ class TabbarCollectionViewController: UIPageViewController, UIPageViewController
         return sv
     }()
 
-    let homeButton: UIButton = {
+    lazy var homeButton: UIButton = {
         let btn = UIButton()
+        btn.addTarget(self, action: #selector(homeButtonTapped(sender:)), for: .touchUpInside)
         btn.setImage(#imageLiteral(resourceName: "cryptoTracking_triangle").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .blue
         return btn
     }()
     
-    let watchListButton: UIButton = {
+    lazy var watchListButton: UIButton = {
         let btn = UIButton()
+        btn.addTarget(self, action: #selector(watchListButtonTapped(sender:)), for: .touchUpInside)
         btn.setImage(#imageLiteral(resourceName: "cryptoTracking_eye").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .lightGray
         return btn
@@ -80,6 +86,35 @@ class TabbarCollectionViewController: UIPageViewController, UIPageViewController
         tabbarView.fillToSuperview(tabbarStackView)
     }
     
+    @objc func watchListButtonTapped(sender: UIButton) {
+        vcIndex = 1
+        watchListButton.tintColor = UIColor.CryptoTracking.darkMain
+        homeButton.tintColor = .lightGray
+        setViewControllers([orderedViewControllers[vcIndex]], direction: .forward, animated: true, completion: nil)
+    }
+    
+    @objc func homeButtonTapped(sender: UIButton) {
+        vcIndex = 0
+        watchListButton.tintColor = .lightGray
+        homeButton.tintColor = .blue
+        setViewControllers([orderedViewControllers[vcIndex]], direction: .reverse, animated: true, completion: nil)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if previousViewControllers.first != mainVCWrapped {
+                print("toot")
+                watchListButton.tintColor = .lightGray
+                homeButton.tintColor = .blue
+            }
+            else {
+                print("faal")
+                watchListButton.tintColor = UIColor.CryptoTracking.darkMain
+                homeButton.tintColor = .lightGray
+            }
+        }
+    }
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil

@@ -61,6 +61,7 @@ class CryptoSearchViewController: BaseSearchViewController, LoadingController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        searchController.becomeFirstResponder()
         searchController.searchBar.delegate = self
         
         updateView()
@@ -95,6 +96,7 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
         cell.accessoryType = .disclosureIndicator
         cell.configureLabel(font: .cryptoRegularLarge, numberOfLines: 1)
         cell.label.text = "\(coinName): \(coinSymbol)"
+        cell.label.textColor = UIColor.CryptoTracking.darkMain
         
         return cell
     }
