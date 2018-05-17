@@ -126,27 +126,40 @@ extension CryptoSearchViewController: UITableViewDelegate, UITableViewDataSource
             let realm = try! Realm()
             let coins = realm.objects(Coin.self)
             
-//            for coin in coins {
-//                if coin.name == filteredCoinTickers[indexPath.row].name && coin.symbol == filteredCoinTickers[indexPath.row].symbol && coin.transactions.count == 0 {
-//                    print("no transactions")
-//                }
-//                else {
-//                    print("coin doesnt exist?")
-//                    break
-//                }
+            let coin = Coin()
+            coin.id = "\(filteredCoinTickers[indexPath.row].name)ID+WATCH"
+            coin.name = filteredCoinTickers[indexPath.row].name
+            coin.symbol = filteredCoinTickers[indexPath.row].symbol
+            
+            let transaction = Transaction()
+            transaction.transactionType = 3
+            
+            coin.transactions.append(transaction)
+            
+//            try! realm.write {
+//                realm.add(coin)
+//                print("added to watchlist")
 //            }
+            
+            if coins.contains(coin) {
+                print("exists")
+            }
+            else {
+                print("no exist")
+            }
+            
             
             for coin in coins {
                 if coin.name == filteredCoinTickers[indexPath.row].name && coin.symbol == filteredCoinTickers[indexPath.row].symbol {
-                    if coin.transactions.count != 0 {
+                    if coin.id != "\(coin.name)ID+WATCH" {
                         print("there is ")
                     }
-                    
-                    for transaction in coin.transactions {
-                        if transaction.transactionType == 3 {
-                            
-                        }
+                    else {
+                        print("no other coin")
                     }
+                }
+                else {
+                    print("no coin exists")
                 }
             }
 

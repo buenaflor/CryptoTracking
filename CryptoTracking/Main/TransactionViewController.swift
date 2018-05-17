@@ -494,6 +494,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
             let coin = Coin()
+            coin.id = "\(coinName)ID"
             coin.name = coinName
             coin.symbol = coinSymbol
             coin.transactions.append(transaction)
